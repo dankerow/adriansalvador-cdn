@@ -25,7 +25,7 @@
     "@zentered/fastify-sentry": "^2.2.1",
     "archiver": "^5.3.1",
     "dayjs": "^1.11.5",
-    "exifreader": "^4.5.1",
+    "exifreader": "^4.6.0",
     "fastify": "4.7.0",
     "mongodb": "^4.10.0",
     "sharp": "^0.31.1"
