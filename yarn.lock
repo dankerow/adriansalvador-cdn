@@ -567,7 +567,7 @@ __metadata:
     dayjs: ^1.11.5
     dotenv: ^16.0.3
     eslint: ^8.24.0
-    exifreader: ^4.5.1
+    exifreader: ^4.6.0
     fastify: 4.7.0
     mongodb: ^4.10.0
     nodemon: ^2.0.20
@@ -1664,15 +1664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exifreader@npm:^4.5.1":
-  version: 4.5.1
-  resolution: "exifreader@npm:4.5.1"
+"exifreader@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "exifreader@npm:4.6.0"
   dependencies:
     "@xmldom/xmldom": ^0.7.5
   dependenciesMeta:
     "@xmldom/xmldom":
       optional: true
-  checksum: 31ac70bc035cc7cde0cc3bb1500be50323f0a42ecfd7684c159ae45560471d7fab3c28bb13de03797f3da335ebb0e68027fe9effe130ff3b76564b65e8e0afdc
+  checksum: debe11a589cc60d8c438c50f5bcbae988dc68d28c452f8549131bcef41f4cb2bf8ddd3eeebd31797dbf167ca44083b618bd94a4ab8c2c39c0ffa356d860c4b6f
   languageName: node
   linkType: hard
 
