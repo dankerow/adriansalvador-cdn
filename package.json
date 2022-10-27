@@ -24,7 +24,7 @@
     "@immobiliarelabs/fastify-sentry": "^4.1.1",
     "@types/node": "^18.7.18",
     "archiver": "^5.3.1",
-    "dayjs": "^1.11.5",
+    "dayjs": "^1.11.6",
     "exifreader": "^4.6.0",
     "fastify": "4.9.2",
     "mongodb": "^4.11.0",
