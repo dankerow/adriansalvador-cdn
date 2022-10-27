@@ -547,7 +547,7 @@ __metadata:
     mongodb: ^4.10.0
     nodemon: ^2.0.20
     sharp: ^0.31.1
-    tsx: ^3.10.1
+    tsx: ^3.11.0
     typescript: ^4.8.4
   languageName: unknown
   linkType: soft
@@ -3716,9 +3716,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:^3.10.1":
-  version: 3.10.1
-  resolution: "tsx@npm:3.10.1"
+"tsx@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "tsx@npm:3.11.0"
   dependencies:
     "@esbuild-kit/cjs-loader": ^2.4.0
     "@esbuild-kit/core-utils": ^3.0.0
@@ -3729,7 +3729,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.js
-  checksum: 73374106476f74697797cdb730d7f1305abbccd5db73321719a817cdff93d43389304ba072053353bae28a41618d69bcab2b6c9cc0dd0e33f7deda890aaf8c36
+  checksum: 07b5230d1bd5242eac13915553564721c5e879e6827ddfd18dbfff297dea96dcf8ec5671071679b9df8697612e8c57e5685b60af09a499f67391df919a60f682
   languageName: node
   linkType: hard
 
