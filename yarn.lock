@@ -1024,13 +1024,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@immobiliarelabs/fastify-sentry@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "@immobiliarelabs/fastify-sentry@npm:4.1.1"
+"@immobiliarelabs/fastify-sentry@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "@immobiliarelabs/fastify-sentry@npm:4.1.2"
   dependencies:
-    "@sentry/node": ^7.0.0
+    "@sentry/node": ^7.17.1
     fastify-plugin: ^4.0.0
-  checksum: 4fd288ca1468db290358c7227ac009ff180f74b102ed1ce3673b336a15c8200a99d2f27c8d1cefe7d2309f1852c458d21334d66d6ecf788502066af7741374ec
+  checksum: a8800857720bbced1eb4821f869234365561b16160cc2ab104b9681ae51ea106a23774ab66cf64b1c4354e295fd00a2dd0fb770ca6bede8984dd1ccfd2afd64a
   languageName: node
   linkType: hard
 
@@ -1081,59 +1081,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.14.1":
-  version: 7.14.1
-  resolution: "@sentry/core@npm:7.14.1"
+"@sentry/core@npm:7.17.2":
+  version: 7.17.2
+  resolution: "@sentry/core@npm:7.17.2"
   dependencies:
-    "@sentry/hub": 7.14.1
-    "@sentry/types": 7.14.1
-    "@sentry/utils": 7.14.1
+    "@sentry/types": 7.17.2
+    "@sentry/utils": 7.17.2
     tslib: ^1.9.3
-  checksum: d8e36c771b81284e85a6d970b79fceba3155674b024e0a26eaaca16ba697fc60e890b782a6918db1a3017ab91b5518ee56921b7225491d12599e565a0e1bc8b3
+  checksum: 1553cff1e67ea584184cac560f06b5a30ebd37628738a42ed7859bc2145aec853150d444570999a44d2c572bb3c078d957560ef6b2578bcc7950f636e71502a6
   languageName: node
   linkType: hard
 
-"@sentry/hub@npm:7.14.1":
-  version: 7.14.1
-  resolution: "@sentry/hub@npm:7.14.1"
+"@sentry/node@npm:^7.17.1":
+  version: 7.17.2
+  resolution: "@sentry/node@npm:7.17.2"
   dependencies:
-    "@sentry/types": 7.14.1
-    "@sentry/utils": 7.14.1
-    tslib: ^1.9.3
-  checksum: d471ea7cee5f800fc4edf1c69bc71ecd1d17c00e7ab7aed30e74f17f2def01b4a1b4eb1923bc116c516233638259aae3b6e76bbb18d3a5fd271c97a991ad5778
-  languageName: node
-  linkType: hard
-
-"@sentry/node@npm:^7.0.0":
-  version: 7.14.1
-  resolution: "@sentry/node@npm:7.14.1"
-  dependencies:
-    "@sentry/core": 7.14.1
-    "@sentry/hub": 7.14.1
-    "@sentry/types": 7.14.1
-    "@sentry/utils": 7.14.1
+    "@sentry/core": 7.17.2
+    "@sentry/types": 7.17.2
+    "@sentry/utils": 7.17.2
     cookie: ^0.4.1
     https-proxy-agent: ^5.0.0
     lru_map: ^0.3.3
     tslib: ^1.9.3
-  checksum: 7db1bdaffbc65a3e7ff3b05a85f60e1f3cda92fedadb7e6fb6c8590d699f83c900aa95acbbe915ddb6b6eb4a068ef8d1f2634036bc777400027faff5ead002d1
+  checksum: 348c13f6005f804cb0fceb2e66ce7fed0ba6ccc790111a866b7393ad31cc85a371b6e4dbd322fa0ff1e732c69faf4465ee9926c27ecd56f15f97ca00e76acf3a
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.14.1":
-  version: 7.14.1
-  resolution: "@sentry/types@npm:7.14.1"
-  checksum: c6c155514f044f5abc9a9627be9d8c5d4126d5f627c0bc5fee9e7beb06c08862bdcbea967c26371ae0e26288ac846083c6a02a06885384296f44acf369b62a82
+"@sentry/types@npm:7.17.2":
+  version: 7.17.2
+  resolution: "@sentry/types@npm:7.17.2"
+  checksum: 1faebab3093cdae9dc0bb361f534b4eec1fb2f90c1ad3253f27263bb32d7275c0485e6dcfbe8f23f5258e346a72b33bd979fe294c6eb6f91352dd7abc8541599
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.14.1":
-  version: 7.14.1
-  resolution: "@sentry/utils@npm:7.14.1"
+"@sentry/utils@npm:7.17.2":
+  version: 7.17.2
+  resolution: "@sentry/utils@npm:7.17.2"
   dependencies:
-    "@sentry/types": 7.14.1
+    "@sentry/types": 7.17.2
     tslib: ^1.9.3
-  checksum: 9b53b7b3b34d995ca83980790a897979aa105028fcac18b34c9cf890f3fab88f8d42e55e35d82cb0acc34285bd03b9ccda612431725e81a2a938c99b6af3a329
+  checksum: a570d896dbc07fe1b7bbe03c643a453a73ed727ea7f57b30a759d869ab996bf143e682f155e3c8c8295cda7d7d562d8f52ab0639a9b5147f2b20b3385daedd4b
   languageName: node
   linkType: hard
 
@@ -1365,7 +1352,7 @@ __metadata:
     "@fastify/helmet": ^10.0.2
     "@fastify/rate-limit": ^7.5.0
     "@fastify/static": ^6.5.0
-    "@immobiliarelabs/fastify-sentry": ^4.1.1
+    "@immobiliarelabs/fastify-sentry": ^4.1.2
     "@types/node": ^18.11.7
     "@typescript-eslint/eslint-plugin": ^5.41.0
     "@typescript-eslint/parser": ^5.41.0
