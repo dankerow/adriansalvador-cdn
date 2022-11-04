@@ -1296,10 +1296,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "@xmldom/xmldom@npm:0.7.5"
-  checksum: 8d7ec35c1ef6183b4f621df08e01d7e61f244fb964a4719025e65fe6ac06fac418919be64fb40fe5908e69158ef728f2d936daa082db326fe04603012b5f2a84
+"@xmldom/xmldom@npm:^0.7.8":
+  version: 0.7.8
+  resolution: "@xmldom/xmldom@npm:0.7.8"
+  checksum: 3bae232f9e6e8218a2c4ab4baa0e2afd5d15d070236cd14b36a59261e5bc9ab26ddf919671fd3ed7474552c7528cf659f14993fdb12f26418f568121f8f4385f
   languageName: node
   linkType: hard
 
@@ -1361,7 +1361,7 @@ __metadata:
     dayjs: ^1.11.6
     dotenv: ^16.0.3
     eslint: ^8.26.0
-    exifreader: ^4.6.0
+    exifreader: ^4.7.0
     fastify: 4.9.2
     mongodb: ^4.11.0
     nodemon: ^2.0.20
@@ -2468,15 +2468,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exifreader@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "exifreader@npm:4.6.0"
+"exifreader@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "exifreader@npm:4.7.0"
   dependencies:
-    "@xmldom/xmldom": ^0.7.5
+    "@xmldom/xmldom": ^0.7.8
   dependenciesMeta:
     "@xmldom/xmldom":
       optional: true
-  checksum: debe11a589cc60d8c438c50f5bcbae988dc68d28c452f8549131bcef41f4cb2bf8ddd3eeebd31797dbf167ca44083b618bd94a4ab8c2c39c0ffa356d860c4b6f
+  checksum: d916cb5c0c0d2fb8fa553189efa3b58f0f6da86cb84bcdacf834471d5b2b0939b37f5e01adc6f47d026719d31f9eaff9b2eb31a1e1db7e37adde68e9222115e5
   languageName: node
   linkType: hard
 
