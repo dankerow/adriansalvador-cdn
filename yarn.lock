@@ -923,13 +923,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/cors@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@fastify/cors@npm:8.1.1"
+"@fastify/cors@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@fastify/cors@npm:8.2.0"
   dependencies:
     fastify-plugin: ^4.0.0
-    mnemonist: 0.39.4
-  checksum: 342964552086f2d113179256791c3a7903e56a9e031d3cc601ea86940552f02edb92c552334f9097ebde3a4bc1fda13bdbff6037f859022e5f2b7a220ea267d6
+    mnemonist: 0.39.5
+  checksum: b2e30602d3aad7b2170a153b60e2b0dba8ad7df67ac3b7918374d202097f60b8a252baeafbf37f4323190fa87170960a3162aa6120540f825ae7750414c3feea
   languageName: node
   linkType: hard
 
@@ -1349,7 +1349,7 @@ __metadata:
   resolution: "adriansalvador-cdn@workspace:."
   dependencies:
     "@fastify/compress": ^6.1.1
-    "@fastify/cors": ^8.1.1
+    "@fastify/cors": ^8.2.0
     "@fastify/helmet": ^10.0.2
     "@fastify/rate-limit": ^7.5.0
     "@fastify/static": ^6.5.0
@@ -3440,12 +3440,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mnemonist@npm:0.39.4":
-  version: 0.39.4
-  resolution: "mnemonist@npm:0.39.4"
+"mnemonist@npm:0.39.5":
+  version: 0.39.5
+  resolution: "mnemonist@npm:0.39.5"
   dependencies:
     obliterator: ^2.0.1
-  checksum: aec354c69dcda2fcd01faef279fce7df48c7b364d5ab7b72bf0059db2fb68bfd276255993fa5d29a3c3809ecdcf763555cffd130e135bf9619a0b59a53319e11
+  checksum: 6669d687a434226924b2c84ee6eb7ce7d0f83dfc5caad8bcc164c73c0c11fb6d43cbe32636e710f068046f4b40a56c3032532554e93e02640aafc6ca3dd222e6
   languageName: node
   linkType: hard
 
