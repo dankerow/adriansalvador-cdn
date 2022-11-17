@@ -8,8 +8,8 @@ specifiers:
   '@fastify/static': ^6.5.0
   '@immobiliarelabs/fastify-sentry': ^4.1.2
   '@types/node': ^18.11.9
-  '@typescript-eslint/eslint-plugin': ^5.42.1
-  '@typescript-eslint/parser': ^5.42.1
+  '@typescript-eslint/eslint-plugin': ^5.43.0
+  '@typescript-eslint/parser': ^5.43.0
   archiver: ^5.3.1
   dayjs: ^1.11.6
   dotenv: ^16.0.3
