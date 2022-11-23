@@ -16,7 +16,7 @@ specifiers:
   eslint: ^8.28.0
   exifreader: ^4.8.1
   fastify: 4.10.2
-  mongodb: ^4.12.0
+  mongodb: ^4.12.1
   nodemon: ^2.0.20
   sharp: ^0.31.2
   tsx: ^3.12.1
@@ -34,7 +34,7 @@ dependencies:
   dayjs: 1.11.6
   exifreader: 4.8.1
   fastify: 4.10.2
-  mongodb: 4.12.0
+  mongodb: 4.12.1
   sharp: 0.31.2
 
 devDependencies:
@@ -2582,8 +2582,8 @@ packages:
       whatwg-url: 11.0.0
     dev: false
 
-  /mongodb/4.12.0:
-    resolution: {integrity: sha512-ssWod7DqVE4faluZESdOqYhV1BI5CQA5c31sr+zxDLJDBX9EA5VJLo8RNSItPTwxExmuGn/T6MbETQWjywNehA==}
+  /mongodb/4.12.1:
+    resolution: {integrity: sha512-koT87tecZmxPKtxRQD8hCKfn+ockEL2xBiUvx3isQGI6mFmagWt4f4AyCE9J4sKepnLhMacoCTQQA6SLAI2L6w==}
     engines: {node: '>=12.9.0'}
     dependencies:
       bson: 4.7.0
