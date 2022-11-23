@@ -5,7 +5,7 @@ specifiers:
   '@fastify/cors': ^8.2.0
   '@fastify/helmet': ^10.0.2
   '@fastify/rate-limit': ^7.5.0
-  '@fastify/static': ^6.5.0
+  '@fastify/static': ^6.5.1
   '@immobiliarelabs/fastify-sentry': ^4.1.2
   '@types/node': ^18.11.9
   '@typescript-eslint/eslint-plugin': ^5.44.0
@@ -27,7 +27,7 @@ dependencies:
   '@fastify/cors': 8.2.0
   '@fastify/helmet': 10.0.2
   '@fastify/rate-limit': 7.5.0
-  '@fastify/static': 6.5.0
+  '@fastify/static': 6.5.1
   '@immobiliarelabs/fastify-sentry': 4.1.2
   '@types/node': 18.11.9
   archiver: 5.3.1
@@ -966,8 +966,8 @@ packages:
       tiny-lru: 9.0.3
     dev: false
 
-  /@fastify/static/6.5.0:
-    resolution: {integrity: sha512-WEk6iqgejA6ivjkvbJ47A+uMci225z5lZwLXCXZS3ZYR/kYje1gzzarkKKGL6TWpBw6smkOzxA7dfEoY0347Nw==}
+  /@fastify/static/6.5.1:
+    resolution: {integrity: sha512-v3XFHTiL51UenZMaFjE1oKJ8od/x3UH4rQ3+U2HWf8KJjnmjy0/ePC92ug+vc3QO6Vf548zaUsdcKeZ1LddRbg==}
     dependencies:
       '@fastify/accept-negotiator': 1.0.0
       content-disposition: 0.5.4
