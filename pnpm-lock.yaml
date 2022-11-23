@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@fastify/compress': ^6.1.1
   '@fastify/cors': ^8.2.0
-  '@fastify/helmet': ^10.0.2
+  '@fastify/helmet': ^10.1.0
   '@fastify/rate-limit': ^7.5.0
   '@fastify/static': ^6.5.1
   '@immobiliarelabs/fastify-sentry': ^4.1.2
@@ -25,7 +25,7 @@ specifiers:
 dependencies:
   '@fastify/compress': 6.1.1
   '@fastify/cors': 8.2.0
-  '@fastify/helmet': 10.0.2
+  '@fastify/helmet': 10.1.0
   '@fastify/rate-limit': 7.5.0
   '@fastify/static': 6.5.1
   '@immobiliarelabs/fastify-sentry': 4.1.2
@@ -951,8 +951,8 @@ packages:
       fast-json-stringify: 5.4.1
     dev: false
 
-  /@fastify/helmet/10.0.2:
-    resolution: {integrity: sha512-gljMbmHJbH85DUfZKN982Pg1hwzX/5Bcizduf1pdjh2uuOqjsqEc49ExSk6U3VNqqTlpm8e+hMaVDSJg2AUrGQ==}
+  /@fastify/helmet/10.1.0:
+    resolution: {integrity: sha512-v7QJPYf1uVcCwzyHzkDGcHTqDPscXj/61JKxOdvczyDPAKTxSeb9Sc2OBActXaj7zUELiAdgnkKkzNwmCNzBLQ==}
     dependencies:
       fastify-plugin: 4.3.0
       helmet: 6.0.0
