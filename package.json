@@ -16,7 +16,7 @@
     "dev": "nodemon --loader tsx ."
   },
   "dependencies": {
-    "@fastify/compress": "^6.1.1",
+    "@fastify/compress": "^6.2.0",
     "@fastify/cors": "^8.2.0",
     "@fastify/helmet": "^10.1.0",
     "@fastify/rate-limit": "^7.5.0",

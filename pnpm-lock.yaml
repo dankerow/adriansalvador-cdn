@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@fastify/compress': ^6.1.1
+  '@fastify/compress': ^6.2.0
   '@fastify/cors': ^8.2.0
   '@fastify/helmet': ^10.1.0
   '@fastify/rate-limit': ^7.5.0
@@ -23,7 +23,7 @@ specifiers:
   typescript: ^4.9.3
 
 dependencies:
-  '@fastify/compress': 6.1.1
+  '@fastify/compress': 6.2.0
   '@fastify/cors': 8.2.0
   '@fastify/helmet': 10.1.0
   '@fastify/rate-limit': 7.5.0
@@ -917,8 +917,8 @@ packages:
       fast-uri: 2.1.0
     dev: false
 
-  /@fastify/compress/6.1.1:
-    resolution: {integrity: sha512-uwgomk59nAWKR2WqXugyn3tXzRJqlBaGCzXHb4ZnKA3sxA9G/JWZSAd6GEF29mJucTLi32iZaFZRAwf7O8bJMg==}
+  /@fastify/compress/6.2.0:
+    resolution: {integrity: sha512-ldFaNHurMNpypkt1AlI3HDXcdIVqkuhPeYHvlVsfIzM+1YHM0qrdWgrBESuwUCxohSCJNZmyXp4FBCxVJX8zaA==}
     dependencies:
       '@fastify/accept-negotiator': 1.0.0
       fastify-plugin: 4.3.0
