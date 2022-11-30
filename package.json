@@ -22,7 +22,7 @@
     "@fastify/rate-limit": "^7.6.0",
     "@fastify/static": "^6.5.1",
     "@immobiliarelabs/fastify-sentry": "^4.1.2",
-    "@types/node": "^18.11.9",
+    "@types/node": "^18.11.10",
     "archiver": "^5.3.1",
     "dayjs": "^1.11.6",
     "exifreader": "^4.8.1",
