@@ -11,7 +11,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.46.0
   '@typescript-eslint/parser': ^5.46.0
   archiver: ^5.3.1
-  dayjs: ^1.11.6
+  dayjs: ^1.11.7
   dotenv: ^16.0.3
   eslint: ^8.29.0
   exifreader: ^4.8.1
@@ -31,7 +31,7 @@ dependencies:
   '@immobiliarelabs/fastify-sentry': 5.0.0
   '@types/node': 18.11.12
   archiver: 5.3.1
-  dayjs: 1.11.6
+  dayjs: 1.11.7
   exifreader: 4.8.1
   fastify: 4.10.2
   mongodb: 4.12.1
@@ -1598,8 +1598,8 @@ packages:
       which: 2.0.2
     dev: true
 
-  /dayjs/1.11.6:
-    resolution: {integrity: sha512-zZbY5giJAinCG+7AGaw0wIhNZ6J8AhWuSXKvuc1KAyMiRsvGQWqh4L+MomvhdAYjN+lqvVCMq1I41e3YHvXkyQ==}
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: false
 
   /debug/2.6.9:
