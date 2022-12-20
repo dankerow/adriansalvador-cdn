@@ -14,7 +14,7 @@ specifiers:
   dayjs: ^1.11.7
   dotenv: ^16.0.3
   eslint: ^8.30.0
-  exifreader: ^4.9.0
+  exifreader: ^4.9.1
   fastify: 4.10.2
   mongodb: ^4.13.0
   nodemon: ^2.0.20
@@ -32,7 +32,7 @@ dependencies:
   '@types/node': 18.11.17
   archiver: 5.3.1
   dayjs: 1.11.7
-  exifreader: 4.9.0
+  exifreader: 4.9.1
   fastify: 4.10.2
   mongodb: 4.13.0
   sharp: 0.31.2
@@ -2053,8 +2053,8 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /exifreader/4.9.0:
-    resolution: {integrity: sha512-FuBewdeXxseIw4wHT1BVBF44S1H1Dgfk7CtLnzatiyKE6Mgg5OM0VfWzOttVVqEDUQGujdEX/ggjoWKbZJEEBQ==}
+  /exifreader/4.9.1:
+    resolution: {integrity: sha512-lcVG6VuSkPVHdmM6HybcVWaE8iO4Qq68qFPCRM6U3kz0JODqw4mjMySJ1nZSHfAnrfsIYGfN9A2vh96b3LAF1g==}
     requiresBuild: true
     optionalDependencies:
       '@xmldom/xmldom': 0.7.9
