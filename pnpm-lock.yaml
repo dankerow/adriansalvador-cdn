@@ -18,7 +18,7 @@ specifiers:
   fastify: 4.10.2
   mongodb: ^4.13.0
   nodemon: ^2.0.20
-  sharp: ^0.31.2
+  sharp: ^0.31.3
   tsx: ^3.12.1
   typescript: ^4.9.4
 
@@ -35,7 +35,7 @@ dependencies:
   exifreader: 4.9.1
   fastify: 4.10.2
   mongodb: 4.13.0
-  sharp: 0.31.2
+  sharp: 0.31.3
 
 devDependencies:
   '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
@@ -3046,8 +3046,8 @@ packages:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
     dev: false
 
-  /sharp/0.31.2:
-    resolution: {integrity: sha512-DUdNVEXgS5A97cTagSLIIp8dUZ/lZtk78iNVZgHdHbx1qnQR7JAHY0BnXnwwH39Iw+VKhO08CTYhIg0p98vQ5Q==}
+  /sharp/0.31.3:
+    resolution: {integrity: sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:
