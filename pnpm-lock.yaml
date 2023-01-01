@@ -15,7 +15,7 @@ specifiers:
   dotenv: ^16.0.3
   eslint: ^8.30.0
   exifreader: ^4.9.1
-  fastify: 4.10.2
+  fastify: 4.11.0
   mongodb: ^4.13.0
   nodemon: ^2.0.20
   sharp: ^0.31.3
@@ -32,7 +32,7 @@ dependencies:
   archiver: 5.3.1
   dayjs: 1.11.7
   exifreader: 4.9.1
-  fastify: 4.10.2
+  fastify: 4.11.0
   mongodb: 4.13.0
   sharp: 0.31.3
 
@@ -2145,8 +2145,8 @@ packages:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
     dev: false
 
-  /fastify/4.10.2:
-    resolution: {integrity: sha512-0T+4zI6N3S8ex0LCZi3H4FasJR4AzWw834fUkPWvV8r6GBJkLmAOfFxH8f5V29Plef24IK0QSQD/tz1Nx+1UOA==}
+  /fastify/4.11.0:
+    resolution: {integrity: sha512-JteZ8pjEqd+6n+azQnQfSJV8MUMxAmxbvC2Dx/Mybj039Lf/u3kda9Kq84uy/huCpqCzZoyHIZS5JFGF3wLztw==}
     dependencies:
       '@fastify/ajv-compiler': 3.4.0
       '@fastify/error': 3.0.0
