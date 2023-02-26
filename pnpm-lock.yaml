@@ -14,7 +14,7 @@ specifiers:
   dayjs: ^1.11.7
   dotenv: ^16.0.3
   eslint: ^8.34.0
-  exifreader: ^4.9.1
+  exifreader: ^4.9.2
   fastify: 4.13.0
   mongodb: ^5.0.1
   nodemon: ^2.0.20
@@ -31,7 +31,7 @@ dependencies:
   '@immobiliarelabs/fastify-sentry': 5.0.2
   archiver: 5.3.1
   dayjs: 1.11.7
-  exifreader: 4.9.1
+  exifreader: 4.9.2
   fastify: 4.13.0
   mongodb: 5.0.1
   sharp: 0.31.3
@@ -1224,8 +1224,8 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /exifreader/4.9.1:
-    resolution: {integrity: sha512-lcVG6VuSkPVHdmM6HybcVWaE8iO4Qq68qFPCRM6U3kz0JODqw4mjMySJ1nZSHfAnrfsIYGfN9A2vh96b3LAF1g==}
+  /exifreader/4.9.2:
+    resolution: {integrity: sha512-99c07jrLXYBscf4qKe8i1pRWgo6ptKr+zR//oNFm8gt7qDtlKYsvbvP8RqkfwLFsZjxVF8cu8LG3x7TWUtS8wQ==}
     requiresBuild: true
     optionalDependencies:
       '@xmldom/xmldom': 0.7.9
