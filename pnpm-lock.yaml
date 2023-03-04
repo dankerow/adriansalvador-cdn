@@ -15,7 +15,7 @@ specifiers:
   dotenv: ^16.0.3
   eslint: ^8.35.0
   exifreader: ^4.9.2
-  fastify: 4.13.0
+  fastify: 4.14.0
   mongodb: ^5.1.0
   nodemon: ^2.0.20
   sharp: ^0.31.3
@@ -32,7 +32,7 @@ dependencies:
   archiver: 5.3.1
   dayjs: 1.11.7
   exifreader: 4.9.2
-  fastify: 4.13.0
+  fastify: 4.14.0
   mongodb: 5.1.0
   sharp: 0.31.3
 
@@ -114,8 +114,8 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
-  /@fastify/ajv-compiler/3.4.0:
-    resolution: {integrity: sha512-69JnK7Cot+ktn7LD5TikP3b7psBPX55tYpQa8WSumt8r117PCa2zwHnImfBtRWYExreJlI48hr0WZaVrTBGj7w==}
+  /@fastify/ajv-compiler/3.5.0:
+    resolution: {integrity: sha512-ebbEtlI7dxXF5ziNdr05mOY8NnDiPB1XvAlLHctRt/Rc+C3LCOVW5imUVX+mhvUhnNzmPBHewUkOFgGlCxgdAA==}
     dependencies:
       ajv: 8.11.2
       ajv-formats: 2.1.1
@@ -1302,10 +1302,10 @@ packages:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
     dev: false
 
-  /fastify/4.13.0:
-    resolution: {integrity: sha512-p9ibdFWH3pZ7KPgmfHPKGUy2W4EWU2TEpwlcu58w4CwGyU3ARFfh2kwq6zpZ5W2ZGVbufi4tZbqHIHAlX/9Z/A==}
+  /fastify/4.14.0:
+    resolution: {integrity: sha512-oJSHlM/XbGdJpe2MKMJBsrvrkPDrHDZlAB9qzuUJIpnBtpDE394bzdFsH4KnsUI1e8zxzFl+GNBEXC64N/IPuw==}
     dependencies:
-      '@fastify/ajv-compiler': 3.4.0
+      '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.0.0
       '@fastify/fast-json-stringify-compiler': 4.1.0
       abstract-logging: 2.0.1
