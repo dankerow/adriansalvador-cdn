@@ -25,7 +25,7 @@
     "archiver": "^5.3.1",
     "dayjs": "^1.11.7",
     "exifreader": "^4.9.2",
-    "fastify": "4.13.0",
+    "fastify": "4.14.0",
     "mongodb": "^5.1.0",
     "sharp": "^0.31.3"
   },
