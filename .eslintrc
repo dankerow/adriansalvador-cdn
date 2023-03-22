@@ -12,5 +12,41 @@
     "import/resolver": {
       "typescript": {}
     }
+  },
+  "rules": {
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "block-spacing": "error",
+    "camelcase": "error",
+    "comma-dangle": ["error", "never"],
+    "comma-spacing": "error",
+    "comma-style": ["error", "last"],
+    "curly": ["error", "multi-line", "consistent"],
+    "dot-location": ["error", "property"],
+    "indent": ["error", "tab"],
+    "no-undef": "off",
+    "no-trailing-spaces": "error",
+    "no-unused-vars": "off",
+    "object-curly-spacing": ["error", "always"],
+    "quote-props": "off",
+    "quotes": ["error", "single"],
+    "space-before-blocks": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "space-in-parens": "error",
+    "space-infix-ops": "error",
+    "space-unary-ops": "error",
+    "no-tabs": "off"
   }
 }
