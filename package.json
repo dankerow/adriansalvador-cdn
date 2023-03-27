@@ -27,7 +27,7 @@
     "exifreader": "^4.11.1",
     "fastify": "4.15.0",
     "mongodb": "^5.1.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.6",
