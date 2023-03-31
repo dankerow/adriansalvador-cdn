@@ -16,7 +16,7 @@
     "dev": "nodemon --loader tsx ."
   },
   "dependencies": {
-    "@fastify/compress": "^6.2.0",
+    "@fastify/compress": "^6.2.1",
     "@fastify/cors": "^8.2.1",
     "@fastify/helmet": "^10.1.0",
     "@fastify/rate-limit": "^8.0.0",
@@ -24,17 +24,17 @@
     "@immobiliarelabs/fastify-sentry": "^5.0.2",
     "archiver": "^5.3.1",
     "dayjs": "^1.11.7",
-    "exifreader": "^4.11.1",
+    "exifreader": "^4.12.0",
     "fastify": "4.15.0",
     "mongodb": "^5.1.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.6",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
     "dotenv": "^16.0.3",
-    "eslint": "^8.36.0",
+    "eslint": "^8.37.0",
     "nodemon": "^2.0.22",
     "tsx": "^3.12.6",
     "typescript": "^4.9.5"
@@ -46,5 +46,5 @@
     ],
     "delay": 2500
   },
-  "packageManager": "pnpm@7.30.0"
+  "packageManager": "pnpm@7.30.5"
 }
