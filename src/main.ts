@@ -1,7 +1,7 @@
-import cluster from 'cluster';
+import cluster from 'cluster'
 
 if (cluster.isPrimary) {
-  import('./cluster/primary.js');
+  import('./cluster/primary.js')
 } else {
-  import('./cluster/worker.js');
+  import('./cluster/worker.js')
 }
