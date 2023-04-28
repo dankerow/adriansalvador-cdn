@@ -17,8 +17,8 @@ dependencies:
     specifier: ^6.10.1
     version: 6.10.1
   '@immobiliarelabs/fastify-sentry':
-    specifier: ^5.0.2
-    version: 5.0.2
+    specifier: ^6.0.1
+    version: 6.0.1
   archiver:
     specifier: ^5.3.1
     version: 5.3.1
@@ -288,13 +288,13 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@immobiliarelabs/fastify-sentry@5.0.2:
-    resolution: {integrity: sha512-1oHJjJjdHVEbwrIw7yQXlsORVDtIv/9eMq4q3QjGpQxMFJCF2KCWbJlDnBgetSzF2Hd+UDiCNNAxEHJNwJXm1w==}
-    engines: {node: '>=14', npm: '>=6'}
+  /@immobiliarelabs/fastify-sentry@6.0.1:
+    resolution: {integrity: sha512-3RVByHvVQCl4JIg1RSXzJvP/8GAVJZMZgwukvotsMT4k35vGuclQnVP2UaCLXpNjkVPlhMrMSaEDM3q1gQzeew==}
+    engines: {node: '>=16', npm: '>=8'}
     dependencies:
-      '@sentry/node': 7.31.0
-      '@sentry/tracing': 7.31.0
-      '@sentry/utils': 7.31.0
+      '@sentry/node': 7.49.0
+      '@sentry/tracing': 7.49.0
+      '@sentry/utils': 7.49.0
       cookie: 0.5.0
       fastify-plugin: 4.3.0
     transitivePeerDependencies:
@@ -327,22 +327,33 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@sentry/core@7.31.0:
-    resolution: {integrity: sha512-IZS1MZznyBOPw7UEpZwq3t3aaaVhFB+r3KM4JYFSJRr7Ky9TjldXA3hadNUTztjYGgEC3u8kB9jXoRvNXM2hqA==}
+  /@sentry-internal/tracing@7.49.0:
+    resolution: {integrity: sha512-ESh3+ZneQk/3HESTUmIPNrW5GVPu/HrRJU+eAJJto74vm+6vP7zDn2YV2gJ1w18O/37nc7W/bVCgZJlhZ3cwew==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.31.0
-      '@sentry/utils': 7.31.0
+      '@sentry/core': 7.49.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/node@7.31.0:
-    resolution: {integrity: sha512-DBjPfThZ5CIC2G9/CVFRlSOP/QqF1IoZXNpTUPZkhQ1cjShJeERT64jMkTdk+RAStSTpEfF6J0rUy1NIyHHEoQ==}
+  /@sentry/core@7.49.0:
+    resolution: {integrity: sha512-AlSnCYgfEbvK8pkNluUkmdW/cD9UpvOVCa+ERQswXNRkAv5aDGCL6Ihv6fnIajE++BYuwZh0+HwZUBVKTFzoZg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.31.0
-      '@sentry/types': 7.31.0
-      '@sentry/utils': 7.31.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/node@7.49.0:
+    resolution: {integrity: sha512-KLIrqcbKk4yR3g8fjl87Eyv4M9j4YI6b7sqVAZYj3FrX3mC6JQyGdlDfUpSKy604n1iAdr6OuUp5f9x7jPJaeQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry-internal/tracing': 7.49.0
+      '@sentry/core': 7.49.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -351,26 +362,23 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/tracing@7.31.0:
-    resolution: {integrity: sha512-p/b9sOw2wwcDLp8p0bJ0oetgeEB1q/ueZaXDeBeSh+3GNKx6J4S3pcFpbMXDK8d2Ayd3P9Gvrm7y9Hc2ueJteg==}
+  /@sentry/tracing@7.49.0:
+    resolution: {integrity: sha512-RtyTt1DvX7s1M2ca9qnevOkuwn8HjbKXrSVHtMbQYoT3uGvjT8Pm71D5WtWMWH2QLpFgcqQq/1ifZBUAG4Y7qA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.31.0
-      '@sentry/types': 7.31.0
-      '@sentry/utils': 7.31.0
-      tslib: 1.14.1
+      '@sentry-internal/tracing': 7.49.0
     dev: false
 
-  /@sentry/types@7.31.0:
-    resolution: {integrity: sha512-nFqo7wyMnapdSEdw1MD+cavDtD9x5QQmh/bwLEOb/euM0cHFJHYyD7CveY/mQng4HyEVWY+DCtX/7E3GcQ7Bdw==}
+  /@sentry/types@7.49.0:
+    resolution: {integrity: sha512-9yXXh7iv76+O6h2ONUVx0wsL1auqJFWez62mTjWk4350SgMmWp/zUkBxnVXhmcYqscz/CepC+Loz9vITLXtgxg==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.31.0:
-    resolution: {integrity: sha512-B1KkvdfwlaqM7sDp3/yk2No7WsbMuLEywGRVOLzXeTqTLSBRBWyyYIudqPtx2LDds9anlUHj21zs9FKY+S3eiA==}
+  /@sentry/utils@7.49.0:
+    resolution: {integrity: sha512-JdC9yGnOgev4ISJVwmIoFsk8Zx0psDZJAj2DV7x4wMZsO6QK+YjC7G3mUED/S5D5lsrkBZ/3uvQQhr8DQI4UcQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.31.0
+      '@sentry/types': 7.49.0
       tslib: 1.14.1
     dev: false
 
@@ -404,7 +412,7 @@ packages:
   /@types/readdir-glob@1.1.1:
     resolution: {integrity: sha512-ImM6TmoF8bgOwvehGviEj3tRdRBbQujr1N+0ypaln/GWjaerOB26jb93vsRHmdMtvVQZQebOlqt2HROark87mQ==}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 18.16.2
     dev: true
 
   /@types/semver@7.3.13:
