@@ -36,20 +36,20 @@
     "@fastify/multipart": "^7.6.0",
     "@types/archiver": "^5.3.2",
     "@types/mv": "^2.1.2",
-    "@types/node": "^18.16.2",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
+    "@types/node": "^18.16.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
     "eslint-plugin-import": "^2.27.5",
     "fastify-formidable": "^3.0.2",
     "nodemon": "^2.0.22",
-    "tsx": "^3.12.6",
+    "tsx": "^3.12.7",
     "typescript": "^5.0.4"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.3.1"
+  "packageManager": "pnpm@8.4.0"
 }
