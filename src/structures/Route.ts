@@ -14,5 +14,7 @@ export class Route {
     this.path = options.path
   }
 
-  routes(app: FastifyInstance, options: FastifyServerOptions, done: DoneFuncWithErrOrRes) {}
+  routes(app: FastifyInstance, options: FastifyServerOptions, done: DoneFuncWithErrOrRes) {
+    done()
+  }
 }
