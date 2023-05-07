@@ -136,7 +136,7 @@ export class Server {
         }
 
         if (i + 1 === routes.length) {
-          this.registerRoutes()
+          await this.registerRoutes()
         }
       }
     } else {
@@ -149,7 +149,7 @@ export class Server {
    * @private
    * @returns void
    */
-  private registerRoutes(): void {
+  private async registerRoutes(): Promise<void> {
     this.routers.sort((a, b) => {
       if (a.position > b.position) return 1
       if (b.position > a.position) return -1
@@ -157,12 +157,33 @@ export class Server {
     })
 
     for (let i = 0; i < this.routers.length; i++) {
-      this.app.register(this.routers[i].routes, { prefix: this.routers[i].path })
+      const route = this.routers[i]
+
+      const middlewares = []
+      if (route.middlewares?.length) {
+        for (const middleware of route.middlewares) {
+          const importedMiddlewarePath = relative(__dirname, join('src', 'middlewares', middleware)).replaceAll('\\', '/')
+          const importedMiddleware = await import(importedMiddlewarePath)
+          middlewares.push(importedMiddleware.default)
+        }
+      }
+
+      await this.app.register((app, options, done) => {
+        app.addHook('onRoute', (routeOptions) => {
+          if (routeOptions.config && routeOptions.config.auth === false) return
+
+          routeOptions.preHandler = [...(routeOptions.preHandler || []), ...middlewares]
+
+          return
+        })
+
+        route.routes(app, options, done)
+      }, { prefix: route.path })
 
       if (i + 1 === this.routers.length) {
         process.send({ type: 'log', content: `Loaded ${this.routers.length} routes.` })
 
-        this.loadTasks(join('src', 'tasks'))
+        await this.loadTasks(join('src', 'tasks'))
       }
     }
   }
