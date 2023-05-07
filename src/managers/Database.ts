@@ -1,184 +1,264 @@
-import { MongoClient, Db } from 'mongodb';
-import { EventEmitter } from 'events';
+import type { Db } from 'mongodb'
+import { MongoClient } from 'mongodb'
+import { EventEmitter } from 'node:events'
 
 export class Database extends EventEmitter {
-	private client: MongoClient;
-	public mongo: Db;
+  private client: MongoClient
+  public mongo: Db
+  private mongoUsers: Db
 
-	constructor() {
-		super();
+  constructor() {
+    super()
 
-		this.client = new MongoClient(process.env.MONGO_URI, { minPoolSize: 12 });
-		this.mongo = null;
-	}
+    this.client = new MongoClient(process.env.MONGO_URI, { minPoolSize: 12 })
+    this.mongo = null
+    this.mongoUsers = null
+  }
 
-	connect() {
-		this.client.connect()
-			.then(() => {
-				this.emit('ready');
-				this.mongo = this.client.db(process.env.MONGO_DATABASE);
-			})
-			.catch((err) => {
-				this.emit('error', err);
-			})
-	}
+  async connect() {
+    await this.client.connect()
+      .then(() => {
+        this.mongo = this.client.db(process.env.MONGO_DATABASE)
+        this.mongoUsers = this.client.db(process.env.MONGO_USERS_DATABASE)
 
-	getAlbumById(id) {
-		return this.mongo
-			.collection('albums')
-			.findOne({ id });
-	}
+        this.emit('ready')
+      })
+      .catch((err) => {
+        this.emit('error', err)
+      })
+  }
 
-	getAllAlbums() {
-		return this.mongo
-			.collection('albums')
-			.find()
-			.toArray();
-	}
+  async close(force = false) {
+    await this.client.close(force)
+  }
 
-	getAlbumsSorted() {
-		return this.mongo
-			.collection('albums')
-			.aggregate([
-				{ $addFields: { lowerName: { $toLower: '$name' } } }
-			],
-			{
-				collation: {
-					locale: 'en_US',
-					numericOrdering: true
-				}
-			})
-			.sort({ name: 1 })
-			.toArray();
-	}
+  getUserById(id) {
+    return this.mongoUsers
+      .collection('metadata')
+      .aggregate([
+        { $match: { id } },
+        { $lookup: { from: 'credentials', localField: 'id', foreignField: 'id', as: 'credentials' } },
+        {
+          $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ '$credentials', 0 ] }, '$$ROOT' ] } }
+        },
+        { $project: { credentials: 0 } },
+        { $unset: [ '_id', 'password' ] }
+      ])
+      .limit(1)
+      .next()
+  }
 
-	getAlbumCount() {
-		return this.mongo
-			.collection('albums')
-			.countDocuments();
-	}
+  getAlbumById(id) {
+    return this.mongo
+      .collection('albums')
+      .aggregate([
+        { $match: { id } },
+        { $lookup: { from: 'files', localField: 'coverId', foreignField: 'id', as: 'cover' } },
+        { $lookup: { from: 'files', localField: 'coverFallbackId', foreignField: 'id', as: 'coverFallback' } },
+        { $addFields: { cover: { $arrayElemAt: ['$cover', 0] } } },
+        { $addFields: { coverFallback: { $arrayElemAt: ['$coverFallback', 0] } } },
+        { $unset: [ 'cover._id', 'cover.albumId', 'coverFallback._id', 'coverFallback.albumId' ] },
+        { $project: { _id: 0 } }
+      ])
+      .limit(1)
+      .next()
+  }
 
-	getRandomImages(limit) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $sample: { size: limit } }
-			])
-			.toArray();
-	}
+  getAlbums(params: { favorite?: boolean; featured?: boolean; search?: string; sort?: any; skip?: number; limit?: number } = {}) {
+    const aggregation = []
+    if (params.favorite) aggregation.push({ $match: { favorite: true } })
+    if (params.featured) aggregation.push({ $match: { featured: true } })
+    if (params.search) aggregation.push({ $match: { name: { $regex: params.search, $options: 'i' } } })
+    if (params.sort) aggregation.push({ $addFields: { lowerName: { $toLower: '$name' } } }, { $sort: params.sort })
+    if (params.skip) aggregation.push({ $skip: params.skip })
+    if (params.limit) aggregation.push({ $limit: params.limit })
 
-	pickRandomImages(limit, ids = []) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { albumId: { $in: ids } } },
-				{ $sample: { size: limit } }
-			])
-			.toArray();
-	}
+    return this.mongo
+      .collection('albums')
+      .aggregate([
+        ...aggregation,
+        { $lookup: { from: 'files', localField: 'coverId', foreignField: 'id', as: 'cover' } },
+        { $lookup: { from: 'files', localField: 'coverFallbackId', foreignField: 'id', as: 'coverFallback' } },
+        { $addFields: { cover: { $arrayElemAt: ['$cover', 0] } } },
+        { $addFields: { coverFallback: { $arrayElemAt: ['$coverFallback', 0] } } },
+        { $unset: [ 'cover._id', 'cover.id', 'cover.type', 'cover.size', 'cover.albumId', 'coverFallback._id', 'coverFallback.id', 'coverFallback.type', 'coverFallback.size', 'coverFallback.albumId' ] },
+        { $project: { _id: 0, lowerName: 0 } }
+      ], {
+        collation: {
+          locale: 'en_US',
+          numericOrdering: true
+        }
+      })
+      .toArray()
+  }
 
-	getAlbumFiles(albumId) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { albumId } }
-			])
-			.toArray();
-	}
+  getAlbumCount() {
+    return this.mongo
+      .collection('albums')
+      .countDocuments()
+  }
 
-	getAlbumFileCount(albumId) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { albumId } },
-				{ $count: 'count' }
-			])
-			.limit(1)
-			.next();
-	}
+  getRandomImages(limit) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $sample: { size: limit } },
+        { $lookup: { from: 'albums', localField: 'albumId', foreignField: 'id', as: 'album' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } },
+        { $project: { _id: 0 } }
+      ])
+      .toArray()
+  }
 
-	getAlbumFilesWithFields(id, fields) {
-		const project = {};
+  pickRandomImages(limit, ids = []) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId: { $in: ids } } },
+        { $sample: { size: limit } }
+      ])
+      .toArray()
+  }
 
-		for (let i = 0; i < fields.length; i++) {
-			project[fields[i]] = '$' + fields[i];
-		}
+  getAlbumFiles(albumId) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId } },
+        { $project: { _id: 0 } }
+      ])
+      .toArray()
+  }
 
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { albumId: { $in: [id] } } },
-				{ $project: { _id: 0, ...project } }
-			])
-			.toArray();
-	}
+  getAlbumFileCount(albumId) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId } },
+        { $count: 'count' }
+      ])
+      .limit(1)
+      .next()
+  }
 
-	getAlbumFilesPaginated(id, skip, limit) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { albumId: { $in: [id] } } }
-			])
-			.skip(skip)
-			.limit(limit)
-			.toArray();
-	}
+  getAlbumFilesWithFields(id, fields) {
+    const project = {}
 
-	getFileById(id) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $match: { id } },
-				{ $lookup: { from: 'albums', localField: 'albumId', foreignField: 'id', as: 'album' } },
-				{ $addFields: { album: { $arrayElemAt: ['$album', 0] } } }
-			])
-			.limit(1)
-			.next();
-	}
+    for (let i = 0; i < fields.length; i++) {
+      project[fields[i]] = '$' + fields[i]
+    }
 
-	findAlbumByName(name) {
-		return this.mongo
-			.collection('albums')
-			.aggregate([
-				{ $addFields: { name: { $toLower: '$name' } } },
-				{ $match: { name } }
-			])
-			.limit(1)
-			.next();
-	}
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId: { $in: [id] } } },
+        { $project: { _id: 0, ...project } }
+      ])
+      .toArray()
+  }
 
-	findFileByName(name) {
-		return this.mongo
-			.collection('files')
-			.aggregate([
-				{ $addFields: { name: { $toLower: '$name' } } },
-				{ $match: { name } }
-			])
-			.limit(1)
-			.next()
-	}
+  getFileById(id, includeAlbum = false) {
+    const collection = this.mongo.collection('files')
 
-	insertAlbum(document) {
-		return this.mongo
-			.collection('albums')
-			.insertOne(document)
-	}
+    if (!includeAlbum) return collection.findOne({ id })
 
-	insertFile(document) {
-		return this.mongo
-			.collection('files')
-			.insertOne(document)
-	}
+    return collection
+      .aggregate([
+        { $match: { id } },
+        { $lookup: { from: 'albums', localField: 'albumId', foreignField: 'id', as: 'album' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } },
+        { $project: { _id: 0 } }
+      ])
+      .limit(1)
+      .next()
+  }
 
-	updateFile(id, fields) {
-		return this.mongo
-			.collection('files')
-			.updateOne({ id }, { $set: fields });
-	}
+  getFileCount() {
+    return this.mongo
+      .collection('files')
+      .countDocuments()
+  }
 
-	updateAlbum(id, fields) {
-		return this.mongo
-			.collection('albums')
-			.updateOne({ id }, { $set: fields })
-	}
+  findAlbumByName(name) {
+    return this.mongo
+      .collection('albums')
+      .aggregate([
+        { $addFields: { lowerName: { $toLower: '$name' } } },
+        { $match: { lowerName: name } },
+        { $lookup: { from: 'files', localField: 'coverId', foreignField: 'id', as: 'cover' } },
+        { $addFields: { cover: { $arrayElemAt: ['$cover', 0] } } },
+        { $unset: [ 'cover._id', 'cover.id', 'cover.type', 'cover.size', 'cover.albumId' ] },
+        { $project: { _id: 0, lowerName: 0 } }
+      ])
+      .limit(1)
+      .next()
+  }
+
+  findFileByName(name) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $addFields: { lowerName: { $toLower: '$name' } } },
+        { $match: { lowerName: name } },
+        { $lookup: { from: 'albums', localField: 'albumId', foreignField: 'id', as: 'album' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } },
+        { $project: { _id: 0, lowerName: 0 } }
+      ])
+      .limit(1)
+      .next()
+  }
+
+  insertAlbum(document) {
+    return this.mongo
+      .collection('albums')
+      .insertOne(document)
+  }
+
+  insertFile(document) {
+    return this.mongo
+      .collection('files')
+      .insertOne(document)
+  }
+
+  updateAlbum(id, fields) {
+    return this.mongo
+      .collection('albums')
+      .updateOne({ id }, { $set: fields })
+  }
+
+  updateFile(id, fields) {
+    return this.mongo
+      .collection('files')
+      .updateOne({ id }, { $set: fields })
+  }
+
+  deleteAlbum(id) {
+    return this.mongo
+      .collection('albums')
+      .deleteOne({ id })
+  }
+
+  deleteAlbums(ids) {
+    return this.mongo
+      .collection('albums')
+      .deleteMany({ id: { $in: ids } })
+  }
+
+  deleteAlbumFiles(albumId) {
+    return this.mongo
+      .collection('files')
+      .deleteMany({ albumId })
+  }
+
+  deleteFile(id) {
+    return this.mongo
+      .collection('files')
+      .deleteOne({ id })
+  }
+
+  deleteFiles(ids) {
+    return this.mongo
+      .collection('files')
+      .deleteMany({ id: { $in: ids } })
+  }
 }
