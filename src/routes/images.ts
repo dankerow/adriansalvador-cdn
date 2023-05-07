@@ -7,7 +7,8 @@ export default class Images extends Route {
   constructor() {
     super({
       position: 2,
-      path: '/images'
+      path: '/images',
+      middlewares: ['auth']
     })
   }
 
@@ -33,7 +34,11 @@ export default class Images extends Route {
       res.code(204)
     })
 
-    app.get('/:name', async (req, reply) => {
+    app.get('/:name', {
+      config: {
+        auth: false
+      }
+    }, async (req, reply) => {
       const name = req.params.name
       const width = req.query.width ? parseInt(req.query.width) : null
       const height = req.query.height ? parseInt(req.query.height) : null
@@ -58,11 +63,7 @@ export default class Images extends Route {
       return buffer
     })
 
-    const authMiddleware = await import('../middlewares/auth.js')
-
-    app.delete('/:id', {
-      preHandler: [authMiddleware.default]
-    }, async (req, reply) => {
+    app.delete('/:id', async (req, reply) => {
       try {
         const image = await app.database.getFileById(req.params.id, true)
         if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
@@ -93,7 +94,11 @@ export default class Images extends Route {
       }
     })
 
-    app.get('/:id/download', async (req, reply) => {
+    app.get('/:id/download', {
+      config: {
+        auth: false
+      }
+    }, async (req, reply) => {
       const file = await app.database.getFileById(req.params.id, true)
 
       if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })

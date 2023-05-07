@@ -14,7 +14,8 @@ export default class Albums extends Route {
   constructor() {
     super({
       position: 2,
-      path: '/albums'
+      path: '/albums',
+      middlewares: ['auth']
     })
   }
 
@@ -294,6 +295,9 @@ export default class Albums extends Route {
     })
 
     app.get('/:id/download', {
+      config: {
+        auth: false
+      },
       preHandler: [getAlbum]
     }, async (req, reply) => {
       return reply.download(`/archives/${req.album.name}.zip`)
