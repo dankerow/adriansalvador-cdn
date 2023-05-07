@@ -1,5 +1,13 @@
+import type { AlbumFile } from '../types/Album'
+
 import { Route } from '../structures'
-import { join } from 'path'
+import { join } from 'node:path'
+import { pipeline } from 'node:stream'
+import { promisify } from 'node:util'
+const pump = promisify(pipeline)
+import { mkdir, readFile, rename, rm, unlink } from 'node:fs/promises'
+import { createWriteStream } from 'node:fs'
+import crypto from 'node:crypto'
 import sharp from 'sharp'
 
 export default class Albums extends Route {
@@ -7,108 +15,290 @@ export default class Albums extends Route {
     super({
       position: 2,
       path: '/albums'
-    });
+    })
   }
 
   routes(app, options, done) {
     const getAlbum = async (req, reply) => {
-      if (!req.params.id) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } });
+      if (!req.params.id) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
 
-      const album = await app.database.getAlbumById(req.params.id);
+      const album = await app.database.getAlbumById(req.params.id)
 
-      if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } });
+      if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
 
-      return album;
+      return req.album = album
     }
 
-    app.get('/random', { config: { rateLimit: { max: 15, timeWindow: 15 * 1000 } } }, async (req) => {
-      const excluded = ['c10a66f4-4b18-427f-81b5-f6213d38cdc1', '34b7cce4-bb76-4e31-9dd7-3ccde004db6a', '4ac306ea-bcec-41b6-b942-1938296a01d6', 'ac8ae991-fce0-4b2d-8a0b-a3a6395d6f6d', '64fe4ee3-ab8b-4712-bfed-a46fe6ac538d']
-      const images = await app.database.getRandomImages(50, excluded)
-
-      for (let image of images) {
-        const host = `http://${req.headers.host}`
-        const album = await app.database.getAlbumById(image.albumId)
-
-        image.album = album
-        image.url = `${host}/gallery/${album.name}/${image.name}`
-        image.thumb = {
-          url: `${host}/images/${image.name}`,
-          width: 225,
-          height: null,
-          sizes: {
-            square: {
-              url: `${host}/images/${image.name}`,
-              width: 64,
-              height: 64
-            }
-          }
-        }
-
-        const filePath = join('src', 'static', 'gallery', album.name, image.name)
-
-        const imageTrans = await sharp(filePath)
-          .resize(225)
-          .toBuffer()
-
-        const imageMetadata = await sharp(imageTrans).metadata()
-        image.thumb.height = imageMetadata.height
+    app.post('/', {
+      config: {
+        rateLimit: { max: 5, timeWindow: 15 * 1000 }
       }
+    }, async (req, reply) => {
+      if (!('name' in req.body)) return reply.code(400).send({ error: { status: 400, message: 'Missing "name" field from request body.' } })
 
-      return images
+      req.body.nsfw = req.body.nsfw ?? false
+      req.body.hidden = req.body.hidden ?? false
+      req.body.favorite = req.body.favorite ?? false
+      req.body.featured = req.body.featured ?? false
+
+      if (typeof req.body.name !== 'string') return reply.code(400).send({ error: { status: 400, message: 'An invalid name was provided. The name must be a string.' } })
+
+      const album = await app.database.findAlbumByName(req.body.name.toLowerCase())
+      if (album) return reply.code(409).send({ error: { status: 409, message: 'An album with that name already exists.' } })
+
+      await app.database.insertAlbum({
+        id: crypto.randomUUID(),
+        name: req.body.name,
+        coverId: null,
+        nsfw: Boolean(req.body.nsfw),
+        hidden: Boolean(req.body.hidden),
+        favorite: Boolean(req.body.favorite),
+        featured: Boolean(req.body.favorite),
+        createdAt: +new Date(),
+        modifiedAt: +new Date()
+      })
+
+      const albumPath = join('src', 'static', 'gallery', req.body.name)
+      await mkdir(albumPath)
+
+      reply.code(204)
     })
 
-    app.get('/:id', async (req, reply) => {
-      const album = await getAlbum(req, reply)
+    app.delete('/', async (req, reply) => {
+      try {
+        if (!('ids' in req.body)) return reply.code(400).send({ error: { status: 400, message: 'Missing "ids" field from request body.' } })
 
-      const page = req.query.page ? parseInt(req.query.page) : 1
-      const limit = req.query.limit ? parseInt(req.query.limit) : 50
-      const pages = (imageCount) => Math.ceil(imageCount / limit);
+        if (!Array.isArray(req.body.ids)) return reply.code(400).send({ error: { status: 400, message: 'An invalid ids was provided. The ids must be an array.' } })
 
-      let images = await app.database.getAlbumFiles(album.id)
-      const fileCount = images.length
-      images = images.slice((page - 1) * limit, page * limit);
+        for (const id of req.body.ids) {
+          const album = await app.database.getAlbumById(id)
+          if (!album) return reply.code(404).send({ error: { status: 404, message: `Album '${id}' not found` } })
 
-      for (let image of images) {
-        const host = `http://${req.headers.host}`
+          const albumPath = join('src', 'static', 'gallery', album.name)
+          const albumArchivePath = join('src', 'static', 'archives', `${album.name}.zip`)
 
-        image.url = `${host}/gallery/${album.name}/${image.name}`
-        image.thumb = {
-          url: `${host}/images/${image.name}`,
-          width: 225,
-          height: null,
-          sizes: {
-            square: {
-              url: `${host}/images/${image.name}`,
-              width: 64,
-              height: 64
-            }
+          await rm(albumPath, { force: true, recursive: true })
+          await rm(albumArchivePath, { force: true, recursive: true })
+
+          await app.database.deleteAlbumFiles(id)
+        }
+
+        await app.database.deleteAlbums(req.body.ids)
+      } catch (error) {
+        app.log.error(error.stack || error)
+        reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the albums in the database.' } })
+      }
+    })
+
+    app.put('/:id', {
+      preHandler: [getAlbum]
+    },
+    async (req, reply) => {
+      if (!('name' in req.body)) return reply.code(400).send({ error: { status: 400, message: 'Missing "name" field from request body.' } })
+
+      req.body.nsfw = req.body.nsfw ?? req.album.nsfw
+      req.body.hidden = req.body.hidden ?? req.album.hidden
+      req.body.favorite = req.body.favorite ?? req.album.favorite
+      req.body.featured = req.body.featured ?? req.album.featured
+
+      if (typeof req.body.name !== 'string') return reply.code(400).send({ error: { status: 400, message: 'An invalid name was provided. The name must be a string.' } })
+
+      const entry: {
+        name?: string
+        nsfw?: boolean
+        hidden?: boolean
+        favorite?: boolean
+        featured?: boolean
+        modifiedAt?: number
+      } = {}
+
+      if (req.body.name.toLowerCase() !== req.album.name.toLowerCase()) {
+        const nameTaken = await app.database.findAlbumByName(req.body.name)
+        if (nameTaken) return reply.code(400).send({ error: { status: 400, message: 'Album name already taken.' } })
+
+        entry.name = req.body.name
+      }
+
+      if (req.body.nsfw !== req.album.nsfw) entry.nsfw = req.body.nsfw
+      if (req.body.hidden !== req.album.hidden) entry.hidden = req.body.hidden
+      if (req.body.favorite !== req.album.favorite) entry.favorite = req.body.favorite
+      if (req.body.featured !== req.album.featured) entry.featured = req.body.featured
+
+      const isObjectEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
+
+      if (isObjectEmpty(entry)) return reply.code(400).send({ error: { status: 400, message: 'No changes were made to the album.' } })
+
+      entry.modifiedAt = +new Date()
+
+      try {
+        if (entry.name) {
+          if (req.body.name.toLowerCase() !== req.album.name.toLowerCase()) {
+            const nameTaken = await app.database.findAlbumByName(req.body.name)
+            if (nameTaken) return reply.code(400).send({ error: { status: 400, message: 'Album name already taken.' } })
+
+            const oldAlbumPath = join('src', 'static', 'gallery', req.album.name)
+            const newAlbumPath = join('src', 'static', 'gallery', req.body.name)
+
+            await rename(oldAlbumPath, newAlbumPath) // Rename the album folder
+
+            const oldAlbumArchivePath = join('src', 'static', 'archives', `${req.album.name}.zip`)
+            const newAlbumArchivePath = join('src', 'static', 'archives', `${req.body.name}.zip`)
+
+            await rename(oldAlbumArchivePath, newAlbumArchivePath) // Rename the album archive
           }
         }
 
-        const filePath = join('src', 'static', 'gallery', album.name, image.name)
+        await app.database.updateAlbum(req.album.id, entry)
 
-        const imageTrans = await sharp(filePath)
-          .resize(225)
-          .toBuffer()
+        return await app.database.getAlbumById(req.params.id)
+      } catch (error) {
+        app.log.error(error.stack || error)
+        reply.code(500).send({ error: { status: 500, message: 'Something went wrong while updating the album in the database.' } })
+      }
+    })
 
-        const imageMetadata = await sharp(imageTrans).metadata()
-        image.thumb.height = imageMetadata.height
+    app.delete('/:id', {
+      schema: {
+        params: {
+          id: { type: 'string' }
+        }
+      },
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      try {
+        const albumPath = join('src', 'static', 'gallery', req.album.name)
+        const albumArchivePath = join('src', 'static', 'archives', `${req.album.name}.zip`)
+
+        await rm(albumPath, { force: true, recursive: true })
+        await rm(albumArchivePath, { force: true, recursive: true })
+
+        await app.database.deleteAlbum(req.params.id)
+        await app.database.deleteAlbumFiles(req.params.id)
+
+        reply.code(204)
+      } catch (error) {
+        app.log.error(error.stack || error)
+        return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the image.' } })
+      }
+    })
+
+    app.post('/:id/images/upload', {
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      const data = await req.file()
+      const path = join('src', 'static', 'gallery', req.album.name, data.filename)
+
+      await pump(data.file, createWriteStream(path))
+
+      const entry: Partial<AlbumFile> = {
+        id: crypto.randomUUID(),
+        name: data.filename,
+        extname: data.filename.slice(data.filename.lastIndexOf('.') - data.filename.length),
+        type: null,
+        size: null,
+        albumId: req.album.id,
+        createdAt: +new Date(),
+        modifiedAt: +new Date()
       }
 
-      reply.code(200).send({
-        album,
-        images,
-        fileCount,
-        pages: pages(fileCount)
-      })
-    });
+      const fileBuffer = await readFile(path)
+      const fileMetadata = await sharp(fileBuffer).metadata()
+      entry.type = fileMetadata.format
+      entry.size = Buffer.byteLength(fileBuffer)
+      entry.metadata = {
+        height: fileMetadata.height,
+        width: fileMetadata.width
+      }
 
-    app.get('/:id/download', async (req, reply) => {
-      const album = await getAlbum(req, reply)
+      await app.database.insertFile(entry)
+      await app.database.updateAlbum(req.album.id, { modifiedAt: +new Date() })
 
-      return reply.download(`/archives/${album.name}.zip`)
-    });
+      reply.type('text/plain').send(data.filename)
+    })
 
-    done();
+    app.delete('/:id/images/upload', {
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      const image = await app.database.findFileByName(req.body)
+      if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
+
+      const path = join('src', 'static', 'gallery', req.album.name, req.body)
+
+      await unlink(path)
+
+      return reply.send(204)
+    })
+
+    app.post('/:id/cover/upload', {
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      const data = await req.file()
+
+      if (!data) return reply.code(400).send({ error: { status: 400, message: 'No file was uploaded.' } })
+
+      const fileName = decodeURIComponent(data.filename)
+
+      const isCover = await app.database.findFileByName(fileName.toLowerCase())
+
+      if (isCover && (req.album.cover && req.album.coverId === isCover.id)) return reply.type('text/plain').send(data.filename)
+      if (isCover && (req.album.coverFallback && req.album.coverFallbackId === isCover.id)) return reply.type('text/plain').send(data.filename)
+
+      const path = join('src', 'static', 'covers', fileName)
+
+      await pump(data.file, createWriteStream(path))
+
+      const entry: Partial<AlbumFile> = {
+        id: crypto.randomUUID(),
+        name: fileName,
+        extname: fileName.slice(fileName.lastIndexOf('.') - fileName.length),
+        type: null,
+        size: null,
+        albumId: null,
+        createdAt: +new Date(),
+        modifiedAt: +new Date()
+      }
+
+      const fileBuffer = await readFile(path)
+      const fileMetadata = await sharp(fileBuffer).metadata()
+      entry.type = fileMetadata.format
+      entry.size = Buffer.byteLength(fileBuffer)
+      entry.metadata = {
+        height: fileMetadata.height,
+        width: fileMetadata.width
+      }
+
+      await app.database.insertFile(entry)
+
+      await app.database.updateAlbum(req.album.id, { coverId: entry.id, modifiedAt: +new Date() })
+
+      return reply.type('text/plain').send(data.filename)
+    })
+
+    app.delete('/:id/cover/upload', {
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      const fileName = decodeURIComponent(req.body)
+      const image = await app.database.findFileByName(fileName.toLowerCase())
+      if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
+
+      if (req.album.coverFallback && req.album.coverFallback.id === image.id) return reply.send(204)
+
+      const path = join('src', 'static', 'covers', fileName)
+
+      await unlink(path)
+
+      await app.database.deleteFile(image.id)
+      await app.database.updateAlbum(req.album.id, { coverId: null, modifiedAt: +new Date() })
+
+      return reply.send(204)
+    })
+
+    app.get('/:id/download', {
+      preHandler: [getAlbum]
+    }, async (req, reply) => {
+      return reply.download(`/archives/${req.album.name}.zip`)
+    })
+
+    done()
   }
 }
