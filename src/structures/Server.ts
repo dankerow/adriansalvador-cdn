@@ -45,11 +45,10 @@ export class Server {
 
     const mainAppBaseURL = process.env.NODE_ENV === 'production' ? process.env.MAIN_APP_BASE_URL : process.env.MAIN_APP_BASE_URL_DEV
     const manageAppBaseURL = process.env.NODE_ENV === 'production' ? process.env.MANAGE_APP_BASE_URL : process.env.MANAGE_APP_BASE_URL_DEV
-    const cdnBaseURL = process.env.NODE_ENV === 'production' ? process.env.CDN_BASE_URL : process.env.CDN_BASE_URL_DEV
     const apiBaseURL = process.env.NODE_ENV === 'production' ? process.env.API_BASE_URL : process.env.API_BASE_URL_DEV
 
     await this.app.register(cors, {
-      origin: [mainAppBaseURL, manageAppBaseURL, cdnBaseURL, apiBaseURL],
+      origin: [mainAppBaseURL, manageAppBaseURL, apiBaseURL],
       allowedHeaders: ['Accept', 'Origin', 'Authorization', 'Cache-Control', 'X-Requested-With', 'Content-Type']
     })
 
