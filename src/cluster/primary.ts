@@ -1,8 +1,8 @@
 import 'dotenv/config'
 
-import type { Worker } from 'cluster'
-import cluster from 'cluster'
-import os from 'os'
+import type { Worker } from 'node:cluster'
+import cluster from 'node:cluster'
+import os from 'node:os'
 import { Logger as logger } from '../utils'
 
 const workers: Map<any, any> = new Map()
