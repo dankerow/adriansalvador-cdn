@@ -1,4 +1,5 @@
 import type { Db } from 'mongodb'
+import type { Album, File } from '../../types'
 import { MongoClient } from 'mongodb'
 import { EventEmitter } from 'node:events'
 
@@ -32,7 +33,7 @@ export class Database extends EventEmitter {
     await this.client.close(force)
   }
 
-  getUserById(id) {
+  getUserById(id: string) {
     return this.mongoUsers
       .collection('metadata')
       .aggregate([
@@ -48,7 +49,7 @@ export class Database extends EventEmitter {
       .next()
   }
 
-  getAlbumById(id) {
+  getAlbumById(id: string) {
     return this.mongo
       .collection('albums')
       .aggregate([
@@ -98,7 +99,7 @@ export class Database extends EventEmitter {
       .countDocuments()
   }
 
-  getRandomImages(limit) {
+  getRandomImages(limit: number) {
     return this.mongo
       .collection('files')
       .aggregate([
@@ -110,7 +111,7 @@ export class Database extends EventEmitter {
       .toArray()
   }
 
-  pickRandomImages(limit, ids = []) {
+  pickRandomImages(limit: number, ids: string[] = []) {
     return this.mongo
       .collection('files')
       .aggregate([
@@ -120,7 +121,7 @@ export class Database extends EventEmitter {
       .toArray()
   }
 
-  getAlbumFiles(albumId) {
+  getAlbumFiles(albumId: string) {
     return this.mongo
       .collection('files')
       .aggregate([
@@ -130,7 +131,7 @@ export class Database extends EventEmitter {
       .toArray()
   }
 
-  getAlbumFileCount(albumId) {
+  getAlbumFileCount(albumId: string) {
     return this.mongo
       .collection('files')
       .aggregate([
@@ -141,7 +142,7 @@ export class Database extends EventEmitter {
       .next()
   }
 
-  getAlbumFilesWithFields(id, fields) {
+  getAlbumFilesWithFields(id: string, fields: string[]) {
     const project = {}
 
     for (let i = 0; i < fields.length; i++) {
@@ -157,7 +158,7 @@ export class Database extends EventEmitter {
       .toArray()
   }
 
-  getFileById(id, includeAlbum = false) {
+  getFileById(id: string, includeAlbum = false) {
     const collection = this.mongo.collection('files')
 
     if (!includeAlbum) return collection.findOne({ id })
@@ -179,7 +180,7 @@ export class Database extends EventEmitter {
       .countDocuments()
   }
 
-  findAlbumByName(name) {
+  findAlbumByName(name: string) {
     return this.mongo
       .collection('albums')
       .aggregate([
@@ -194,7 +195,7 @@ export class Database extends EventEmitter {
       .next()
   }
 
-  findFileByName(name) {
+  findFileByName(name: string) {
     return this.mongo
       .collection('files')
       .aggregate([
@@ -208,55 +209,55 @@ export class Database extends EventEmitter {
       .next()
   }
 
-  insertAlbum(document) {
+  insertAlbum(document: Album) {
     return this.mongo
       .collection('albums')
       .insertOne(document)
   }
 
-  insertFile(document) {
+  insertFile(document: File) {
     return this.mongo
       .collection('files')
       .insertOne(document)
   }
 
-  updateAlbum(id, fields) {
+  updateAlbum(id: string, fields: string[]) {
     return this.mongo
       .collection('albums')
       .updateOne({ id }, { $set: fields })
   }
 
-  updateFile(id, fields) {
+  updateFile(id: string, fields: string[]) {
     return this.mongo
       .collection('files')
       .updateOne({ id }, { $set: fields })
   }
 
-  deleteAlbum(id) {
+  deleteAlbum(id: string) {
     return this.mongo
       .collection('albums')
       .deleteOne({ id })
   }
 
-  deleteAlbums(ids) {
+  deleteAlbums(ids: string[]) {
     return this.mongo
       .collection('albums')
       .deleteMany({ id: { $in: ids } })
   }
 
-  deleteAlbumFiles(albumId) {
+  deleteAlbumFiles(albumId: string) {
     return this.mongo
       .collection('files')
       .deleteMany({ albumId })
   }
 
-  deleteFile(id) {
+  deleteFile(id: string) {
     return this.mongo
       .collection('files')
       .deleteOne({ id })
   }
 
-  deleteFiles(ids) {
+  deleteFiles(ids: string[]) {
     return this.mongo
       .collection('files')
       .deleteMany({ id: { $in: ids } })
