@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyServerOptions, DoneFuncWithErrOrRes } from 'fastify'
+import type { FastifyInstance, FastifyRegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
 
 export interface RouteOptions {
   position: number
@@ -17,7 +17,7 @@ export class Route {
     this.middlewares = options.middlewares || []
   }
 
-  routes(app: FastifyInstance, options: FastifyServerOptions, done: DoneFuncWithErrOrRes) {
+  routes(app: FastifyInstance, options: FastifyRegisterOptions<{ prefix: string }>, done: DoneFuncWithErrOrRes) {
     done()
   }
 }
