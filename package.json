@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^8.3.0",
-    "@fastify/helmet": "^10.1.1",
+    "@fastify/helmet": "^11.0.0",
     "@fastify/rate-limit": "^8.0.1",
     "@fastify/static": "^6.10.2",
     "@immobiliarelabs/fastify-sentry": "^6.0.7",
