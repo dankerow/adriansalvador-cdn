@@ -27,14 +27,14 @@ dependencies:
     specifier: ^2.3.1
     version: 2.3.1
   dayjs:
-    specifier: ^1.11.8
-    version: 1.11.8
+    specifier: ^1.11.9
+    version: 1.11.9
   exifreader:
     specifier: ^4.12.1
     version: 4.12.1
   fastify:
-    specifier: 4.19.0
-    version: 4.19.0
+    specifier: 4.19.1
+    version: 4.19.1
   jsonwebtoken:
     specifier: ^9.0.0
     version: 9.0.0
@@ -967,8 +967,8 @@ packages:
       which: 2.0.2
     dev: true
 
-  /dayjs@1.11.8:
-    resolution: {integrity: sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==}
+  /dayjs@1.11.9:
+    resolution: {integrity: sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==}
     dev: false
 
   /debug@3.2.7(supports-color@5.5.0):
@@ -1618,8 +1618,8 @@ packages:
   /fastify-plugin@4.3.0:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
 
-  /fastify@4.19.0:
-    resolution: {integrity: sha512-Fb7w46k3kum/V+OMiw2/LN1lo2xqhJqwTsv+LGie5n7YNdA9bmDUntXfcec9rG6VRDXIBfPf5xmFv2wooBdxzg==}
+  /fastify@4.19.1:
+    resolution: {integrity: sha512-99r7xae02BUWI1H8exJidkFJXi/SUZpO18YIJ6SSWIB1bb5CN659ga0iB85oLD+C4D9LeTOKplOJ1/YcFsK7oQ==}
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.2.1
