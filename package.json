@@ -42,7 +42,7 @@
     "eslint": "^8.44.0",
     "eslint-plugin-import": "^2.27.5",
     "fastify-formidable": "^3.0.2",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
