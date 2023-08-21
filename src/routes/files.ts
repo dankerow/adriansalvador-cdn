@@ -12,7 +12,7 @@ export default class Files extends Route {
     })
   }
 
-  async routes(app, options, done) {
+  async routes(app, _options, done) {
     const defaultFormat = 'webp'
     const allowedFormats = ['png', 'jpeg', 'webp']
 
