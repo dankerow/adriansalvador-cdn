@@ -1,4 +1,4 @@
-import type { AlbumFile } from '../types/Album'
+import type { AlbumFile } from '../../types'
 
 import { Route } from '../structures'
 import { join } from 'node:path'
@@ -19,7 +19,7 @@ export default class Albums extends Route {
     })
   }
 
-  routes(app, options, done) {
+  routes(app, _options, done) {
     const getAlbum = async (req, reply) => {
       if (!req.params.id) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
 
@@ -183,7 +183,7 @@ export default class Albums extends Route {
       }
     })
 
-    app.post('/:id/images/upload', {
+    app.post('/:id/files/upload', {
       preHandler: [getAlbum]
     }, async (req, reply) => {
       const data = await req.file()
@@ -217,11 +217,11 @@ export default class Albums extends Route {
       reply.type('text/plain').send(data.filename)
     })
 
-    app.delete('/:id/images/upload', {
+    app.delete('/:id/files/upload', {
       preHandler: [getAlbum]
     }, async (req, reply) => {
-      const image = await app.database.findFileByName(req.body)
-      if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
+      const file = await app.database.findFileByName(req.body)
+      if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
       const path = join('src', 'static', 'gallery', req.album.name, req.body)
 
