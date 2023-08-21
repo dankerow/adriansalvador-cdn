@@ -3,11 +3,11 @@ import { join } from 'node:path'
 import { readFile, unlink } from 'node:fs/promises'
 import sharp from 'sharp'
 
-export default class Images extends Route {
+export default class Files extends Route {
   constructor() {
     super({
       position: 2,
-      path: '/images',
+      path: '/files',
       middlewares: ['auth']
     })
   }
@@ -65,25 +65,25 @@ export default class Images extends Route {
 
     app.delete('/:id', async (req, reply) => {
       try {
-        const image = await app.database.getFileById(req.params.id, true)
-        if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
+        const file = await app.database.getFileById(req.params.id, true)
+        if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
-        const isImageCover = image.album.coverId === image.id
-        if (isImageCover) {
-          await app.database.updateAlbum(image.albumId, { coverId: null })
+        const isFileCover = file.album.coverId === file.id
+        if (isFileCover) {
+          await app.database.updateAlbum(file.albumId, { coverId: null })
         }
 
-        const isImageCoverFallback = image.album.coverFallbackId === image.id
-        if (isImageCoverFallback) {
-          const images = await app.database.getAlbumImages(image.albumId)
+        const isFileCoverFallback = file.album.coverFallbackId === file.id
+        if (isFileCoverFallback) {
+          const images = await app.database.getAlbumFiles(image.albumId)
           const newCover = images[0]
 
-          await app.database.updateAlbum(image.albumId, { coverId: newCover?.id ?? null })
+          await app.database.updateAlbum(file.albumId, { coverId: newCover?.id ?? null })
         }
 
-        const filePath = join('src', 'static', 'gallery', image.album.name, image.name)
+        const filePath = join('src', 'static', 'gallery', file.album.name, file.name)
 
-        await app.database.deleteFile(image.id)
+        await app.database.deleteFile(file.id)
 
         await unlink(filePath)
 
