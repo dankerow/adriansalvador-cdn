@@ -41,3 +41,8 @@ export interface Album {
   createdAt: number
   modifiedAt: number
 }
+
+export interface AlbumFile extends File {
+  albumId: string
+  album: Album
+}
