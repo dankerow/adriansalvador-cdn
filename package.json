@@ -20,7 +20,7 @@
     "@fastify/helmet": "^11.0.0",
     "@fastify/rate-limit": "^8.0.3",
     "@fastify/static": "^6.10.2",
-    "@immobiliarelabs/fastify-sentry": "^6.0.10",
+    "@immobiliarelabs/fastify-sentry": "^7.0.0",
     "archiver": "^6.0.0",
     "cron": "^2.4.1",
     "dayjs": "^1.11.9",
