@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.7.1"
+  "packageManager": "pnpm@8.7.4"
 }
