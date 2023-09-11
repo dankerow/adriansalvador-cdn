@@ -25,7 +25,7 @@
     "cron": "^2.4.3",
     "dayjs": "^1.11.9",
     "exifreader": "^4.13.0",
-    "fastify": "4.22.2",
+    "fastify": "4.23.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
     "mv": "^2.1.1",
@@ -35,11 +35,11 @@
     "@fastify/multipart": "^7.7.3",
     "@types/archiver": "^5.3.2",
     "@types/mv": "^2.1.2",
-    "@types/node": "^20.5.9",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@types/node": "^20.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "dotenv": "^16.3.1",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-plugin-import": "^2.28.1",
     "fastify-formidable": "^3.0.2",
     "nodemon": "^3.0.1",
@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.7.4"
+  "packageManager": "pnpm@8.7.5"
 }
