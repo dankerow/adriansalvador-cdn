@@ -59,8 +59,8 @@ devDependencies:
     specifier: ^2.1.2
     version: 2.1.2
   '@types/node':
-    specifier: ^20.6.2
-    version: 20.6.2
+    specifier: ^20.6.3
+    version: 20.6.3
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.7.2
     version: 6.7.2(@typescript-eslint/parser@6.7.2)(eslint@8.49.0)(typescript@5.2.2)
@@ -591,7 +591,7 @@ packages:
   /@types/formidable@2.0.5:
     resolution: {integrity: sha512-uvMcdn/KK3maPOaVUAc3HEYbCEhjaGFwww4EsX6IJfWIJ1tzHtDHczuImH3GKdusPnAAmzB07St90uabZeCKPA==}
     dependencies:
-      '@types/node': 20.6.2
+      '@types/node': 20.6.3
     dev: true
 
   /@types/json-schema@7.0.12:
@@ -610,13 +610,13 @@ packages:
     resolution: {integrity: sha512-IvAjPuiQ2exDicnTrMidt1m+tj3gZ60BM0PaoRsU0m9Cn+lrOyemuO9Tf8CvHFmXlxMjr1TVCfadi9sfwbSuKg==}
     dev: true
 
-  /@types/node@20.6.2:
-    resolution: {integrity: sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==}
+  /@types/node@20.6.3:
+    resolution: {integrity: sha512-HksnYH4Ljr4VQgEy2lTStbCKv/P590tmPe5HqOnv9Gprffgv5WXAY+Y5Gqniu0GGqeTCUdBnzC3QSrzPkBkAMA==}
 
   /@types/readdir-glob@1.1.1:
     resolution: {integrity: sha512-ImM6TmoF8bgOwvehGviEj3tRdRBbQujr1N+0ypaln/GWjaerOB26jb93vsRHmdMtvVQZQebOlqt2HROark87mQ==}
     dependencies:
-      '@types/node': 20.6.2
+      '@types/node': 20.6.3
     dev: true
 
   /@types/semver@7.5.0:
@@ -630,7 +630,7 @@ packages:
   /@types/whatwg-url@8.2.2:
     resolution: {integrity: sha512-FtQu10RWgn3D9U4aazdwIE2yzphmTJREDqNdODHrbrZmmMqI0vMheC/6NE/J1Yveaj8H+ela+YwWTjq5PGmuhA==}
     dependencies:
-      '@types/node': 20.6.2
+      '@types/node': 20.6.3
       '@types/webidl-conversions': 7.0.0
     dev: false
 
