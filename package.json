@@ -22,9 +22,9 @@
     "@fastify/static": "^6.11.2",
     "@immobiliarelabs/fastify-sentry": "^7.1.1",
     "archiver": "^6.0.1",
-    "cron": "^3.0.0",
+    "cron": "^3.1.0",
     "dayjs": "^1.11.10",
-    "exifreader": "^4.13.1",
+    "exifreader": "^4.13.2",
     "fastify": "4.23.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.1.0",
@@ -35,9 +35,9 @@
     "@fastify/multipart": "^8.0.0",
     "@types/archiver": "^5.3.3",
     "@types/mv": "^2.1.2",
-    "@types/node": "^20.8.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
+    "@types/node": "^20.8.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
     "dotenv": "^16.3.1",
     "eslint": "^8.51.0",
     "eslint-plugin-import": "^2.28.1",
@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.8.0"
+  "packageManager": "pnpm@8.9.0"
 }
