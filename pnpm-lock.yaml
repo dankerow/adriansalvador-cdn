@@ -24,8 +24,8 @@ dependencies:
     specifier: ^6.0.1
     version: 6.0.1
   cron:
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^3.1.1
+    version: 3.1.1
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -1137,8 +1137,8 @@ packages:
       readable-stream: 3.6.0
     dev: false
 
-  /cron@3.1.0:
-    resolution: {integrity: sha512-u6Z89TV7zhG7aW7MX7aLQhK5PYjTzFpzjFgiSX5r7qC1vjPvRt1FVfarHRaN/5IokEXM1DRJcXnwXI0e9G0awA==}
+  /cron@3.1.1:
+    resolution: {integrity: sha512-P8rDShXt2IZa16KwuYpbd1w7NjU4BnXeUEfkesBXT36JXhUsQ1P6i6ctsi5H82FQmR4tn/MOz05aB/3vn6dSkA==}
     dependencies:
       '@types/luxon': 3.3.1
       luxon: 3.3.0
