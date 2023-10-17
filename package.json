@@ -36,8 +36,8 @@
     "@types/archiver": "^5.3.3",
     "@types/mv": "^2.1.2",
     "@types/node": "^20.8.6",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.5",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.51.0",
     "eslint-plugin-import": "^2.28.1",
@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.9.1"
+  "packageManager": "pnpm@8.9.2"
 }
