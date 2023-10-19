@@ -3,7 +3,7 @@ module.exports = {
 		{
 			name: 'adriansalvador-cdn',
 			script: 'node',
-			args: '--loader tsx .'
+			args: '--import tsx .'
 		}
 	]
 }

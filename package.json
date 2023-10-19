@@ -13,7 +13,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "start": "tsx .",
-    "dev": "nodemon --loader tsx ."
+    "dev": "nodemon --import tsx ."
   },
   "dependencies": {
     "@fastify/cors": "^8.4.0",
