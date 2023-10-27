@@ -30,8 +30,8 @@ dependencies:
     specifier: ^1.11.10
     version: 1.11.10
   exifreader:
-    specifier: ^4.14.1
-    version: 4.14.1
+    specifier: ^4.15.0
+    version: 4.15.0
   fastify:
     specifier: 4.24.3
     version: 4.24.3
@@ -754,8 +754,8 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@xmldom/xmldom@0.8.8:
-    resolution: {integrity: sha512-0LNz4EY8B/8xXY86wMrQ4tz6zEHZv9ehFMJPm8u2gq5lQ71cfRKdaKyxfJAx5aUoyzx0qzgURblTisPGgz3d+Q==}
+  /@xmldom/xmldom@0.8.10:
+    resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
     requiresBuild: true
     dev: false
@@ -1581,11 +1581,11 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /exifreader@4.14.1:
-    resolution: {integrity: sha512-fHtnNeAgD2OaqkoEAoo4znXOOPs5EByem5RkmWIYYnZnNL2dnpyJZqHEAv0WJAwbKs8lX0sM1N/6/Er95UNiPQ==}
+  /exifreader@4.15.0:
+    resolution: {integrity: sha512-2GvKkmCSAL7AVnCjcnj9oOahIDt3WQig5NDPvVXx88T18iudMmDjYXiNupb9v0u+WX5ngwdMhgw9zG+k2Qi1fg==}
     requiresBuild: true
     optionalDependencies:
-      '@xmldom/xmldom': 0.8.8
+      '@xmldom/xmldom': 0.8.10
     dev: false
 
   /expand-template@2.0.3:

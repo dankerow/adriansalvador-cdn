@@ -24,7 +24,7 @@
     "archiver": "^6.0.1",
     "cron": "^3.1.4",
     "dayjs": "^1.11.10",
-    "exifreader": "^4.14.1",
+    "exifreader": "^4.15.0",
     "fastify": "4.24.3",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.2.0",
@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.9.2"
+  "packageManager": "pnpm@8.10.0"
 }
