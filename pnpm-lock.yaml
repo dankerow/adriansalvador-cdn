@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/cors':
-    specifier: ^8.4.0
-    version: 8.4.0
+    specifier: ^8.4.1
+    version: 8.4.1
   '@fastify/helmet':
     specifier: ^11.1.1
     version: 11.1.1
@@ -15,8 +15,8 @@ dependencies:
     specifier: ^8.0.3
     version: 8.0.3
   '@fastify/static':
-    specifier: ^6.11.2
-    version: 6.11.2
+    specifier: ^6.12.0
+    version: 6.12.0
   '@immobiliarelabs/fastify-sentry':
     specifier: ^7.1.1
     version: 7.1.1
@@ -350,8 +350,8 @@ packages:
       text-decoding: 1.0.0
     dev: true
 
-  /@fastify/cors@8.4.0:
-    resolution: {integrity: sha512-MlVvMTenltToByTpLwlWtO+7dQ3l2J+1OpmGrx9JpSNWo1d+dhfNCOi23zHhxdFhtpDzfwGwCsKu9DTeG7k7nQ==}
+  /@fastify/cors@8.4.1:
+    resolution: {integrity: sha512-iYQJtrY3pFiDS5mo5zRaudzg2OcUdJ96PD6xfkKOOEilly5nnrFZx/W6Sce2T79xxlEn2qpU3t5+qS2phS369w==}
     dependencies:
       fastify-plugin: 4.3.0
       mnemonist: 0.39.5
@@ -413,8 +413,8 @@ packages:
       http-errors: 2.0.0
       mime: 3.0.0
 
-  /@fastify/static@6.11.2:
-    resolution: {integrity: sha512-EH7mh7q4MfNdT7N07ZVlwsX/ObngMvQ7KBP0FXAuPov99Fjn80KSJMdxQhhYKAKWW1jXiFdrk8X7d6uGWdZFxg==}
+  /@fastify/static@6.12.0:
+    resolution: {integrity: sha512-KK1B84E6QD/FcQWxDI2aiUCwHxMJBI1KeCUzm1BwYpPY1b742+jeKruGHP2uOluuM6OkBPI8CIANrXcCRtC2oQ==}
     dependencies:
       '@fastify/accept-negotiator': 1.0.0
       '@fastify/send': 2.0.1
@@ -426,7 +426,7 @@ packages:
   /@fastify/swagger-ui@1.9.0:
     resolution: {integrity: sha512-7RTq2bI2cg4k6WsY69k8MZ8GnH6VUSbczJGnTotUKH+fOY9Cg3y8NEvPUREfwRzguI+3N+v8gp6H0UAohayldA==}
     dependencies:
-      '@fastify/static': 6.11.2
+      '@fastify/static': 6.12.0
       fastify-plugin: 4.3.0
       openapi-types: 12.1.3
       rfdc: 1.3.0
