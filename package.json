@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@fastify/multipart": "^8.0.0",
-    "@types/archiver": "^5.3.4",
+    "@types/archiver": "^6.0.0",
     "@types/mv": "^2.1.3",
     "@types/node": "^20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
