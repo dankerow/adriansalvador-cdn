@@ -33,13 +33,13 @@
   },
   "devDependencies": {
     "@fastify/multipart": "^8.0.0",
-    "@types/archiver": "^6.0.0",
-    "@types/mv": "^2.1.3",
-    "@types/node": "^20.8.10",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
+    "@types/archiver": "^6.0.1",
+    "@types/mv": "^2.1.4",
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
     "dotenv": "^16.3.1",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "eslint-plugin-import": "^2.29.0",
     "fastify-formidable": "^3.0.2",
     "nodemon": "^3.0.1",
@@ -50,5 +50,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.2"
 }
