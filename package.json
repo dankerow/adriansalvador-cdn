@@ -36,19 +36,19 @@
     "@types/archiver": "^6.0.1",
     "@types/mv": "^2.1.4",
     "@types/node": "^20.9.0",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.53.0",
     "eslint-plugin-import": "^2.29.0",
     "fastify-formidable": "^3.0.2",
     "nodemon": "^3.0.1",
-    "tsx": "^4.1.1",
+    "tsx": "^4.1.2",
     "typescript": "^5.2.2"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.10.2"
+  "packageManager": "pnpm@8.10.5"
 }
