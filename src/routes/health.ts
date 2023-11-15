@@ -12,7 +12,7 @@ export default class Health extends Route {
 
   routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     app.get('/', async (req, reply) => {
-      reply.headers('Cache-Control', [
+      reply.header('Cache-Control', [
         'private',
         'max-age=0',
         'no-cache',
@@ -20,7 +20,7 @@ export default class Health extends Route {
         'must-revalidate'
       ].join(', '))
 
-      reply.headers('Expires', new Date(Date.now() - 1000).toUTCString())
+      reply.header('Expires', new Date(Date.now() - 1000).toUTCString())
 
       return {
         status: 'OK',
