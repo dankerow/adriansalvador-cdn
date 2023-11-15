@@ -1,3 +1,5 @@
+import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
+
 import { Route } from '../structures'
 
 export default class Health extends Route {
@@ -8,7 +10,7 @@ export default class Health extends Route {
     })
   }
 
-  routes(app, options, done) {
+  routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     app.get('/', async (req, reply) => {
       reply.headers('Cache-Control', [
         'private',
