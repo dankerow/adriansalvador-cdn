@@ -12,8 +12,8 @@ dependencies:
     specifier: ^11.1.1
     version: 11.1.1
   '@fastify/rate-limit':
-    specifier: ^8.0.3
-    version: 8.0.3
+    specifier: ^9.0.0
+    version: 9.0.0
   '@fastify/static':
     specifier: ^6.12.0
     version: 6.12.0
@@ -396,12 +396,12 @@ packages:
       - supports-color
     dev: true
 
-  /@fastify/rate-limit@8.0.3:
-    resolution: {integrity: sha512-7wbSKXGKKLI1VkpW2XvS7SFg4n4/uzYt0YA5O2pfCcM6PYaBSV3VhSKGJ9/hJceCSH+zNEDRrWpufqxbcDkTZg==}
+  /@fastify/rate-limit@9.0.0:
+    resolution: {integrity: sha512-Gt5NXYyidUY47yO0QFvwwVwolbpFcq8Y6wSL0iV8v29IdUQVKhE9hcJE5N48LdnhTQDBdLiZDiR7nV4niMfOWw==}
     dependencies:
+      '@lukeed/ms': 2.0.1
       fastify-plugin: 4.3.0
-      ms: 2.1.3
-      tiny-lru: 11.0.1
+      toad-cache: 3.3.0
     dev: false
 
   /@fastify/send@2.0.1:
@@ -3174,11 +3174,6 @@ packages:
     resolution: {integrity: sha512-rUkv4/fnb4rqy/gGy7VuqK6wE1+1DOCOWy4RMeaV69ZHMP11tQKZvZSip1yTgrKCMZzEMcCL/bKfHvSfDHx+iQ==}
     dependencies:
       real-require: 0.2.0
-    dev: false
-
-  /tiny-lru@11.0.1:
-    resolution: {integrity: sha512-iNgFugVuQgBKrqeO/mpiTTgmBsTP0WL6yeuLfLs/Ctf0pI/ixGqIRm8sDCwMcXGe9WWvt2sGXI5mNqZbValmJg==}
-    engines: {node: '>=12'}
     dev: false
 
   /to-regex-range@5.0.1:
