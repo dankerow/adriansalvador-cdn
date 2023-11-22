@@ -38,6 +38,17 @@ export default class Files extends Route {
     const defaultFormat = 'webp'
     const allowedFormats = ['png', 'jpeg', 'webp']
 
+    const deleteFile = async (file: AlbumFile) => {
+      const filePath = join('src', 'static', 's-files', file.name)
+
+      await unlink(filePath)
+      await app.database.deleteFile(file.id)
+
+      if (file.albumId) {
+        await app.database.updateAlbum(file.albumId, { modifiedAt: +new Date() })
+      }
+    }
+
     app.post<{
       Querystring: IQuerystring
     }>('/upload', {
@@ -104,10 +115,7 @@ export default class Files extends Route {
       const file = await app.database.findFileByName(req.body.toLowerCase())
       if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
-      const path = join('src', 'static', 's-files', req.body)
-
-      await unlink(path)
-      await app.database.deleteFile(file.id)
+      await deleteFile(file)
 
       if (file.albumId) {
         await app.database.updateAlbum(file.albumId, { modifiedAt: +new Date() })
@@ -210,11 +218,7 @@ export default class Files extends Route {
           }
         }
 
-        const filePath = join('src', 'static', 's-files', file.name)
-
-        await app.database.deleteFile(file.id)
-
-        await unlink(filePath)
+        await deleteFile(file)
 
         reply.code(204)
       } catch (error) {
