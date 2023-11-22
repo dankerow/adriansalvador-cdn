@@ -76,8 +76,6 @@ export default class Files extends Route {
 
       await pump(data.file, createWriteStream(path))
 
-      console.log(data.file.truncated)
-
       if (req.query.albumId) {
         const album = await app.database.getAlbumById(req.query.albumId)
         if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found.' } })
