@@ -1,4 +1,6 @@
 import type { AlbumFile } from '../../types'
+import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
+import type { FitEnum, FormatEnum } from 'sharp'
 
 import { Route } from '../structures'
 import { join } from 'node:path'
@@ -11,6 +13,18 @@ import sharp from 'sharp'
 
 const pump = promisify(pipeline)
 
+interface IParams {
+  id: string
+}
+
+interface IBodyDelete {
+  ids: string[]
+}
+
+interface IQuerystring {
+  albumId?: string
+}
+
 export default class Files extends Route {
   constructor() {
     super({
@@ -20,11 +34,23 @@ export default class Files extends Route {
     })
   }
 
-  async routes(app, _options, done) {
+  async routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     const defaultFormat = 'webp'
     const allowedFormats = ['png', 'jpeg', 'webp']
 
-    app.post('/upload', async (req, reply) => {
+    app.post<{
+      Querystring: IQuerystring
+    }>('/upload', {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            albumId: { type: 'string' }
+          },
+          required: ['albumId']
+        }
+      }
+    }, async (req, reply) => {
       const data = await req.file()
       if (!data) {
         return reply.code(400).send({ error: { status: 400, message: 'No file was uploaded.' } })
@@ -72,7 +98,9 @@ export default class Files extends Route {
       reply.type('text/plain').send(data.filename)
     })
 
-    app.delete('/upload', async (req, reply) => {
+    app.delete<{
+      Body: string
+    }>('/upload', async (req, reply) => {
       const file = await app.database.findFileByName(req.body.toLowerCase())
       if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
@@ -88,9 +116,9 @@ export default class Files extends Route {
       return reply.send(204)
     })
 
-    app.delete('/', async (req, res) => {
-      if (!('ids' in req.body)) return res.code(400).send({ error: { status: 400, message: 'Missing "ids" field from request body.' } })
-
+    app.delete<{
+      Body: IBodyDelete
+    }>('/', async (req, res) => {
       if (!Array.isArray(req.body.ids)) return res.code(400).send({ error: { status: 400, message: 'An invalid ids was provided. The ids must be an array.' } })
 
       for (const id of req.body.ids) {
@@ -106,14 +134,41 @@ export default class Files extends Route {
       res.code(204)
     })
 
-    app.get('/:name', {
+    app.get<{
+      Params: {
+        name: string
+      }
+      Querystring: {
+        albumId?: string
+        width?: number
+        height?: number
+        fit?: keyof FitEnum
+        format?: keyof FormatEnum
+      }
+    }>('/:name', {
       config: {
         auth: false
+      },
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            albumId: { type: 'string' },
+            status: { type: 'string', enum: ['all', 'posted', 'draft'] },
+            favorites: { type: 'boolean' },
+            featured: { type: 'boolean' },
+            search: { type: 'string' },
+            sort: { type: 'string' },
+            order: { type: 'string', enum: ['asc', 'desc'] },
+            page: { type: 'number' },
+            limit: { type: 'number' }
+          }
+        }
       }
     }, async (req, reply) => {
       const name = req.params.name
-      const width = req.query.width ? parseInt(req.query.width) : null
-      const height = req.query.height ? parseInt(req.query.height) : null
+      const width = req.query.width ?? null
+      const height = req.query.height ?? null
       const fit = req.query.fit ?? null
       const format = allowedFormats.includes(req.query.format) ? req.query.format : defaultFormat
 
@@ -133,7 +188,9 @@ export default class Files extends Route {
       return buffer
     })
 
-    app.delete('/:id', async (req, reply) => {
+    app.delete<{
+      Params: IParams
+    }>('/:id', async (req, reply) => {
       try {
         const file = await app.database.getFileById(req.params.id, true)
         if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
@@ -166,7 +223,9 @@ export default class Files extends Route {
       }
     })
 
-    app.get('/:id/download', {
+    app.get<{
+      Params: IParams
+    }>('/:id/download', {
       config: {
         auth: false
       }
