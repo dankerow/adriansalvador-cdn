@@ -124,13 +124,10 @@ export default class Files extends Route {
       if (!Array.isArray(req.body.ids)) return res.code(400).send({ error: { status: 400, message: 'An invalid ids was provided. The ids must be an array.' } })
 
       for (const id of req.body.ids) {
-        const image = await app.database.getFileById(id)
-        if (!image) return res.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
+        const file = await app.database.getFileById(id)
+        if (!file) return res.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
 
-        await app.database.deleteFile(image.id)
-
-        const filePath = join('src', 'static', 's-files', image.name)
-        await unlink(filePath)
+        await deleteFile(file)
       }
 
       res.code(204)
