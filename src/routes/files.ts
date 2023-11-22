@@ -115,10 +115,6 @@ export default class Files extends Route {
 
       await deleteFile(file)
 
-      if (file.albumId) {
-        await app.database.updateAlbum(file.albumId, { modifiedAt: +new Date() })
-      }
-
       return reply.send(204)
     })
 
