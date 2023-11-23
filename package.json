@@ -34,6 +34,7 @@
   "devDependencies": {
     "@fastify/multipart": "^8.0.0",
     "@types/archiver": "^6.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/mv": "^2.1.4",
     "@types/node": "^20.9.4",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
