@@ -1,3 +1,23 @@
+import type { Database } from '@/managers'
+import type { Logger } from '@/utils'
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    database: Database
+    logger: Logger
+  }
+
+  interface FastifyContextConfig {
+    auth?: boolean
+  }
+
+  interface FastifyRequest {
+    user?: Omit<User, 'password'>
+    album?: Album
+  }
+}
+
+
 export interface User {
   readonly id: string
   firstName: string
