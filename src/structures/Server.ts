@@ -19,7 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export class Server {
   public app: FastifyInstance
-  private routers: Array<Route>
+  private readonly routers: Array<Route>
   private tasks: Array<() => Promise<void>>
   public logger: logger
   public database: Database
