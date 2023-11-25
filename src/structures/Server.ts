@@ -52,7 +52,11 @@ export class Server {
       allowedHeaders: ['Accept', 'Origin', 'Authorization', 'Cache-Control', 'X-Requested-With', 'Content-Type']
     })
 
-    await this.app.register(multipart)
+    await this.app.register(multipart, {
+      limits: {
+        fileSize: 16777216
+      }
+    })
 
     await this.app.register(rateLimit,
       {
