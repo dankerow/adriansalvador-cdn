@@ -69,9 +69,11 @@ export class Server {
     this.app.setErrorHandler((error, req, reply) => {
       logger.error(`Something went wrong.\nError: ${error.stack || error}`)
 
-      reply.code(500).send({
+      const statusCode = error.statusCode || 500
+
+      reply.code(statusCode).send({
         success: false,
-        status: 500,
+        status: statusCode,
         message: 'Oops! Something went wrong. Try again later.'
       })
     })
@@ -95,6 +97,7 @@ export class Server {
     })
 
     await this.initializeDatabase()
+    await this.loadRoutes(join('src', 'routes'))
   }
 
   /**
@@ -112,8 +115,6 @@ export class Server {
     })
 
     process.send({ type: 'log', content: 'Successfully connected to database.' })
-
-    await this.loadRoutes(join('src', 'routes'))
   }
 
   /**
