@@ -1,4 +1,5 @@
 import type { AlbumFile } from '../../types'
+import type { FastifyInstance, FastifyReply, FastifyRequest, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
 
 import { Route } from '../structures'
 import { join } from 'node:path'
@@ -11,6 +12,22 @@ import sharp from 'sharp'
 
 const pump = promisify(pipeline)
 
+interface IParams {
+  id: string
+}
+
+interface IBody {
+  draft: boolean
+  hidden: boolean
+  nsfw: boolean
+  favorite: boolean
+  featured: boolean
+}
+
+interface IBodyDelete {
+  ids: string[]
+}
+
 export default class Albums extends Route {
   constructor() {
     super({
@@ -20,8 +37,10 @@ export default class Albums extends Route {
     })
   }
 
-  routes(app, _options, done) {
-    const getAlbum = async (req, reply) => {
+  routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
+    app.decorateRequest('album', null)
+
+    const getAlbum = async (req: FastifyRequest<{ Params: IParams }>, reply: FastifyReply) => {
       if (!req.params.id) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
 
       const album = await app.database.getAlbumById(req.params.id)
@@ -31,7 +50,9 @@ export default class Albums extends Route {
       return req.album = album
     }
 
-    app.post('/', {
+    app.post<{
+      Body: IBody
+    }>('/', {
       config: {
         rateLimit: { max: 5, timeWindow: 15 * 1000 }
       },
@@ -83,7 +104,9 @@ export default class Albums extends Route {
       return album
     })
 
-    app.delete('/',
+    app.delete<{
+      Body: IBodyDelete
+    }>('/',
       {
         schema: {
           body: {
@@ -113,7 +136,10 @@ export default class Albums extends Route {
         }
       })
 
-    app.put('/:id', {
+    app.put<{
+      Params: IParams
+      Body: IBody
+    }>('/:id', {
       preHandler: [getAlbum],
       schema: {
         params: {
@@ -162,7 +188,7 @@ export default class Albums extends Route {
       if (req.body.favorite !== req.album.favorite) entry.favorite = req.body.favorite
       if (req.body.featured !== req.album.featured) entry.featured = req.body.featured
 
-      const isObjectEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
+      const isObjectEmpty = (obj: object) => Object.keys(obj).length === 0 && obj.constructor === Object
 
       if (isObjectEmpty(entry)) return reply.code(400).send({ error: { status: 400, message: 'No changes were made to the album.' } })
 
@@ -190,7 +216,10 @@ export default class Albums extends Route {
       }
     })
 
-    app.delete('/:id', {
+    app.delete<{
+      Params: IParams
+      Body: IBody
+    }>('/:id', {
       schema: {
         params: {
           id: { type: 'string' }
@@ -215,7 +244,10 @@ export default class Albums extends Route {
       }
     })
 
-    app.post('/:id/cover/upload', {
+    app.post<{
+      Params: IParams
+      Body: IBody
+    }>('/:id/cover/upload', {
       preHandler: [getAlbum]
     }, async (req, reply) => {
       const data = await req.file()
@@ -262,7 +294,10 @@ export default class Albums extends Route {
       return reply.type('text/plain').send(data.filename)
     })
 
-    app.delete('/:id/cover/upload', {
+    app.delete<{
+      Params: IParams
+      Body: string
+    }>('/:id/cover/upload', {
       preHandler: [getAlbum]
     }, async (req, reply) => {
       const fileName = decodeURIComponent(req.body)
@@ -281,7 +316,10 @@ export default class Albums extends Route {
       return reply.send(204)
     })
 
-    app.get('/:id/download', {
+    app.get<{
+      Params: IParams
+      Body: IBody
+    }>('/:id/download', {
       config: {
         auth: false
       },
