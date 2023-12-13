@@ -25,7 +25,7 @@
     "cron": "^3.1.4",
     "dayjs": "^1.11.10",
     "exifreader": "^4.17.0",
-    "fastify": "4.24.3",
+    "fastify": "4.25.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mv": "^2.1.1",
@@ -37,8 +37,8 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mv": "^2.1.4",
     "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.55.0",
     "eslint-plugin-import": "^2.29.0",
@@ -51,5 +51,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.11.0"
+  "packageManager": "pnpm@8.12.1"
 }
