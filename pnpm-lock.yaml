@@ -30,8 +30,8 @@ dependencies:
     specifier: ^1.11.10
     version: 1.11.10
   exifreader:
-    specifier: ^4.19.0
-    version: 4.19.0
+    specifier: ^4.19.1
+    version: 4.19.1
   fastify:
     specifier: 4.25.1
     version: 4.25.1
@@ -1738,8 +1738,8 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /exifreader@4.19.0:
-    resolution: {integrity: sha512-QAG3qVIsHfHrm/tbCFbu0reCGXgCqR+YVtI5Kg/O56xtoo75PwgzGoejSdFzfEUbKkDiokMWAoHFo9QV20AMmw==}
+  /exifreader@4.19.1:
+    resolution: {integrity: sha512-0201S8XZ4SEZH23ce7PG3THvNplLcgapItRMf9JIuKu19slZ7FINLoUrl2SijwVg00Ly1pB6mXdzKwObSF937A==}
     requiresBuild: true
     optionalDependencies:
       '@xmldom/xmldom': 0.8.10
