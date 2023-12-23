@@ -18,8 +18,8 @@ dependencies:
     specifier: ^6.12.0
     version: 6.12.0
   '@immobiliarelabs/fastify-sentry':
-    specifier: ^7.1.1
-    version: 7.1.1
+    specifier: ^8.0.0
+    version: 8.0.0
   archiver:
     specifier: ^6.0.1
     version: 6.0.1
@@ -673,14 +673,14 @@ packages:
     dev: false
     optional: true
 
-  /@immobiliarelabs/fastify-sentry@7.1.1:
-    resolution: {integrity: sha512-V6cIMLhufo81td6nPP7Y/ISgh+MaxH/FXQ7VfGnsPBq6l/B6L2d00mcOe7ER0oHfm0bIwGQa/KdvaGyz5nEVbw==}
-    engines: {node: '>=16', npm: '>=8'}
+  /@immobiliarelabs/fastify-sentry@8.0.0:
+    resolution: {integrity: sha512-W2T7dTIxctBo70vFDjknsQeaITKyY7YmL4OJHV79Qotm0CCcQ8DHW+dJvCOYDOnFrNo92mf73pdC/M2NvDzi+Q==}
+    engines: {node: '>=18'}
     dependencies:
       '@sentry/node': 7.60.0
       '@sentry/tracing': 7.60.0
       '@sentry/utils': 7.60.0
-      cookie: 0.5.0
+      cookie: 0.6.0
       fastify-plugin: 4.3.0
     transitivePeerDependencies:
       - supports-color
@@ -725,7 +725,7 @@ packages:
       '@sentry/core': 7.60.0
       '@sentry/types': 7.60.0
       '@sentry/utils': 7.60.0
-      tslib: 1.14.1
+      tslib: 2.6.2
     dev: false
 
   /@sentry/core@7.60.0:
@@ -734,7 +734,7 @@ packages:
     dependencies:
       '@sentry/types': 7.60.0
       '@sentry/utils': 7.60.0
-      tslib: 1.14.1
+      tslib: 2.6.2
     dev: false
 
   /@sentry/node@7.60.0:
@@ -748,7 +748,7 @@ packages:
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
-      tslib: 1.14.1
+      tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -770,7 +770,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       '@sentry/types': 7.60.0
-      tslib: 1.14.1
+      tslib: 2.6.2
     dev: false
 
   /@types/archiver@6.0.2:
@@ -1330,6 +1330,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -3257,15 +3262,10 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /tslib@1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: false
-
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     requiresBuild: true
     dev: false
-    optional: true
 
   /tsx@4.7.0:
     resolution: {integrity: sha512-I+t79RYPlEYlHn9a+KzwrvEwhJg35h/1zHsLC2JXvhC2mdynMv6Zxzvhv5EMV6VF5qJlLlkSnMVvdZV3PSIGcg==}
