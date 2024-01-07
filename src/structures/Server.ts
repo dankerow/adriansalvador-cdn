@@ -86,11 +86,8 @@ export class Server {
 
     this.app.register(fstatic, {
       root: join(__dirname, '..', 'static'),
-      preCompressed: true,
       immutable: true,
       maxAge: '1y',
-      etag: true,
-      lastModified: true,
       setHeaders: (res) => {
         res.setHeader('Access-Control-Allow-Origin', '*')
       }
