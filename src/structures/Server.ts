@@ -38,6 +38,10 @@ export class Server {
     this.database = new Database()
   }
 
+  /**
+   * @description Sets up the application by registering middleware, error handler, and initializing the database.
+   * @returns {Promise<void>} A promise that resolves when the setup is complete.
+   */
   public async setup(): Promise<void> {
     await this.app.register(helmet, {
       crossOriginResourcePolicy: false
@@ -100,7 +104,7 @@ export class Server {
   /**
    * @description A method to create a connection to the database
    * @private
-   * @returns void
+   * @returns Promise<void>
    */
   private async initializeDatabase(): Promise<void> {
     await this.database.connect()
@@ -118,8 +122,8 @@ export class Server {
    * @description Loads the routes on the HTTP Server instance
    * @param directory The path to the routes directory
    * @param prefix Prefix used load the routes following the file structure
-   * @returns void
    * @private
+   * @returns Promises<void>
    */
   private async loadRoutes(directory: string, prefix: string | boolean = false): Promise<void> {
     const routes = await readdir(directory)
@@ -156,7 +160,7 @@ export class Server {
   /**
    * @description Registers the routes on the Fastify instance
    * @private
-   * @returns void
+   * @returns Promise<void>
    */
   private async registerRoutes(): Promise<void> {
     this.routers.sort((a, b) => {
@@ -197,6 +201,11 @@ export class Server {
     }
   }
 
+  /**
+   * @description Loads the tasks on the HTTP Server instance
+   * @param directory
+   * @private
+   */
   private async loadTasks(directory: string) {
     const start = process.hrtime()
     const tasks = await readdir(directory)
@@ -220,6 +229,10 @@ export class Server {
     this.listen()
   }
 
+  /**
+   * @description Listens for incoming requests on the specified port.
+   * @return {void}
+   */
   private listen(): void {
     this.app.listen({ port: parseInt(process.env.PORT) }, (error, address) => {
       if (error) return process.send({ type: 'error', content: error.stack || error })
