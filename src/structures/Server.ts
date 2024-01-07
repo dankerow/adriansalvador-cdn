@@ -1,6 +1,6 @@
-import { dirname, join, relative } from 'path'
-import { fileURLToPath } from 'url'
-import { readdir, stat } from 'fs/promises'
+import { dirname, join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { readdir, stat } from 'node:fs/promises'
 
 import type { FastifyInstance } from 'fastify'
 import Fastify from 'fastify'
