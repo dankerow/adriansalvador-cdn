@@ -99,6 +99,8 @@ export class Server {
 
     await this.initializeDatabase()
     await this.loadRoutes(join('src', 'routes'))
+    await this.loadTasks(join('src', 'tasks'))
+    this.listen()
   }
 
   /**
@@ -152,8 +154,6 @@ export class Server {
           await this.registerRoutes()
         }
       }
-    } else {
-      await this.loadTasks(join('src', 'tasks'))
     }
   }
 
@@ -195,8 +195,6 @@ export class Server {
 
       if (i + 1 === this.routers.length) {
         process.send({ type: 'log', content: `Loaded ${this.routers.length} routes.` })
-
-        await this.loadTasks(join('src', 'tasks'))
       }
     }
   }
@@ -225,8 +223,6 @@ export class Server {
 
     const end = process.hrtime(start)
     process.send({ type: 'log', content: `Loaded ${this.tasks.length}/${tasks.length} tasks (took ${end[1] / 1000000}ms)` })
-
-    this.listen()
   }
 
   /**
