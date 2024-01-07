@@ -108,11 +108,11 @@ export class Server {
    */
   private async initializeDatabase(): Promise<void> {
     await this.database.connect()
+
     this.app.decorate('database', this.database)
 
-    this.app.addHook('onClose', async (instance, done) => {
+    this.app.addHook('onClose', async () => {
       await this.database.close()
-      done()
     })
 
     process.send({ type: 'log', content: 'Successfully connected to database.' })
