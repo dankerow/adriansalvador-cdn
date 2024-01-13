@@ -17,6 +17,7 @@ interface IParams {
 }
 
 interface IBody {
+  name: string
   draft: boolean
   hidden: boolean
   nsfw: boolean
@@ -60,26 +61,17 @@ export default class Albums extends Route {
         body: {
           type: 'object',
           properties: {
-            name: { type: 'string' },
-            draft: { type: 'boolean' },
-            nsfw: { type: 'boolean' },
-            hidden: { type: 'boolean' },
-            favorite: { type: 'boolean' },
-            featured: { type: 'boolean' }
-          }
+            name: { type: 'string', minLength: 1, maxLength: 50 },
+            draft: { type: 'boolean', default: false },
+            nsfw: { type: 'boolean', default: false },
+            hidden: { type: 'boolean', default: false },
+            favorite: { type: 'boolean', default: false },
+            featured: { type: 'boolean', default: false }
+          },
+          required: ['name']
         }
       }
     }, async (req, reply) => {
-      if (!('name' in req.body)) return reply.code(400).send({ error: { status: 400, message: 'Missing "name" field from request body.' } })
-
-      req.body.draft = req.body.draft ?? false
-      req.body.nsfw = req.body.nsfw ?? false
-      req.body.hidden = req.body.hidden ?? false
-      req.body.favorite = req.body.favorite ?? false
-      req.body.featured = req.body.featured ?? false
-
-      if (typeof req.body.name !== 'string') return reply.code(400).send({ error: { status: 400, message: 'An invalid name was provided. The name must be a string.' } })
-
       let album = await app.database.findAlbumByName(req.body.name.toLowerCase())
       if (album) return reply.code(409).send({ error: { status: 409, message: 'An album with that name already exists.' } })
 
@@ -112,8 +104,16 @@ export default class Albums extends Route {
           body: {
             type: 'object',
             properties: {
-              ids: { type: 'array', items: { type: 'string' } }
-            }
+              ids: {
+                type: 'array',
+                items: {
+                  type: 'string',
+                  format: 'uuid'
+                },
+                minItems: 1
+              }
+            },
+            required: ['ids']
           }
         }
       }, async (req, reply) => {
@@ -143,29 +143,26 @@ export default class Albums extends Route {
       preHandler: [getAlbum],
       schema: {
         params: {
-          id: { type: 'string' }
+          id: { type: 'string', format: 'uuid' }
         },
         body: {
           type: 'object',
           properties: {
-            name: { type: 'string' },
-            nsfw: { type: 'boolean' },
-            hidden: { type: 'boolean' },
-            favorite: { type: 'boolean' },
-            featured: { type: 'boolean' }
-          }
+            name: { type: 'string', minLength: 1, maxLength: 50 },
+            nsfw: { type: 'boolean', default: false },
+            hidden: { type: 'boolean', default: false },
+            favorite: { type: 'boolean', default: false },
+            featured: { type: 'boolean', default: false }
+          },
+          required: ['name']
         }
       }
     },
     async (req, reply) => {
-      if (!('name' in req.body)) return reply.code(400).send({ error: { status: 400, message: 'Missing "name" field from request body.' } })
-
       req.body.nsfw = req.body.nsfw ?? req.album.nsfw
       req.body.hidden = req.body.hidden ?? req.album.hidden
       req.body.favorite = req.body.favorite ?? req.album.favorite
       req.body.featured = req.body.featured ?? req.album.featured
-
-      if (typeof req.body.name !== 'string') return reply.code(400).send({ error: { status: 400, message: 'An invalid name was provided. The name must be a string.' } })
 
       const entry: {
         name?: string
@@ -222,7 +219,7 @@ export default class Albums extends Route {
     }>('/:id', {
       schema: {
         params: {
-          id: { type: 'string' }
+          id: { type: 'string', format: 'uuid' }
         }
       },
       preHandler: [getAlbum]
@@ -248,6 +245,11 @@ export default class Albums extends Route {
       Params: IParams
       Body: IBody
     }>('/:id/cover/upload', {
+      schema: {
+        params: {
+          id: { type: 'string', format: 'uuid' }
+        }
+      },
       preHandler: [getAlbum]
     }, async (req, reply) => {
       const data = await req.file()
@@ -298,10 +300,16 @@ export default class Albums extends Route {
       Params: IParams
       Body: string
     }>('/:id/cover/upload', {
+      schema: {
+        params: {
+          id: { type: 'string', format: 'uuid' }
+        }
+      },
       preHandler: [getAlbum]
     }, async (req, reply) => {
       const fileName = decodeURIComponent(req.body)
       const image = await app.database.findFileByName(fileName.toLowerCase())
+
       if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
 
       if (req.album.coverFallback && req.album.coverFallback.id === image.id) return reply.send(204)
@@ -322,6 +330,11 @@ export default class Albums extends Route {
     }>('/:id/download', {
       config: {
         auth: false
+      },
+      schema: {
+        params: {
+          id: { type: 'string', format: 'uuid' }
+        }
       },
       preHandler: [getAlbum]
     }, async (req, reply) => {

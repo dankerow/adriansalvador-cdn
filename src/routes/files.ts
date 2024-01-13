@@ -120,25 +120,40 @@ export default class Files extends Route {
 
     app.delete<{
       Body: IBodyDelete
-    }>('/', async (req, res) => {
-      if (!Array.isArray(req.body.ids)) return res.code(400).send({ error: { status: 400, message: 'An invalid ids was provided. The ids must be an array.' } })
+    }>('/',
+      {
+        schema: {
+          body: {
+            type: 'object',
+            properties: {
+              ids: {
+                type: 'array',
+                items: {
+                  type: 'string',
+                  format: 'uuid'
+                },
+                minItems: 1
+              }
+            },
+            required: ['ids']
+          }
+        }
+      }, async (req, res) => {
+        for (const id of req.body.ids) {
+          const file = await app.database.getFileById(id)
+          if (!file) return res.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
 
-      for (const id of req.body.ids) {
-        const file = await app.database.getFileById(id)
-        if (!file) return res.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
+          await deleteFile(file)
+        }
 
-        await deleteFile(file)
-      }
-
-      res.code(204)
-    })
+        res.code(204)
+      })
 
     app.get<{
       Params: {
         name: string
       }
       Querystring: {
-        albumId?: string
         width?: number
         height?: number
         fit?: keyof FitEnum
@@ -149,18 +164,16 @@ export default class Files extends Route {
         auth: false
       },
       schema: {
+        params: {
+          name: { type: 'string' }
+        },
         querystring: {
           type: 'object',
           properties: {
-            albumId: { type: 'string' },
-            status: { type: 'string', enum: ['all', 'posted', 'draft'] },
-            favorites: { type: 'boolean' },
-            featured: { type: 'boolean' },
-            search: { type: 'string' },
-            sort: { type: 'string' },
-            order: { type: 'string', enum: ['asc', 'desc'] },
-            page: { type: 'number' },
-            limit: { type: 'number' }
+            width: { type: 'number', nullable: true },
+            height: { type: 'number', nullable: true },
+            fit: { type: 'string', enum: ['cover', 'contain', 'fill', 'inside', 'outside'], nullable: true },
+            format: { type: 'string', enum: allowedFormats, default: defaultFormat }
           }
         }
       }
@@ -189,7 +202,13 @@ export default class Files extends Route {
 
     app.delete<{
       Params: IParams
-    }>('/:id', async (req, reply) => {
+    }>('/:id', {
+      schema: {
+        params: {
+          id: { type: 'string', format: 'uuid' }
+        }
+      }
+    }, async (req, reply) => {
       try {
         const file = await app.database.getFileById(req.params.id, true)
         if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
@@ -223,6 +242,11 @@ export default class Files extends Route {
     }>('/:id/download', {
       config: {
         auth: false
+      },
+      schema: {
+        params: {
+          id: { type: 'string', format: 'uuid' }
+        }
       }
     }, async (req, reply) => {
       const file = await app.database.getFileById(req.params.id)
