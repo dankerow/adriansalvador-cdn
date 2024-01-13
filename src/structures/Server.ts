@@ -99,6 +99,7 @@ export class Server {
 
     await this.initializeDatabase()
     await this.loadRoutes(join('src', 'routes'))
+    await this.registerRoutes()
     await this.loadTasks(join('src', 'tasks'))
     this.listen()
   }
@@ -130,30 +131,25 @@ export class Server {
   private async loadRoutes(directory: string, prefix: string | boolean = false): Promise<void> {
     const routes = await readdir(directory)
 
-    if (routes.length > 0) {
-      for (let i = 0; i < routes.length; i++) {
-        const stats = await stat(join(directory, routes[i]))
+    for (const route of routes) {
+      const stats = await stat(join(directory, route))
 
-        if (stats.isDirectory()) {
-          await this.loadRoutes(join(directory, routes[i]), routes[i].replace('/', ''))
-          return
-        } else {
-          const routeFile = relative(__dirname, join(directory, routes[i])).replaceAll('\\', '/')
-          const routeImport = await import(routeFile)
-          const RouteClass = routeImport.default
-          const route = new RouteClass(this)
+      if (stats.isDirectory()) {
+        await this.loadRoutes(join(directory, route), route.replace('/', ''))
 
-          if (prefix) {
-            route.path = `/${prefix}${route.path}`
-          }
-
-          this.routers.push(route)
-        }
-
-        if (i + 1 === routes.length) {
-          await this.registerRoutes()
-        }
+        continue
       }
+
+      const routeFile = relative(__dirname, join(directory, route)).replaceAll('\\', '/')
+      const routeImport = await import(routeFile)
+      const RouteClass = routeImport.default
+      const routeInstance = new RouteClass(this)
+
+      if (prefix) {
+        routeInstance.path = `/${prefix}${routeInstance.path}`
+      }
+
+      this.routers.push(routeInstance)
     }
   }
 
