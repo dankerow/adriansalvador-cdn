@@ -21,26 +21,26 @@
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/static": "^7.0.1",
     "@immobiliarelabs/fastify-sentry": "^8.0.0",
-    "archiver": "^6.0.1",
+    "archiver": "^6.0.2",
     "cron": "^3.1.4",
     "dayjs": "^1.11.10",
     "exifreader": "^4.21.0",
     "fastify": "4.26.1",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.3.0",
+    "mongodb": "^6.4.0",
     "mv": "^2.1.1",
     "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@fastify/multipart": "^8.1.0",
     "@types/archiver": "^6.0.2",
-    "@types/jsonwebtoken": "^9.0.5",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.11.20",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
     "dotenv": "^16.4.5",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "fastify-formidable": "^3.0.2",
     "nodemon": "^3.1.0",
@@ -51,5 +51,5 @@
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@8.15.3"
+  "packageManager": "pnpm@8.15.4"
 }
