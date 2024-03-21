@@ -1,63 +1,67 @@
 import { inspect } from 'util'
 import chalk from 'chalk'
-import dayjs from 'dayjs'
+import { consola } from 'consola'
 
 /**
  * Provides some logs for info, errors and warns
- * @typedef {Logger} Logger
+ * @class Logger
  */
 export class Logger {
   /**
-   * Used to have the date on the log more simply
-   * @function date()
-   */
-  static get date() {
-    return chalk.gray(dayjs(Date.now()).format('MM-DD-YY HH:MM:ss'))
-  }
-
-  /**
    * Used to format arguments.
    * @function formatInput()
-   * @param {Object} args - Message(s) to be shown in the log.
-   * @returns {Object}
+   * @param {(string | object)[]} args - Message(s) to be shown in the log.
+   * @returns string[]
    */
-  static formatInput(args: any[]) {
-    return args.map((arg) => arg instanceof Array ? inspect(arg) : arg)
+  formatInput(args: (string | object)[]): string[] {
+    return args.map((arg) => arg instanceof Object ? inspect(arg, { depth: 4 }) : arg)
   }
 
   /**
    * Used to display some messages.
-   * @function logger.log()
-   * @param {Object} args - Message(s) to be shown in the log.
-   * @param worker
+   * @function log()
+   * @param {string} worker The worker's identifier
+   * @param {(string | object)[]} args Message(s) to be shown in the
    * @returns {void}
    */
-  static log(worker, ...args: string[]) {
+  log(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    console.log(`${chalk.blue(`[${worker}]`)} | ${chalk.blue('[INFO]')} - [${this.date}] - ${args.join(' ')}`)
+    return consola.info(`${chalk.cyan(`[${worker}]`)} | ${args}`)
+  }
+
+  /**
+   * Used to display some debugging messages.
+   * @function debug()
+   * @param {string} worker The worker's identifier
+   * @param {(string | object)[]} args Message(s) to be shown in the
+   * @returns {void}
+   */
+  debug(worker: string, ...args: (string | object)[]): void {
+    args = this.formatInput(args)
+    return consola.debug(`${chalk.green(`[${worker}]`)} | [${chalk.green('DEBUG')}] - ${args}`)
   }
 
   /**
    * Used to display warnings messages.
-   * @function logger.warn()
-   * @param {Object} args - Message(s) to be shown in the log.
-   * @param worker
+   * @function warn()
+   * @param {string} worker The worker's identifier
+   * @param {(string | object)[]} args Message(s) to be shown in the warn log.
    * @returns {void}
    */
-  static warn(worker, ...args: string[]) {
+  warn(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    console.warn(`${chalk.yellow(`[${worker}]`)} | ${chalk.yellow('[WARN]')} - [${this.date}] - ${args.join(' ')}`)
+    return consola.warn(`${chalk.yellow(`[${worker}]`)} | ${args}`)
   }
 
   /**
    * Used to display errors messages.
-   * @function logger.error()
-   * @param {Object} args - Message(s) to be shown in the log.
-   * @param worker
+   * @function error()
+   * @param {string} worker The worker's identifier
+   * @param {(string | object)[]} args Message(s) to be shown in the error log.
    * @returns {void}
    */
-  static error(worker, ...args: string[]) {
+  error(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    console.error(`${chalk.red(`[${worker}]`)} | ${chalk.red('[ERROR]')} - [${this.date}] - ${args.join(' ')}`)
+    return consola.error(`${chalk.red(`[${worker}]`)} | ${args}`)
   }
 }
