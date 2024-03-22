@@ -1,4 +1,5 @@
-import type { Database } from '@/managers'
+import type { ObjectId } from 'mongodb'
+import type { Database } from '@/services'
 import type { Logger } from '@/utils'
 
 declare module 'fastify' {
@@ -19,7 +20,7 @@ declare module 'fastify' {
 
 
 export interface User {
-  readonly id: string
+  readonly _id: ObjectId
   firstName: string
   lastName: string
   email: string
@@ -29,7 +30,7 @@ export interface User {
 }
 
 export interface File {
-  id: string
+  readonly _id: ObjectId
   name: string
   url?: string
   type: string
@@ -43,7 +44,7 @@ export interface File {
 }
 
 export interface Album {
-  id: string
+  readonly _id: ObjectId
   name: string
   url?: string
   draft: boolean
@@ -51,9 +52,9 @@ export interface Album {
   nsfw: boolean
   favorite: boolean
   featured: boolean
-  coverId: string | null
+  coverId: ObjectId | null
   cover?: Omit<File, | 'albumId' | 'album' | 'createdAt' | 'modifiedAt'>
-  coverFallbackId: string | null
+  coverFallbackId: ObjectId | null
   coverFallback?: Omit<File, | 'albumId' | 'album' | 'createdAt' | 'modifiedAt'>
   fileCount: number
   images: File[]
@@ -63,6 +64,6 @@ export interface Album {
 }
 
 export interface AlbumFile extends File {
-  albumId: string
+  albumId: ObjectId
   album: Album
 }
