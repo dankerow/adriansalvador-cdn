@@ -1,4 +1,4 @@
-import { Server } from '../structures'
+import { Server } from '@/structures'
 
 const handleError = (error: Error) => {
   if (process.send) {
