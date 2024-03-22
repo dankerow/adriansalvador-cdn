@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "target": "ESNext",
     "module": "ESNext",
@@ -12,8 +13,21 @@
     "resolveJsonModule": true,
     "types": [
       "node"
-    ]
+    ],
+    "paths": {
+      "@": [
+        "./*",
+        "./src"
+      ],
+      "@/*": [
+        "./*",
+        "./src/*"
+      ]
+    }
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.d.ts"
+  ],
   "lib": ["ESNext"]
 }
