@@ -29,16 +29,16 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "mv": "^2.1.1",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.3"
   },
   "devDependencies": {
-    "@fastify/multipart": "^8.1.0",
+    "@fastify/multipart": "^8.2.0",
     "@types/archiver": "^6.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.11.29",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
@@ -46,7 +46,7 @@
     "fastify-formidable": "^3.0.2",
     "nodemon": "^3.1.0",
     "tsx": "^4.7.1",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "nodemonConfig": {
     "ext": "*.ts",
