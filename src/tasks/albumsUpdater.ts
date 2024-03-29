@@ -1,5 +1,5 @@
-import type { Server } from '../structures'
-import { Task } from '../structures'
+import type { Server } from '@/structures'
+import { Task } from '@/structures'
 
 export default class albumsUpdater extends Task {
   constructor(server: Server) {
@@ -15,17 +15,17 @@ export default class albumsUpdater extends Task {
     const albums = await this.database.getAlbums()
 
     for (const album of albums) {
-      const cover = album.cover ? await this.database.getFileById(album.cover) : null
+      const cover = album.cover ? await this.database.getFileById(album.cover._id) : null
 
-      album.coverId = cover?.id ?? null
+      album.coverId = cover?._id ?? null
 
-      if (!album.coverFallbackId) {
-        const files = await this.database.getAlbumFiles(album.id)
+      const files = await this.database.getAlbumFiles(album._id)
+      if (!album.coverFallbackId || album.coverFallbackId && files.length > 0 && album.coverFallbackId.toString() !== files[0]._id.toString()) {
 
-        await this.database.updateAlbum(album.id, { coverFallbackId: files.length > 0 ? files[0].id : null })
+        await this.database.updateAlbum(album._id, { coverFallbackId: files.length > 0 ? files[0]._id : null })
       }
 
-      await this.database.updateAlbum(album.id, { coverId: album.coverId })
+      await this.database.updateAlbum(album._id, { coverId: album.coverId })
     }
   }
 }
