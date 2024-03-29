@@ -1,6 +1,6 @@
 import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
 
-import { Route } from '../structures'
+import { Route } from '@/structures'
 
 export default class Health extends Route {
   constructor() {
