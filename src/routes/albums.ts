@@ -1,14 +1,14 @@
-import type { AlbumFile } from '../../types'
+import type { AlbumFile } from '@/types'
 import type { FastifyInstance, FastifyReply, FastifyRequest, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
 
-import { Route } from '../structures'
+import { Route } from '@/structures'
 import { join } from 'node:path'
 import { pipeline } from 'node:stream'
 import { promisify } from 'node:util'
 import { readFile, rename, rm, unlink } from 'node:fs/promises'
 import { createWriteStream } from 'node:fs'
-import crypto from 'node:crypto'
 import sharp from 'sharp'
+import { filesize } from 'filesize'
 
 const pump = promisify(pipeline)
 
@@ -41,15 +41,97 @@ export default class Albums extends Route {
   routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     app.decorateRequest('album', null)
 
-    const getAlbum = async (req: FastifyRequest<{ Params: IParams }>, reply: FastifyReply) => {
-      if (!req.params.id) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
+    const getAlbum = async (req: FastifyRequest<{ Params: IParams; Body: IBody  }>, reply: FastifyReply) => {
+      if (!req.params.id) {
+        return reply.code(404).send({
+          error: {
+            status: 404,
+            message: 'Album not found'
+          }
+        })
+      }
 
       const album = await app.database.getAlbumById(req.params.id)
 
-      if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found' } })
+      if (!album) {
+        return reply.code(404).send({
+          error: {
+            status: 404,
+            message: 'Album not found'
+          }
+        })
+      }
 
       return req.album = album
     }
+
+    app.get<{
+      Querystring: {
+        status?: string
+        favorites?: boolean
+        featured?: boolean
+        search?: string
+        sort?: string
+        order?: 'asc' | 'desc'
+        page?: number
+        limit?: number
+      }
+    }>('/', {
+      config: {
+        auth: false
+      },
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            status: { type: 'string', enum: ['all', 'posted', 'draft'] },
+            favorites: { type: 'boolean' },
+            featured: { type: 'boolean' },
+            search: { type: 'string' },
+            sort: { type: 'string' },
+            order: { type: 'string', enum: ['asc', 'desc'] },
+            page: { type: 'number' },
+            limit: { type: 'number' }
+          }
+        }
+      }
+    }, async (req) => {
+      const {
+        status = 'posted',
+        favorites = null,
+        featured = null,
+        search = null,
+        sort = 'lowerName',
+        order = 'asc',
+        page = 1,
+        limit = 25
+      } = req.query
+
+      const params = {
+        status,
+        search,
+        favorites,
+        featured,
+        sort,
+        order,
+        limit,
+        skip: (page - 1) * limit
+      }
+
+      const albums = await app.database.getAlbums(params)
+      const count = await app.database.getAlbumCount()
+      const pages = (albumCount: number) => Math.ceil(albumCount / limit)
+
+      for (const album of albums) {
+        album.fileCount = (await app.database.getAlbumFileCount(album._id))?.count ?? 0
+      }
+
+      return {
+        data: albums,
+        count,
+        pages: pages(count)
+      }
+    })
 
     app.post<{
       Body: IBody
@@ -78,7 +160,6 @@ export default class Albums extends Route {
       const currentTime = +new Date()
 
       await app.database.insertAlbum({
-        id: crypto.randomUUID(),
         name: req.body.name,
         coverId: null,
         draft: false,
@@ -108,7 +189,8 @@ export default class Albums extends Route {
                 type: 'array',
                 items: {
                   type: 'string',
-                  format: 'uuid'
+                  minLength: 24,
+                  maxLength: 24
                 },
                 minItems: 1
               }
@@ -136,6 +218,28 @@ export default class Albums extends Route {
         }
       })
 
+    app.get<{
+      Params: IParams
+      Body: IBody
+    }>('/:id', {
+      config: {
+        auth: false
+      },
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
+        }
+      },
+      preHandler: [getAlbum]
+    }, async (req) => {
+      req.album.fileCount = (await app.database.getAlbumFileCount(req.album._id))?.count ?? 0
+
+      return req.album
+    })
+
     app.put<{
       Params: IParams
       Body: IBody
@@ -143,7 +247,7 @@ export default class Albums extends Route {
       preHandler: [getAlbum],
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string', minLength: 24, maxLength: 24 }
         },
         body: {
           type: 'object',
@@ -204,7 +308,7 @@ export default class Albums extends Route {
           }
         }
 
-        await app.database.updateAlbum(req.album.id, entry)
+        await app.database.updateAlbum(req.album._id, entry)
 
         return await app.database.getAlbumById(req.params.id)
       } catch (error) {
@@ -219,7 +323,7 @@ export default class Albums extends Route {
     }>('/:id', {
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string', minLength: 24, maxLength: 24 }
         }
       },
       preHandler: [getAlbum]
@@ -242,12 +346,44 @@ export default class Albums extends Route {
     })
 
     app.post<{
+      Body: IBody
+    }>('/:id/publish', {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
+        }
+      },
+      preHandler: [getAlbum]
+    }, async (req) => {
+      return await app.database.updateAlbum(req.album._id, { draft: false, postedAt: +new Date() })
+    })
+
+    app.post<{
+      Body: IBody
+    }>('/:id/unpublish', {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
+        }
+      },
+      preHandler: [getAlbum]
+    }, async (req) => {
+      return await app.database.updateAlbum(req.album._id, { draft: true, postedAt: null })
+    })
+
+    app.post<{
       Params: IParams
       Body: IBody
     }>('/:id/cover/upload', {
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string', minLength: 24, maxLength: 24 }
         }
       },
       preHandler: [getAlbum]
@@ -262,15 +398,14 @@ export default class Albums extends Route {
 
       const isCover = await app.database.findFileByName(fileName.toLowerCase())
 
-      if (isCover && (req.album.cover && req.album.coverId === isCover.id)) return reply.type('text/plain').send(data.filename)
-      if (isCover && (req.album.coverFallback && req.album.coverFallbackId === isCover.id)) return reply.type('text/plain').send(data.filename)
+      if (isCover && (req.album.cover && req.album.coverId.toString() === isCover._id.toString())) return reply.type('text/plain').send(data.filename)
+      if (isCover && (req.album.coverFallback && req.album.coverFallbackId.toString() === isCover._id.toString())) return reply.type('text/plain').send(data.filename)
 
       const path = join('src', 'static', 'covers', fileName)
 
       await pump(data.file, createWriteStream(path))
 
       const entry: Partial<AlbumFile> = {
-        id: crypto.randomUUID(),
         name: fileName,
         extname: fileName.slice(fileName.lastIndexOf('.') - fileName.length),
         type: null,
@@ -289,9 +424,9 @@ export default class Albums extends Route {
         width: fileMetadata.width
       }
 
-      await app.database.insertFile(entry)
+      const insertedEntry = await app.database.insertFile(entry)
 
-      await app.database.updateAlbum(req.album.id, { coverId: entry.id, modifiedAt: +new Date() })
+      await app.database.updateAlbum(req.album._id, { coverId: insertedEntry.insertedId, modifiedAt: +new Date() })
 
       return reply.type('text/plain').send(data.filename)
     })
@@ -302,7 +437,7 @@ export default class Albums extends Route {
     }>('/:id/cover/upload', {
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string', minLength: 24, maxLength: 24 }
         }
       },
       preHandler: [getAlbum]
@@ -312,14 +447,14 @@ export default class Albums extends Route {
 
       if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
 
-      if (req.album.coverFallback && req.album.coverFallback.id === image.id) return reply.send(204)
+      if (req.album.coverFallback && req.album.coverFallback._id.toString() === image._id.toString()) return reply.send(204)
 
       const path = join('src', 'static', 'covers', fileName)
 
       await unlink(path)
 
-      await app.database.deleteFile(image.id)
-      await app.database.updateAlbum(req.album.id, { coverId: null, modifiedAt: +new Date() })
+      await app.database.deleteFile(image._id)
+      await app.database.updateAlbum(req.album._id, { coverId: null, modifiedAt: +new Date() })
 
       return reply.send(204)
     })
@@ -333,12 +468,64 @@ export default class Albums extends Route {
       },
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string', minLength: 24, maxLength: 24 }
         }
       },
       preHandler: [getAlbum]
     }, async (req, reply) => {
       return reply.download(`/archives/${req.album.name}.zip`)
+    })
+
+    app.get<{
+      Params: IParams
+      Querystring: {
+        page?: number
+        limit?: number
+      }
+      Body: IBody
+    }>('/:id/files', {
+      config: {
+        auth: false
+      },
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
+        },
+        querystring: {
+          type: 'object',
+          properties: {
+            page: { type: 'number' },
+            limit: { type: 'number' }
+          }
+        }
+      },
+      preHandler: [getAlbum]
+    }, async (req) => {
+      const {
+        page = 1,
+        limit = 25
+      } = req.query
+      const pages = (imageCount: number) => Math.ceil(imageCount / limit)
+
+      let files = await app.database.getAlbumFiles(req.album._id)
+      const count = files.length
+
+      if (limit !== -1) { // -1 means no limit
+        files = files.slice((page - 1) * limit, page * limit)
+      }
+
+      for (const file of files) {
+        file.size = filesize(file.size)
+      }
+
+      return {
+        data: files,
+        count: count,
+        pages: pages(count)
+      }
     })
 
     done()

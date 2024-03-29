@@ -1,15 +1,14 @@
-import type { AlbumFile } from '../../types'
+import type { AlbumFile } from '@/types'
 import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
-import type { FitEnum, FormatEnum } from 'sharp'
 
-import { Route } from '../structures'
+import { Route } from '@/structures'
 import { join } from 'node:path'
 import { readFile, unlink } from 'node:fs/promises'
 import { createWriteStream } from 'node:fs'
 import { pipeline } from 'node:stream'
 import { promisify } from 'node:util'
-import crypto from 'node:crypto'
 import sharp from 'sharp'
+import { filesize } from 'filesize'
 
 const pump = promisify(pipeline)
 
@@ -42,12 +41,74 @@ export default class Files extends Route {
       const filePath = join('src', 'static', 's-files', file.name)
 
       await unlink(filePath)
-      await app.database.deleteFile(file.id)
+      await app.database.deleteFile(file._id)
 
       if (file.albumId) {
         await app.database.updateAlbum(file.albumId, { modifiedAt: +new Date() })
       }
     }
+
+    app.get<{
+      Querystring: {
+        search?: string
+        sort?: 'lowerName' | 'createdAt' | 'modifiedAt'
+        order?: 'asc' | 'desc'
+        includeAlbum?: boolean
+        page?: number
+        limit?: number
+      }
+    }>('/', {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            search: { type: 'string', maxLength: 100 },
+            sort: { type: 'string', enum: ['lowerName', 'name', 'size', 'createdAt', 'modifiedAt'] },
+            order: { type: 'string', enum: ['asc', 'desc'] },
+            includeAlbum: { type: 'boolean' },
+            page: { type: 'integer', minimum: 1 },
+            limit: { type: 'integer', minimum: -1 }
+          }
+        }
+      }
+    }, async (req) => {
+      const {
+        search = null,
+        sort = 'lowerName',
+        order = 'asc',
+        includeAlbum = false,
+        page = 1,
+        limit = 25
+      } = req.query
+
+      const params = {
+        search,
+        sort,
+        order,
+        includeAlbum,
+        limit,
+        skip: (page - 1) * limit
+      }
+
+      const files = await app.database.getFiles(params)
+      const count = await app.database.getFileCount()
+      const pages = (fileCount: number) => Math.ceil(fileCount / limit)
+
+      return {
+        data: files,
+        count,
+        pages: pages(count)
+      }
+    })
+
+    app.get('/random', {
+      config: {
+        auth: false,
+        rateLimit: { max: 15, timeWindow: 15 * 1000 }
+      }
+    }, async () => {
+      return await app.database.getRandomAlbumsImages(35)
+    })
 
     app.post<{
       Querystring: IQuerystring
@@ -76,18 +137,15 @@ export default class Files extends Route {
 
       await pump(data.file, createWriteStream(path))
 
-      if (req.query.albumId) {
-        const album = await app.database.getAlbumById(req.query.albumId)
-        if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found.' } })
-      }
+      const album = req.query.albumId ? await app.database.getAlbumById(req.query.albumId) : null
+      if (!album) return reply.code(404).send({ error: { status: 404, message: 'Album not found.' } })
 
-      const entry: Partial<AlbumFile> = {
-        id: crypto.randomUUID(),
+      const entry: Omit<AlbumFile, '_id'> = {
         name: data.filename,
         extname: data.filename.slice(data.filename.lastIndexOf('.') - data.filename.length),
         type: null,
         size: null,
-        albumId: req.query.albumId ?? null,
+        albumId: album._id ?? null,
         createdAt: +new Date(),
         modifiedAt: +new Date()
       }
@@ -129,8 +187,7 @@ export default class Files extends Route {
               ids: {
                 type: 'array',
                 items: {
-                  type: 'string',
-                  format: 'uuid'
+                  type: 'string'
                 },
                 minItems: 1
               }
@@ -150,54 +207,35 @@ export default class Files extends Route {
       })
 
     app.get<{
-      Params: {
-        name: string
-      }
+      Params: IParams
       Querystring: {
-        width?: number
-        height?: number
-        fit?: keyof FitEnum
-        format?: keyof FormatEnum
+        includeAlbum?: boolean
       }
-    }>('/:name', {
-      config: {
-        auth: false
-      },
+    }>('/:id', {
       schema: {
         params: {
-          name: { type: 'string' }
+          type: 'object',
+          properties: {
+            id: { type: 'string' }
+          }
         },
         querystring: {
           type: 'object',
           properties: {
-            width: { type: 'number', nullable: true },
-            height: { type: 'number', nullable: true },
-            fit: { type: 'string', enum: ['cover', 'contain', 'fill', 'inside', 'outside'], nullable: true },
-            format: { type: 'string', enum: allowedFormats, default: defaultFormat }
+            includeAlbum: { type: 'boolean' }
           }
         }
       }
     }, async (req, reply) => {
-      const name = req.params.name
-      const width = req.query.width ?? null
-      const height = req.query.height ?? null
-      const fit = req.query.fit ?? null
-      const format = allowedFormats.includes(req.query.format) ? req.query.format : defaultFormat
+      const includeAlbum = req.query.includeAlbum ?? false
+      const file = await app.database.getFileById(req.params.id, includeAlbum)
 
-      const image = await app.database.findFileByName(name.toLowerCase())
-      if (!image) return reply.code(404).send({ error: { status: 404, message: 'Image not found.' } })
+      if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
-      const filePath = join('src', 'static', 's-files', name)
-      const buffer  = await sharp(filePath)
-        .resize({
-          width,
-          height,
-          fit
-        })
-        .toFormat(format)
-        .toBuffer()
-
-      return buffer
+      return {
+        ...file,
+        size: filesize(file.size)
+      }
     })
 
     app.delete<{
@@ -205,7 +243,7 @@ export default class Files extends Route {
     }>('/:id', {
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string' }
         }
       }
     }, async (req, reply) => {
@@ -214,17 +252,17 @@ export default class Files extends Route {
         if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
         if (file.albumId) {
-          const isFileCover = file.album.coverId === file.id
+          const isFileCover = file.album.coverId ? file.album.coverId.toString() === file._id.toString() : false
           if (isFileCover) {
             await app.database.updateAlbum(file.albumId, { coverId: null })
           }
 
-          const isFileCoverFallback = file.album.coverFallbackId === file.id
+          const isFileCoverFallback = file.album.coverFallback ? file.album.coverFallbackId.toString() === file._id.toString() : false
           if (isFileCoverFallback) {
             const images = await app.database.getAlbumFiles(file.albumId)
-            const newCover = images[0]
+            const newCover = images[1]
 
-            await app.database.updateAlbum(file.albumId, { coverId: newCover?.id ?? null })
+            await app.database.updateAlbum(file.albumId, { coverId: newCover?._id ?? null })
           }
         }
 
@@ -245,7 +283,7 @@ export default class Files extends Route {
       },
       schema: {
         params: {
-          id: { type: 'string', format: 'uuid' }
+          id: { type: 'string' }
         }
       }
     }, async (req, reply) => {

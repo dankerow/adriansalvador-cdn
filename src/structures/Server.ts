@@ -1,19 +1,23 @@
+import type { FastifyInstance } from 'fastify'
+import type { Route } from './Route'
+
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { readdir, stat } from 'node:fs/promises'
 
-import type { FastifyInstance } from 'fastify'
 import Fastify from 'fastify'
 import sentry from '@immobiliarelabs/fastify-sentry'
-import helmet from '@fastify/helmet'
+import cookie from '@fastify/cookie'
 import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
 import multipart from '@fastify/multipart'
-import fstatic from '@fastify/static'
 import rateLimit from '@fastify/rate-limit'
+import session from '@fastify/session'
+import fstatic from '@fastify/static'
+import jwt from 'jsonwebtoken'
 
-import { Database } from '../managers'
-import { Logger as logger } from '../utils'
-import type { Route } from './Route'
+import { Database } from '@/services'
+import { Logger } from '@/utils'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -21,7 +25,7 @@ export class Server {
   public app: FastifyInstance
   private readonly routers: Array<Route>
   private tasks: Array<() => Promise<void>>
-  public logger: logger
+  public logger: Logger
   public database: Database
 
   constructor() {
@@ -34,7 +38,7 @@ export class Server {
     this.routers = []
     this.tasks = []
 
-    this.logger = logger
+    this.logger = new Logger()
     this.database = new Database()
   }
 
@@ -56,6 +60,17 @@ export class Server {
       allowedHeaders: ['Accept', 'Origin', 'Authorization', 'Cache-Control', 'X-Requested-With', 'Content-Type']
     })
 
+    this.app.register(cookie, {
+      secret: process.env.COOKIE_SECRET
+    })
+
+    this.app.register(session, {
+      secret: process.env.SESSION_SECRET,
+      cookie: {
+        httpOnly: true
+      }
+    })
+
     await this.app.register(multipart, {
       limits: {
         fileSize: 16777216
@@ -64,21 +79,36 @@ export class Server {
 
     await this.app.register(rateLimit,
       {
-        global : false,
+        global: true,
+        ban: 3,
         max: 100,
-        keyGenerator: (req) => req.headers.authorization || req.ip,
+        keyGenerator: (req) => {
+          if (req.headers.authorization) {
+            const token = req.headers.authorization.split(' ')[1]
+            try {
+              const decoded = jwt.verify(token, process.env.AUTH_SECRET) as { id: string }
+
+              return decoded.id
+            } catch (err) {
+              return req.ip
+            }
+          }
+
+          return req.ip
+        },
         errorResponseBuilder: () => ({ status: 429, message: 'Too many requests, please you need to slow down, try again later.' })
       })
 
     this.app.setErrorHandler((error, req, reply) => {
-      logger.error(`Something went wrong.\nError: ${error.stack || error}`)
+      process.send({ type: 'error', content: `Something went wrong.\nError: ${error.stack || error}` })
 
       const statusCode = error.statusCode || 500
 
       reply.code(statusCode).send({
-        success: false,
-        status: statusCode,
-        message: 'Oops! Something went wrong. Try again later.'
+        error: {
+          status: statusCode,
+          message: error.message ?? 'Oops! Something went wrong. Try again later.'
+        }
       })
     })
 
@@ -154,45 +184,49 @@ export class Server {
   }
 
   /**
+   * @description Loads the specified middlewares dynamically.
+   * @param {string[]} middlewares - The names of the middlewares to load.
+   * @return {Promise<any[]>} - A promise that resolves with an array of imported middlewares.
+   */
+  private async loadMiddlewares(middlewares: string[]): Promise<any[]> {
+    const importedMiddlewares = []
+
+    for (const middleware of middlewares) {
+      const importedMiddlewarePath = relative(__dirname, join('src', 'middlewares', middleware)).replaceAll('\\', '/')
+      const importedMiddleware = await import(importedMiddlewarePath)
+      importedMiddlewares.push(importedMiddleware.default)
+    }
+
+    return importedMiddlewares
+  }
+
+  /**
    * @description Registers the routes on the Fastify instance
    * @private
    * @returns Promise<void>
    */
   private async registerRoutes(): Promise<void> {
-    this.routers.sort((a, b) => {
-      if (a.position > b.position) return 1
-      if (b.position > a.position) return -1
-      return 0
-    })
+    this.routers.sort((a, b) => a.position - b.position)
 
-    for (let i = 0; i < this.routers.length; i++) {
-      const route = this.routers[i]
-
-      const middlewares = []
-      if (route.middlewares?.length) {
-        for (const middleware of route.middlewares) {
-          const importedMiddlewarePath = relative(__dirname, join('src', 'middlewares', middleware)).replaceAll('\\', '/')
-          const importedMiddleware = await import(importedMiddlewarePath)
-          middlewares.push(importedMiddleware.default)
-        }
-      }
+    for (const router of this.routers) {
+      const middlewares = router.middlewares?.length ? await this.loadMiddlewares(router.middlewares) : []
 
       await this.app.register((app, options, done) => {
         app.addHook('onRoute', (routeOptions) => {
           if (routeOptions.config && routeOptions.config.auth === false) return
 
-          routeOptions.preHandler = [...(routeOptions.preHandler || []), ...middlewares]
+          if (middlewares.length > 0) {
+            routeOptions.preHandler = [...(routeOptions.preHandler || []), ...middlewares]
+          }
 
           return
         })
 
-        route.routes(app, options, done)
-      }, { prefix: route.path })
-
-      if (i + 1 === this.routers.length) {
-        process.send({ type: 'log', content: `Loaded ${this.routers.length} routes.` })
-      }
+        router.routes(app, options, done)
+      }, { prefix: router.path })
     }
+
+    process.send({ type: 'log', content: `Loaded ${this.routers.length} routes.` })
   }
 
   /**

@@ -1,4 +1,4 @@
-import type { Album, AlbumFile, File, User } from '@/types'
+import type { Album, AlbumFile, File, User, UserMetadata, UserCredentials } from '@/types'
 import type { Db, WithId } from 'mongodb'
 
 import { EventEmitter } from 'node:events'
@@ -50,6 +50,73 @@ export class Database extends EventEmitter {
       .next()  as Promise<WithId<Omit<User, 'password'>>>
   }
 
+  getUserByEmail(email: string): Promise<WithId<Omit<User, 'password'>>> {
+    return this.mongoUsers
+      .collection('credentials')
+      .aggregate([
+        { $match: { email } },
+        { $lookup: { from: 'metadata', localField: '_id', foreignField: '_id', as: 'metadata' } },
+        {
+          $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ '$metadata', 0 ] }, '$$ROOT' ] } }
+        },
+        { $project: { metadata: 0 } },
+        { $unset: [ 'password' ] }
+      ])
+      .limit(1)
+      .next() as Promise<WithId<Omit<User, 'password'>>>
+  }
+
+  getUserCredentials(id: ObjectId | string) {
+    return this.mongoUsers
+      .collection('credentials')
+      .aggregate([
+        { $match: { _id: new ObjectId(id) } }
+      ])
+      .limit(1)
+      .next() as Promise<WithId<UserCredentials>>
+  }
+
+  getUsersSorted() {
+    return this.mongoUsers
+      .collection('metadata')
+      .aggregate([
+        { $addFields: { lowerName: { $toLower: '$firstName' } } }
+      ])
+      .sort({ firstName: 1 })
+      .toArray() as Promise<WithId<UserMetadata>[]>
+  }
+
+  getUsersMetadata() {
+    return this.mongoUsers
+      .collection('metadata')
+      .find()
+      .toArray() as Promise<WithId<UserMetadata>[]>
+  }
+
+  getUsersCredentials(): Promise<WithId<UserCredentials>[]> {
+    return this.mongoUsers
+      .collection('credentials')
+      .find()
+      .toArray() as Promise<WithId<UserCredentials>[]>
+  }
+
+  getUserCredentialsWithFields(id: ObjectId, fields: string[]) {
+    const project = {}
+
+    for (let i = 0; i < fields.length; i++) {
+      project[fields[i]] = '$' + fields[i]
+    }
+
+    return this.mongoUsers
+      .collection('credentials')
+      .aggregate([
+        { $match: { _id: { $in: [new ObjectId(id)] } } },
+        { $project: { ...project } }
+      ])
+      .limit(1)
+      .next() as Promise<WithId<Partial<UserCredentials>>>
+  }
+
   getAlbumById(id: ObjectId | string) {
     return this.mongo
       .collection('albums')
@@ -72,8 +139,9 @@ export class Database extends EventEmitter {
       aggregation.push({ $match: { draft: params.status === 'draft' ?? params.status !== 'posted' } })
     }
 
-    if (params.favorites) aggregation.push({ $match: { favorite: true } })
-    if (params.featured) aggregation.push({ $match: { featured: true } })
+    if (params.favorites && params.featured) aggregation.push({ $match: { $or: [{ favorite: true }, { featured: true }] } })
+    else if (params.favorites) aggregation.push({ $match: { favorite: true } })
+    else if (params.featured) aggregation.push({ $match: { featured: true } })
 
     if (params.search) aggregation.push({ $match: { name: { $regex: params.search, $options: 'i' } } })
     if (params.sort) aggregation.push({ $addFields: { lowerName: { $toLower: '$name' } } }, { $sort: { [params.sort]: params.order === 'asc' ? 1 : -1 } })
@@ -99,12 +167,69 @@ export class Database extends EventEmitter {
       .toArray() as Promise<WithId<Album>[]>
   }
 
+  getAlbumCount() {
+    return this.mongo
+      .collection('albums')
+      .countDocuments()
+  }
+
+  getRandomAlbumsImages(limit: number): Promise<WithId<AlbumFile>[]> {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId: { $ne: null } } },
+        { $sample: { size: limit } },
+        { $lookup: { from: 'albums', localField: 'albumId', foreignField: '_id', as: 'album' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } }
+      ])
+      .toArray() as Promise<WithId<AlbumFile>[]>
+  }
+
   getAlbumFiles(albumId: ObjectId | string) {
     return this.mongo
       .collection('files')
       .aggregate([
         { $match: { albumId: new ObjectId(albumId) } }
       ])
+      .toArray() as Promise<WithId<AlbumFile>[]>
+  }
+
+  getAlbumFileCount(albumId: ObjectId) {
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        { $match: { albumId: new ObjectId(albumId) } },
+        { $count: 'count' }
+      ])
+      .limit(1)
+      .next()
+  }
+
+  getFiles(params: { search?: string; sort?: string; order?: string; includeAlbum?: boolean; skip?: number; limit?: number } = {}) {
+    const aggregation = []
+
+    if (params.search) aggregation.push({ $match: { name: { $regex: params.search, $options: 'i' } } })
+    if (params.sort) aggregation.push({ $addFields: { lowerName: { $toLower: '$name' } } }, { $sort: { [params.sort]: params.order === 'asc' ? 1 : -1 } })
+    if (params.includeAlbum) {
+      aggregation.push(
+        { $lookup: { from: 'albums', localField: 'albumId', foreignField: '_id', as: 'album' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } }
+      )
+    }
+    if (params.skip) aggregation.push({ $skip: params.skip })
+    if (params.limit) aggregation.push({ $limit: params.limit })
+
+    return this.mongo
+      .collection('files')
+      .aggregate([
+        ...aggregation,
+        { $project: { lowerName: 0 } }
+      ], {
+        collation: {
+          locale: 'en_US',
+          numericOrdering: true
+        }
+      })
       .toArray() as Promise<WithId<AlbumFile>[]>
   }
 
@@ -121,6 +246,12 @@ export class Database extends EventEmitter {
       ])
       .limit(1)
       .next() as Promise<WithId<AlbumFile>>
+  }
+
+  getFileCount(): Promise<number> {
+    return this.mongo
+      .collection('files')
+      .countDocuments()
   }
 
   findAlbumByName(name: string) {
@@ -154,6 +285,18 @@ export class Database extends EventEmitter {
       .next() as Promise<WithId<AlbumFile>>
   }
 
+  insertUserMetadata(document: UserMetadata) {
+    return this.mongoUsers
+      .collection('metadata')
+      .insertOne(document)
+  }
+
+  insertUserCredentials(document: UserCredentials) {
+    return this.mongoUsers
+      .collection('credentials')
+      .insertOne(document)
+  }
+
   insertAlbum(document: Album) {
     return this.mongo
       .collection('albums')
@@ -164,6 +307,18 @@ export class Database extends EventEmitter {
     return this.mongo
       .collection('files')
       .insertOne(document)
+  }
+
+  updateUserMetadata(id: ObjectId, fields: Omit<Partial<UserMetadata>, '_id' | 'createdAt'>) {
+    return this.mongoUsers
+      .collection('metadata')
+      .updateOne({ _id: new ObjectId(id) }, { $set: fields })
+  }
+
+  updateUserCredentials(id: ObjectId, fields: Omit<Partial<UserCredentials>, '_id' | 'createdAt'>) {
+    return this.mongoUsers
+      .collection('credentials')
+      .updateOne({ _id: new ObjectId(id) }, { $set: fields })
   }
 
   updateAlbum(id: ObjectId | string, fields: Omit<Partial<Album>, '_id'>) {
