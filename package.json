@@ -32,18 +32,23 @@
     "sharp": "^0.33.3"
   },
   "devDependencies": {
+    "@fastify/cookie": "^9.3.1",
     "@fastify/multipart": "^8.2.0",
+    "@fastify/session": "^10.7.0",
+    "@google-analytics/data": "^4.4.0",
     "@types/archiver": "^6.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
+    "bcrypt": "^5.1.1",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "fastify-formidable": "^3.0.2",
+    "filesize": "^10.1.1",
     "nodemon": "^3.1.0",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
