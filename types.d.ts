@@ -19,15 +19,23 @@ declare module 'fastify' {
 }
 
 
-export interface User {
+export interface UserMetadata {
   readonly _id: ObjectId
   firstName: string
   lastName: string
-  email: string
-  role: string
-  readonly createdAt: string
-  readonly updatedAt: string
+  readonly createdAt: number
+  readonly modifiedAt: number
 }
+
+export interface UserCredentials {
+  readonly _id: ObjectId
+  email: string
+  password: string
+  readonly createdAt: number
+  readonly modifiedAt: number
+}
+
+export type User = UserMetadata & UserCredentials
 
 export interface File {
   readonly _id: ObjectId
