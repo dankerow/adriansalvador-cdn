@@ -2,7 +2,7 @@ import type { User } from '@/types'
 import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fastify'
 
 import { Route } from '@/structures'
-import bcrypt from 'bcrypt'
+import { compare as comparePassword } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 interface IBody {
@@ -19,7 +19,7 @@ export default class Authentication extends Route {
     })
   }
 
-  async routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
+  routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     app.decorateRequest('user', null)
 
     const createToken = (user: Omit<User, 'password'>) => {
@@ -58,7 +58,7 @@ export default class Authentication extends Route {
 
       const userCredentials = await app.database.getUserCredentials(user._id)
 
-      const passwordVerification = await bcrypt.compare(password, userCredentials.password)
+      const passwordVerification = await comparePassword(password, userCredentials.password)
       if (!passwordVerification) {
         return reply.code(401).send({ error: { message: 'Invalid credentials.' } })
       }
@@ -69,7 +69,7 @@ export default class Authentication extends Route {
         sessionToken: token
       }) */
 
-      reply.setCookie('sessionId', req.session.sessionId, {
+      await reply.setCookie('sessionId', req.session.sessionId, {
         path: '/',
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',

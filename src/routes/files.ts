@@ -33,10 +33,7 @@ export default class Files extends Route {
     })
   }
 
-  async routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
-    const defaultFormat = 'webp'
-    const allowedFormats = ['png', 'jpeg', 'webp']
-
+  routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     const deleteFile = async (file: AlbumFile) => {
       const filePath = join('src', 'static', 's-files', file.name)
 
@@ -162,7 +159,9 @@ export default class Files extends Route {
       await app.database.insertFile(entry)
       await app.database.updateAlbum(entry.albumId, { modifiedAt: +new Date() })
 
-      reply.type('text/plain').send(data.filename)
+      await reply.type('text/plain')
+
+      return data.filename
     })
 
     app.delete<{
@@ -195,15 +194,15 @@ export default class Files extends Route {
             required: ['ids']
           }
         }
-      }, async (req, res) => {
+      }, async (req, reply) => {
         for (const id of req.body.ids) {
           const file = await app.database.getFileById(id)
-          if (!file) return res.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
+          if (!file) return reply.code(404).send({ error: { status: 404, message: `File '${id}' not found` } })
 
           await deleteFile(file)
         }
 
-        res.code(204)
+        await reply.code(204)
       })
 
     app.get<{
@@ -268,10 +267,16 @@ export default class Files extends Route {
 
         await deleteFile(file)
 
-        reply.code(204)
+        await reply.code(204)
       } catch (error) {
-        app.log.error(error.stack || error)
-        return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the image.' } })
+        app.log.error(error)
+
+        return reply.code(500).send({
+          error: {
+            status: 500,
+            message: 'Something went wrong while deleting the image.'
+          }
+        })
       }
     })
 
@@ -294,8 +299,8 @@ export default class Files extends Route {
       const filePath = join('src', 'static', 's-files', file.name)
       const buffer = await readFile(filePath)
 
-      reply.header('Content-Disposition', `attachment; filename="${file.name}"`)
-      reply.header('Content-Type', file.mimetype)
+      await reply.header('Content-Disposition', `attachment; filename="${file.name}"`)
+      await reply.header('Content-Type', file.mimetype)
 
       return buffer
     })

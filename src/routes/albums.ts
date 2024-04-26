@@ -213,7 +213,8 @@ export default class Albums extends Route {
 
           await app.database.deleteAlbums(req.body.ids)
         } catch (error) {
-          app.log.error(error.stack || error)
+          app.log.error(error)
+
           return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the albums in the database.' } })
         }
       })
@@ -310,9 +311,10 @@ export default class Albums extends Route {
 
         await app.database.updateAlbum(req.album._id, entry)
 
-        return await app.database.getAlbumById(req.params.id)
+        await app.database.getAlbumById(req.params.id)
       } catch (error) {
-        app.log.error(error.stack || error)
+        app.log.error(error)
+
         return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while updating the album in the database.' } })
       }
     })
@@ -338,9 +340,9 @@ export default class Albums extends Route {
         await app.database.deleteAlbum(req.params.id)
         await app.database.deleteAlbumFiles(req.params.id)
 
-        reply.code(204)
+        return reply.code(204)
       } catch (error) {
-        app.log.error(error.stack || error)
+        app.log.error(error)
         return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the image.' } })
       }
     })

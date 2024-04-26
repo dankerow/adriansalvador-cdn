@@ -26,7 +26,7 @@ export class Logger {
    */
   log(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    return consola.info(`${chalk.cyan(`[${worker}]`)} | ${args}`)
+    return consola.info(`${chalk.cyan(`[${worker}]`)} | ${args.join(' ')}`)
   }
 
   /**
@@ -38,7 +38,7 @@ export class Logger {
    */
   debug(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    return consola.debug(`${chalk.green(`[${worker}]`)} | [${chalk.green('DEBUG')}] - ${args}`)
+    return consola.debug(`${chalk.green(`[${worker}]`)} | [${chalk.green('DEBUG')}] - ${args.join(' ')}`)
   }
 
   /**
@@ -50,7 +50,7 @@ export class Logger {
    */
   warn(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    return consola.warn(`${chalk.yellow(`[${worker}]`)} | ${args}`)
+    return consola.warn(`${chalk.yellow(`[${worker}]`)} | ${args.join(' ')}`)
   }
 
   /**
@@ -62,6 +62,6 @@ export class Logger {
    */
   error(worker: string, ...args: (string | object)[]): void {
     args = this.formatInput(args)
-    return consola.error(`${chalk.red(`[${worker}]`)} | ${args}`)
+    return consola.error(`${chalk.red(`[${worker}]`)} | ${args.join(' ')}`)
   }
 }

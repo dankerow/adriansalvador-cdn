@@ -5,6 +5,11 @@ import cluster from 'node:cluster'
 import os from 'node:os'
 import { Logger } from '@/utils'
 
+interface WorkerMessage {
+  type: string
+  content: string
+}
+
 const logger = new Logger()
 
 const workers: Map<number, Worker> = new Map()
@@ -17,7 +22,7 @@ for (let i = 0; i < workersLength; i++) {
   workers.set(worker.id, worker)
 }
 
-cluster.on('message', (worker: Worker, message) => {
+cluster.on('message', (worker: Worker, message: WorkerMessage) => {
   if (message.type) {
     switch (message.type) {
       case 'log':

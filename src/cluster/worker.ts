@@ -1,8 +1,8 @@
 import { Server } from '@/structures'
 
-const handleError = (error: Error) => {
+const handleError = (error: any) => {
   if (process.send) {
-    process.send({ type: 'error', content: error.stack || error })
+    process.send({ type: 'error', content: error })
   } else {
     console.error(error)
   }
@@ -10,7 +10,7 @@ const handleError = (error: Error) => {
 
 const server = new Server()
 try {
-  server.setup()
+  await server.setup()
 } catch (error) {
   handleError(error)
 }

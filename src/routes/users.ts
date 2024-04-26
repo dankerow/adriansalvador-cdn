@@ -28,7 +28,7 @@ export default class Users extends Route {
     })
   }
 
-  async routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
+  routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
     const getUser = async (req: FastifyRequest<{ Params: IParams; Body: IBody }>, reply: FastifyReply) => {
       if (req.params.id.length > 100) return reply.status(404).send({ status: 404, message: 'The user you are looking for does not exist.' })
       if (req.params.id === '@me' && req.body.user) {
@@ -135,7 +135,7 @@ export default class Users extends Route {
         rateLimit: { max: 5, timeWindow: 1000 }
       },
       preHandler: [getUser]
-    }, async (req) => {
+    }, (req) => {
       return req.body.user
     })
 
