@@ -39,6 +39,7 @@
     "@google-analytics/data": "^4.5.0",
     "@stylistic/eslint-plugin-ts": "^1.7.2",
     "@types/archiver": "^6.0.2",
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
     "@types/node": "^20.12.7",

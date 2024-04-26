@@ -70,6 +70,9 @@ devDependencies:
   '@types/archiver':
     specifier: ^6.0.2
     version: 6.0.2
+  '@types/bcrypt':
+    specifier: ^5.0.2
+    version: 5.0.2
   '@types/jsonwebtoken':
     specifier: ^9.0.6
     version: 9.0.6
@@ -923,6 +926,12 @@ packages:
     resolution: {integrity: sha512-KmROQqbQzKGuaAbmK+ZcytkJ51+YqDa7NmbXjmtC5YBLSyQYo21YaUnQ3HbaPFKL1ooo6RQ6OPYPIDyxfpDDXw==}
     dependencies:
       '@types/readdir-glob': 1.1.1
+    dev: true
+
+  /@types/bcrypt@5.0.2:
+    resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
+    dependencies:
+      '@types/node': 20.12.7
     dev: true
 
   /@types/caseless@0.12.5:
