@@ -23,7 +23,7 @@
     "@immobiliarelabs/fastify-sentry": "^8.0.1",
     "archiver": "^7.0.1",
     "cron": "^3.1.7",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.11",
     "exifreader": "^4.22.1",
     "fastify": "4.26.2",
     "jsonwebtoken": "^9.0.2",
