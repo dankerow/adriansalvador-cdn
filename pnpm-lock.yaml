@@ -18,8 +18,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       '@fastify/static':
-        specifier: ^7.0.3
-        version: 7.0.3
+        specifier: ^7.0.4
+        version: 7.0.4
       '@immobiliarelabs/fastify-sentry':
         specifier: ^8.0.1
         version: 8.0.1
@@ -61,14 +61,14 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       '@fastify/session':
-        specifier: ^10.7.2
-        version: 10.7.2
+        specifier: ^10.8.0
+        version: 10.8.0
       '@google-analytics/data':
         specifier: ^4.5.0
         version: 4.5.0
       '@stylistic/eslint-plugin-ts':
-        specifier: ^1.8.0
-        version: 1.8.0(eslint@9.2.0)(typescript@5.4.5)
+        specifier: ^1.8.1
+        version: 1.8.1(eslint@9.2.0)(typescript@5.4.5)
       '@types/archiver':
         specifier: ^6.0.2
         version: 6.0.2
@@ -321,11 +321,11 @@ packages:
   '@fastify/send@2.0.1':
     resolution: {integrity: sha512-8jdouu0o5d0FMq1+zCKeKXc1tmOQ5tTGYdQP3MpyF9+WWrZT1KCBdh6hvoEYxOm3oJG/akdE9BpehLiJgYRvGw==}
 
-  '@fastify/session@10.7.2':
-    resolution: {integrity: sha512-PezR26nY8FMmAs4cww5rpnVyRkPDv2WQcVBLEKrtLTQy8mjL+twUKv9TLo/SXZYHZOIETzmquWoLYlnY3dSb+w==}
+  '@fastify/session@10.8.0':
+    resolution: {integrity: sha512-dLz6IuBd85KiuinrGsklNv33S0LEYX1/i0B29gzu3sGZh13rSZMDnNOq6OuH8oSBadRKBFOUkIJl7sQv/dFIfw==}
 
-  '@fastify/static@7.0.3':
-    resolution: {integrity: sha512-2tmTdF+uFCykasutaO6k4/wOt7eXyi7m3dGuCPo5micXzv0qt6ttb/nWnDYL/BlXjYGfp1JI4a1gyluTIylvQA==}
+  '@fastify/static@7.0.4':
+    resolution: {integrity: sha512-p2uKtaf8BMOZWLs6wu+Ihg7bWNBdjNgCwDza4MJtTqg+5ovKmcbgbR9Xs5/smZ1YISfzKOCNYmZV8LaCj+eJ1Q==}
 
   '@google-analytics/data@4.5.0':
     resolution: {integrity: sha512-QdN3eb9IqLye3gRXUOLVxIhvrGmq2hgC4RxUy2lRIaVq2LyO3YHBYK+71Ji0eWpSCTZjVEb6SsUBpboko8DVOw==}
@@ -560,14 +560,14 @@ packages:
     resolution: {integrity: sha512-NIeuvB9MeDwrObbi6W5xRrNTcQj8klVvwWWYQB0zotY/LDjyl+c+cZzUshFOxBTp9ljVnYzWqZ7J8x/i4baj7w==}
     engines: {node: '>=8'}
 
-  '@stylistic/eslint-plugin-js@1.8.0':
-    resolution: {integrity: sha512-jdvnzt+pZPg8TfclZlTZPiUbbima93ylvQ+wNgHLNmup3obY6heQvgewSu9i2CfS61BnRByv+F9fxQLPoNeHag==}
+  '@stylistic/eslint-plugin-js@1.8.1':
+    resolution: {integrity: sha512-c5c2C8Mos5tTQd+NWpqwEu7VT6SSRooAguFPMj1cp2RkTYl1ynKoXo8MWy3k4rkbzoeYHrqC2UlUzsroAN7wtQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
       eslint: '>=8.40.0'
 
-  '@stylistic/eslint-plugin-ts@1.8.0':
-    resolution: {integrity: sha512-WuCIhz4JEHxzhAWjrBASMGj6Or1wAjDqTsRIck3DRRrw/FJ8C/8AAuHPk8ECHNSDI5PZ0OT72nF2uSUn0aQq1w==}
+  '@stylistic/eslint-plugin-ts@1.8.1':
+    resolution: {integrity: sha512-/q1m+ZuO1JHfiSF16EATFzv7XSJkc5W6DocfvH5o9oB6WWYFMF77fVoBWnKT3wGptPOc2hkRupRKhmeFROdfWA==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
       eslint: '>=8.40.0'
@@ -2533,12 +2533,12 @@ snapshots:
       http-errors: 2.0.0
       mime: 3.0.0
 
-  '@fastify/session@10.7.2':
+  '@fastify/session@10.8.0':
     dependencies:
       fastify-plugin: 4.3.0
       safe-stable-stringify: 2.4.1
 
-  '@fastify/static@7.0.3':
+  '@fastify/static@7.0.4':
     dependencies:
       '@fastify/accept-negotiator': 1.0.0
       '@fastify/send': 2.0.1
@@ -2761,7 +2761,7 @@ snapshots:
     dependencies:
       '@sentry/types': 7.106.1
 
-  '@stylistic/eslint-plugin-js@1.8.0(eslint@9.2.0)':
+  '@stylistic/eslint-plugin-js@1.8.1(eslint@9.2.0)':
     dependencies:
       '@types/eslint': 8.56.10
       acorn: 8.11.3
@@ -2770,9 +2770,9 @@ snapshots:
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
 
-  '@stylistic/eslint-plugin-ts@1.8.0(eslint@9.2.0)(typescript@5.4.5)':
+  '@stylistic/eslint-plugin-ts@1.8.1(eslint@9.2.0)(typescript@5.4.5)':
     dependencies:
-      '@stylistic/eslint-plugin-js': 1.8.0(eslint@9.2.0)
+      '@stylistic/eslint-plugin-js': 1.8.1(eslint@9.2.0)
       '@types/eslint': 8.56.10
       '@typescript-eslint/utils': 6.21.0(eslint@9.2.0)(typescript@5.4.5)
       eslint: 9.2.0
