@@ -33,17 +33,17 @@ importers:
         specifier: ^1.11.11
         version: 1.11.11
       exifreader:
-        specifier: ^4.22.1
-        version: 4.22.1
+        specifier: ^4.23.1
+        version: 4.23.1
       fastify:
-        specifier: 4.26.2
-        version: 4.26.2
+        specifier: 4.27.0
+        version: 4.27.0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
       mongodb:
-        specifier: ^6.6.0
-        version: 6.6.0(gcp-metadata@6.1.0)
+        specifier: ^6.6.1
+        version: 6.6.1
       mv:
         specifier: ^2.1.1
         version: 2.1.1
@@ -82,8 +82,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4
       '@types/node':
-        specifier: ^20.12.8
-        version: 20.12.8
+        specifier: ^20.12.10
+        version: 20.12.10
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -109,8 +109,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       tsx:
-        specifier: ^4.9.0
-        version: 4.9.0
+        specifier: ^4.9.3
+        version: 4.9.3
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -612,8 +612,8 @@ packages:
   '@types/mv@2.1.4':
     resolution: {integrity: sha512-MgEHBpXnQo44Q43j8G0Bvp/Yi8LYbC8hxKrRFMgDEDZMmzDKZLgiyMWtW49B37ko+QupgZ3G5rtPUnOGe5ixLw==}
 
-  '@types/node@20.12.8':
-    resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
+  '@types/node@20.12.10':
+    resolution: {integrity: sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==}
 
   '@types/readdir-glob@1.1.1':
     resolution: {integrity: sha512-ImM6TmoF8bgOwvehGviEj3tRdRBbQujr1N+0ypaln/GWjaerOB26jb93vsRHmdMtvVQZQebOlqt2HROark87mQ==}
@@ -1183,8 +1183,8 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
 
-  exifreader@4.22.1:
-    resolution: {integrity: sha512-XpRFIBLVV7eVE+BIF1PdogJaboGpvlfMbPC8cjofKkoAAodDOV79Li6JSkAspiYdD+ygMqb7R/C+bS6nTkIUFQ==}
+  exifreader@4.23.1:
+    resolution: {integrity: sha512-sB5aWpF618lCsEpTqWEu60VPBkj4U7StHiatcTHzlhUWUKJWHZFKezndnGmeEuFLggcqBjwPrAXQ9jDqt7xawA==}
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
@@ -1230,8 +1230,8 @@ packages:
   fastify-plugin@4.3.0:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
 
-  fastify@4.26.2:
-    resolution: {integrity: sha512-90pjTuPGrfVKtdpLeLzND5nyC4woXZN5VadiNQCicj/iJU4viNHKhsAnb7jmv1vu2IzkLXyBiCzdWuzeXgQ5Ug==}
+  fastify@4.27.0:
+    resolution: {integrity: sha512-ci9IXzbigB8dyi0mSy3faa3Bsj0xWAPb9JeT4KRzubdSb6pNhcADRUaXCBml6V1Ss/a05kbtQls5LBmhHydoTA==}
 
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
@@ -1748,8 +1748,8 @@ packages:
   mongodb-connection-string-url@3.0.0:
     resolution: {integrity: sha512-t1Vf+m1I5hC2M5RJx/7AtxgABy1cZmIPQRMXw+gEIPn/cZNF3Oiy+l0UIypUwVB5trcWHq3crg2g3uAR9aAwsQ==}
 
-  mongodb@6.6.0:
-    resolution: {integrity: sha512-LoR0hel6y1i7pubPOzbflccdc89RDOapIGqwce4aenOfhhLKOqiQ2F4yQHP+Hqa7TuPhpVqDVjixbvUSx7R0rQ==}
+  mongodb@6.6.1:
+    resolution: {integrity: sha512-FvA9ocQzRzzvhin1HHLrZDEm0gWvnksbiciYrU/0GmET/t/DdDiMJroA7rfDrHM3AInwGVYw2fwAU2oNYUyUEw==}
     engines: {node: '>=16.20.1'}
     peerDependencies:
       '@aws-sdk/credential-providers': ^3.188.0
@@ -1907,14 +1907,14 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  pino-abstract-transport@1.1.0:
-    resolution: {integrity: sha512-lsleG3/2a/JIWUtf9Q5gUNErBqwIu1tUKTT3dUzaf5DySw9ra1wcqKjJjLX1VTY64Wk1eEOYsVGSaGfCK85ekA==}
+  pino-abstract-transport@1.2.0:
+    resolution: {integrity: sha512-Guhh8EZfPCfH+PMXAb6rKOjGQEoy0xlAIn+irODG5kgfYV+BQ0rGYYWTIel3P5mmyXqkYkPmdIkywsn6QKUR1Q==}
 
   pino-std-serializers@6.0.0:
     resolution: {integrity: sha512-mMMOwSKrmyl+Y12Ri2xhH1lbzQxwwpuru9VjyJpgFIH4asSj88F2csdMwN6+M5g1Ll4rmsYghHLQJw81tgZ7LQ==}
 
-  pino@8.17.0:
-    resolution: {integrity: sha512-ey+Mku+PVPhvxglLXMg1l1zQMwSHuNrKC3MD40EDZbkckJmmuY7DYZLIOwwjZ8ix/Nvhe9dZt5H99cgkot9bAw==}
+  pino@9.0.0:
+    resolution: {integrity: sha512-uI1ThkzTShNSwvsUM6b4ND8ANzWURk9zTELMztFkmnCQeR/4wkomJ+echHee5GMWGovoSfjwdeu80DsFIt7mbA==}
     hasBin: true
 
   prelude-ls@1.2.1:
@@ -2217,8 +2217,8 @@ packages:
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
-  thread-stream@2.2.0:
-    resolution: {integrity: sha512-rUkv4/fnb4rqy/gGy7VuqK6wE1+1DOCOWy4RMeaV69ZHMP11tQKZvZSip1yTgrKCMZzEMcCL/bKfHvSfDHx+iQ==}
+  thread-stream@2.7.0:
+    resolution: {integrity: sha512-qQiRWsU/wvNolI6tbbCKd9iKaTnCXsTwVxhhKM6nctPdujTyztjlbUkUTUymidWcMnZ5pWR0ej4a0tjsW021vw==}
 
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -2255,8 +2255,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsx@4.9.0:
-    resolution: {integrity: sha512-UY0UUhDPL6MkqkZU4xTEjEBOLfV+RIt4xeeJ1qwK73xai4/zveG+X6+tieILa7rjtegUW2LE4p7fw7gAoLuytA==}
+  tsx@4.9.3:
+    resolution: {integrity: sha512-czVbetlILiyJZI5zGlj2kw9vFiSeyra9liPD4nG+Thh4pKTi0AmMEQ8zdV/L2xbIVKrIqif4sUNrsMAOksx9Zg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -2788,7 +2788,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
 
   '@types/caseless@0.12.5': {}
 
@@ -2801,7 +2801,7 @@ snapshots:
 
   '@types/formidable@2.0.5':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
 
   '@types/json-schema@7.0.15': {}
 
@@ -2809,7 +2809,7 @@ snapshots:
 
   '@types/jsonwebtoken@9.0.6':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
 
   '@types/long@4.0.2': {}
 
@@ -2817,18 +2817,18 @@ snapshots:
 
   '@types/mv@2.1.4': {}
 
-  '@types/node@20.12.8':
+  '@types/node@20.12.10':
     dependencies:
       undici-types: 5.26.5
 
   '@types/readdir-glob@1.1.1':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
 
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
@@ -3549,7 +3549,7 @@ snapshots:
 
   events@3.3.0: {}
 
-  exifreader@4.22.1:
+  exifreader@4.23.1:
     optionalDependencies:
       '@xmldom/xmldom': 0.8.10
 
@@ -3600,7 +3600,7 @@ snapshots:
 
   fastify-plugin@4.3.0: {}
 
-  fastify@4.26.2:
+  fastify@4.27.0:
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.4.0
@@ -3611,12 +3611,12 @@ snapshots:
       fast-json-stringify: 5.8.0
       find-my-way: 8.1.0
       light-my-request: 5.11.0
-      pino: 8.17.0
+      pino: 9.0.0
       process-warning: 3.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
       secure-json-parse: 2.7.0
-      semver: 7.5.4
+      semver: 7.6.0
       toad-cache: 3.3.1
     transitivePeerDependencies:
       - supports-color
@@ -4192,13 +4192,11 @@ snapshots:
       '@types/whatwg-url': 11.0.3
       whatwg-url: 13.0.0
 
-  mongodb@6.6.0(gcp-metadata@6.1.0):
+  mongodb@6.6.1:
     dependencies:
       '@mongodb-js/saslprep': 1.1.5
       bson: 6.7.0
       mongodb-connection-string-url: 3.0.0
-    optionalDependencies:
-      gcp-metadata: 6.1.0
 
   ms@2.1.2: {}
 
@@ -4330,26 +4328,26 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  pino-abstract-transport@1.1.0:
+  pino-abstract-transport@1.2.0:
     dependencies:
       readable-stream: 4.2.0
       split2: 4.1.0
 
   pino-std-serializers@6.0.0: {}
 
-  pino@8.17.0:
+  pino@9.0.0:
     dependencies:
       atomic-sleep: 1.0.0
       fast-redact: 3.1.2
       on-exit-leak-free: 2.1.0
-      pino-abstract-transport: 1.1.0
+      pino-abstract-transport: 1.2.0
       pino-std-serializers: 6.0.0
-      process-warning: 2.2.0
+      process-warning: 3.0.0
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.4.1
       sonic-boom: 3.7.0
-      thread-stream: 2.2.0
+      thread-stream: 2.7.0
 
   prelude-ls@1.2.1: {}
 
@@ -4377,7 +4375,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.12.8
+      '@types/node': 20.12.10
       long: 5.2.3
 
   proxy-addr@2.0.7:
@@ -4696,7 +4694,7 @@ snapshots:
 
   text-table@0.2.0: {}
 
-  thread-stream@2.2.0:
+  thread-stream@2.7.0:
     dependencies:
       real-require: 0.2.0
 
@@ -4732,7 +4730,7 @@ snapshots:
   tslib@2.6.2:
     optional: true
 
-  tsx@4.9.0:
+  tsx@4.9.3:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.3
