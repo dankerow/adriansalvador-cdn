@@ -37,7 +37,7 @@
     "@fastify/multipart": "^8.2.0",
     "@fastify/session": "^10.8.0",
     "@google-analytics/data": "^4.6.0",
-    "@stylistic/eslint-plugin-ts": "^1.8.1",
+    "@stylistic/eslint-plugin-ts": "^2.1.0",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
