@@ -35,8 +35,8 @@
     "@eslint/js": "^9.3.0",
     "@fastify/cookie": "^9.3.1",
     "@fastify/multipart": "^8.2.0",
-    "@fastify/session": "^10.8.0",
-    "@google-analytics/data": "^4.6.0",
+    "@fastify/session": "^10.9.0",
+    "@google-analytics/data": "^4.7.0",
     "@stylistic/eslint-plugin-ts": "^2.1.0",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
@@ -53,11 +53,11 @@
     "nodemon": "^3.1.0",
     "tsx": "^4.10.5",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.9.0"
+    "typescript-eslint": "^7.10.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@9.1.2"
 }
