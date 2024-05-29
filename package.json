@@ -50,14 +50,14 @@
     "eslint-plugin-import": "^2.29.1",
     "fastify-formidable": "^3.0.2",
     "filesize": "^10.1.2",
-    "nodemon": "^3.1.0",
-    "tsx": "^4.10.5",
+    "nodemon": "^3.1.1",
+    "tsx": "^4.11.0",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.10.0"
+    "typescript-eslint": "^7.11.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@9.1.2"
+  "packageManager": "pnpm@9.1.3"
 }
