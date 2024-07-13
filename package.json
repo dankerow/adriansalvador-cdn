@@ -32,7 +32,7 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.6.0",
+    "@eslint/js": "^9.7.0",
     "@fastify/cookie": "^9.3.1",
     "@fastify/multipart": "^8.3.0",
     "@fastify/session": "^10.9.0",
@@ -46,7 +46,7 @@
     "bcrypt": "^5.1.1",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
-    "eslint": "^9.6.0",
+    "eslint": "^9.7.0",
     "eslint-plugin-import": "^2.29.1",
     "fastify-formidable": "^3.0.2",
     "filesize": "^10.1.4",
