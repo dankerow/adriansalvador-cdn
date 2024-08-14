@@ -250,6 +250,8 @@ export default class Files extends Route {
         const file = await app.database.getFileById(req.params.id, true)
         if (!file) return reply.code(404).send({ error: { status: 404, message: 'File not found.' } })
 
+        await deleteFile(file)
+
         if (file.albumId) {
           const isFileCover = file.album.coverId ? file.album.coverId.toString() === file._id.toString() : false
           if (isFileCover) {
@@ -263,15 +265,29 @@ export default class Files extends Route {
 
             await app.database.updateAlbum(file.albumId, { coverId: newCover?._id ?? null })
           }
+
+          const albumCoverExists = await app.database.getFileById(file.album.coverId)
+          if (!albumCoverExists) {
+            const images = await app.database.getAlbumFiles(file.albumId)
+            const newCover = images[0]
+
+            await app.database.updateAlbum(file.albumId, { coverFallbackId: newCover?._id ?? null, coverId: null })
+          }
+
+          const albumCoverFallbackExists = await app.database.getFileById(file.album.coverFallbackId)
+          if (!albumCoverFallbackExists) {
+            const images = await app.database.getAlbumFiles(file.albumId)
+            const newCover = images[0]
+
+            await app.database.updateAlbum(file.albumId, { coverFallbackId: newCover?._id ?? null })
+          }
         }
 
-        await deleteFile(file)
-
-        await reply.code(204)
+        await reply.code(204).send()
       } catch (error) {
         app.log.error(error)
 
-        return reply.code(500).send({
+        await reply.code(500).send({
           error: {
             status: 500,
             message: 'Something went wrong while deleting the image.'
