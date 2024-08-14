@@ -3,13 +3,13 @@ import type { FastifyInstance, RegisterOptions, DoneFuncWithErrOrRes } from 'fas
 export interface RouteOptions {
   position: number
   path: string
-  middlewares?: any[]
+  middlewares?: string[]
 }
 
 export class Route {
   position: number
   path: string
-  middlewares?: any[]
+  middlewares: string[]
 
   constructor(options: RouteOptions) {
     this.position = options.position
