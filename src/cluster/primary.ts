@@ -1,6 +1,7 @@
 import 'dotenv/config'
 
 import type { Worker } from 'node:cluster'
+
 import cluster from 'node:cluster'
 import os from 'node:os'
 import { Logger } from '@/utils'
@@ -11,7 +12,6 @@ interface WorkerMessage {
 }
 
 const logger = new Logger()
-
 const workers: Map<number, Worker> = new Map()
 const workersLength: number = (process.env.WORKERS_NUMBER ? parseInt(process.env.WORKERS_NUMBER) : false) || os.cpus().length
 
@@ -51,6 +51,7 @@ cluster.on('exit', (worker: Worker, code, signal) => {
   logger.log('Primary', 'Starting a new worker')
 
   const newWorker: Worker = cluster.fork()
+
   workers.delete(worker.id)
   workers.set(newWorker.id, newWorker)
 })
