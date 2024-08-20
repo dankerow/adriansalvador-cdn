@@ -23,26 +23,26 @@
     "@immobiliarelabs/fastify-sentry": "^8.0.1",
     "archiver": "^7.0.1",
     "cron": "^3.1.7",
-    "dayjs": "^1.11.12",
+    "dayjs": "^1.11.13",
     "exifreader": "^4.23.3",
     "fastify": "4.28.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "mv": "^2.1.1",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@fastify/cookie": "^9.3.1",
+    "@fastify/cookie": "^9.4.0",
     "@fastify/multipart": "^8.3.0",
     "@fastify/session": "^10.9.0",
     "@google-analytics/data": "^4.8.0",
-    "@stylistic/eslint-plugin-ts": "^2.6.2",
+    "@stylistic/eslint-plugin-ts": "^2.6.4",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.14.15",
+    "@types/node": "^20.16.1",
     "bcrypt": "^5.1.1",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
@@ -53,7 +53,7 @@
     "nodemon": "^3.1.4",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.1.0"
+    "typescript-eslint": "^8.2.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
