@@ -24,12 +24,12 @@ export class Task extends Server {
     this.name = options.name
     this.noDevelopment = options.noDevelopment || false
 
-    this.job = new CronJob<string, null>(options.interval, () => {
+    this.job = new CronJob<null, null>(options.interval, () => {
       if (process.env.NODE_ENV === 'development' && this.noDevelopment) return
 
       process.send({ type: 'log', content: `[Task] ${this.name} was executed.` })
       this.execute()
-    }, null, true)
+    }, undefined, true)
   }
 
   execute(): void {
