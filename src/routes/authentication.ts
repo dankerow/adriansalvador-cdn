@@ -65,17 +65,6 @@ export default class Authentication extends Route {
 
       const token = createToken(user)
 
-      /* await app.database.updateUser(user.id, {
-        sessionToken: token
-      }) */
-
-      await reply.setCookie('sessionId', req.session.sessionId, {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      })
-
       return { token, user }
     })
 
