@@ -1,33 +1,32 @@
 import 'dotenv/config'
 
-import { createWriteStream } from 'fs'
-import { readdir } from 'fs/promises'
-import { join } from 'path'
+import { createWriteStream } from 'node:fs'
+import { join } from 'node:path'
 
 import archiver from 'archiver'
 
-import { Database } from '../src/managers'
+import { Database } from '@/services'
 
 const database = new Database()
 await database.connect()
 
-const dirGallery = join('src', 'static', 'gallery')
+const dirGallery = join('src', 'static', 's-files')
 const dirArchives = join('src', 'static', 'archives')
 
-const loader = async (directory) => {
-  const folders = await readdir(directory)
+const loader = async (directory: string) => {
+  const albums = await database.getAlbums()
 
-  if (folders.length > 0) {
-    for (let i = 0; i < folders.length; i++) {
-      const dirName = folders[i]
+  if (albums.length > 0) {
+    for (let i = 0; i < albums.length; i++) {
+      const album = albums[i]
 
-      const output = createWriteStream(join(dirArchives, dirName) + '.zip')
+      const output = createWriteStream(join(dirArchives, album.name) + '.zip')
       const archive = archiver('zip', {
         zlib: { level: 9 }
       })
 
       output.on('close', function () {
-        console.log(`${dirName} - ${archive.pointer()} total bytes`)
+        console.log(`${album.name} (${album._id.toString()} - ${archive.pointer()} total bytes`)
         console.log('archiver has been finalized and the output file descriptor has closed.')
       })
 
@@ -43,13 +42,16 @@ const loader = async (directory) => {
         throw err
       })
 
-      await archive.pipe(output)
+      archive.pipe(output)
 
-      await archive.directory(join(dirGallery, dirName), false)
+      const files = await database.getAlbumFiles(album._id)
+      for (const file of files) {
+        archive.file(join(directory, file.name), { name: file.name })
+      }
 
       await archive.finalize()
 
-      if (i + 1 === folders.length) return process.exit(1)
+      if (i + 1 === albums.length) return process.exit(1)
     }
   }
 }
