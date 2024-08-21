@@ -340,7 +340,7 @@ export default class Albums extends Route {
         await app.database.deleteAlbum(req.params.id)
         await app.database.deleteAlbumFiles(req.params.id)
 
-        return reply.code(204)
+        return reply.code(204).send()
       } catch (error) {
         app.log.error(error)
         return reply.code(500).send({ error: { status: 500, message: 'Something went wrong while deleting the image.' } })
@@ -458,7 +458,7 @@ export default class Albums extends Route {
       await app.database.deleteFile(image._id)
       await app.database.updateAlbum(req.album._id, { coverId: null, modifiedAt: +new Date() })
 
-      return reply.send(204)
+      return reply.send(204).send()
     })
 
     app.get<{
