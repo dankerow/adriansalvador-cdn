@@ -1,7 +1,7 @@
 import cluster from 'cluster'
 
 if (cluster.isPrimary) {
-  import('./cluster/primary.js')
+  await import('./cluster/primary.js')
 } else {
-  import('./cluster/worker.js')
+  await import('./cluster/worker.js')
 }
