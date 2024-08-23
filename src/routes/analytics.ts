@@ -4,7 +4,7 @@ import { Route } from '@/structures'
 import { toArray } from '@/utils'
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
 
-import key from '../keys/adrian-salvador-website-9e67e3e8a223.json' assert { type: 'json' }
+import key from '@/keys/adrian-salvador-website-9e67e3e8a223.json' assert { type: 'json' }
 
 interface Dimensions {
   name: string
