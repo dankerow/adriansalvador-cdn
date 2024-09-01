@@ -39,25 +39,25 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@stylistic/eslint-plugin-ts": "^2.6.4",
+    "@eslint/js": "^9.9.1",
+    "@stylistic/eslint-plugin-ts": "^2.7.2",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.16.1",
+    "@types/node": "^20.16.2",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
-    "eslint": "^9.9.0",
+    "eslint": "^9.9.1",
     "eslint-plugin-import": "^2.29.1",
     "nodemon": "^3.1.4",
-    "tsx": "^4.17.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.2.0"
+    "typescript-eslint": "^8.3.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@9.8.0"
+  "packageManager": "pnpm@9.9.0"
 }
