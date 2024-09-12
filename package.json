@@ -29,35 +29,35 @@
     "bcrypt": "^5.1.1",
     "cron": "^3.1.7",
     "dayjs": "^1.11.13",
-    "exifreader": "^4.23.3",
+    "exifreader": "^4.23.5",
     "fastify": "4.28.1",
     "fastify-formidable": "^3.0.2",
-    "filesize": "^10.1.4",
+    "filesize": "^10.1.6",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.8.0",
+    "mongodb": "^6.9.0",
     "mv": "^2.1.1",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.1",
-    "@stylistic/eslint-plugin-ts": "^2.7.2",
+    "@eslint/js": "^9.10.0",
+    "@stylistic/eslint-plugin-ts": "^2.8.0",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.16.3",
+    "@types/node": "^20.16.5",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
-    "eslint": "^9.9.1",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint": "^9.10.0",
+    "eslint-plugin-import": "^2.30.0",
     "nodemon": "^3.1.4",
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.3.0"
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.5.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@9.9.0"
+  "packageManager": "pnpm@9.10.0"
 }
