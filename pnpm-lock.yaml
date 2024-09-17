@@ -18,8 +18,8 @@ importers:
         specifier: ^11.1.1
         version: 11.1.1
       '@fastify/multipart':
-        specifier: ^8.3.0
-        version: 8.3.0
+        specifier: ^9.0.0
+        version: 9.0.0
       '@fastify/rate-limit':
         specifier: ^9.1.0
         version: 9.1.0
@@ -308,9 +308,8 @@ packages:
   '@fastify/ajv-compiler@3.5.0':
     resolution: {integrity: sha512-ebbEtlI7dxXF5ziNdr05mOY8NnDiPB1XvAlLHctRt/Rc+C3LCOVW5imUVX+mhvUhnNzmPBHewUkOFgGlCxgdAA==}
 
-  '@fastify/busboy@2.1.1':
-    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
-    engines: {node: '>=14'}
+  '@fastify/busboy@3.0.0':
+    resolution: {integrity: sha512-83rnH2nCvclWaPQQKvkJ2pdOjG4TZyEVuFDnlOF6KP08lDaaceVyw/W63mDuafQT+MKHCvXIPpE5uYWeM0rT4w==}
 
   '@fastify/cookie@9.4.0':
     resolution: {integrity: sha512-Th+pt3kEkh4MQD/Q2q1bMuJIB5NX/D5SwSpOKu3G/tjoGbwfpurIMJsWSPS0SJJ4eyjtmQ8OipDQspf8RbUOlg==}
@@ -321,8 +320,14 @@ packages:
   '@fastify/deepmerge@1.1.0':
     resolution: {integrity: sha512-E8Hfdvs1bG6u0N4vN5Nty6JONUfTdOciyD5rn8KnEsLKIenvOVcr210BQR9t34PRkNyjqnMLGk3e0BsaxRdL+g==}
 
+  '@fastify/deepmerge@2.0.0':
+    resolution: {integrity: sha512-fsaybTGDyQ5KpPsplQqb9yKdCf2x/pbNpMNk8Tvp3rRz7lVcupKysH4b2ELMN2P4Hak1+UqTYdTj/u4FNV2p0g==}
+
   '@fastify/error@3.4.0':
     resolution: {integrity: sha512-e/mafFwbK3MNqxUcFBLgHhgxsF8UT1m8aj0dAlqEa2nJEgPsRtpHTZ3ObgrgkZ2M1eJHPTwgyUl/tXkvabsZdQ==}
+
+  '@fastify/error@4.0.0':
+    resolution: {integrity: sha512-OO/SA8As24JtT1usTUTKgGH7uLvhfwZPwlptRi2Dp5P4KKmJI3gvsZ8MIHnNwDs4sLf/aai5LzTyl66xr7qMxA==}
 
   '@fastify/fast-json-stringify-compiler@4.3.0':
     resolution: {integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==}
@@ -330,8 +335,8 @@ packages:
   '@fastify/helmet@11.1.1':
     resolution: {integrity: sha512-pjJxjk6SLEimITWadtYIXt6wBMfFC1I6OQyH/jYVCqSAn36sgAIFjeNiibHtifjCd+e25442pObis3Rjtame6A==}
 
-  '@fastify/multipart@8.3.0':
-    resolution: {integrity: sha512-A8h80TTyqUzaMVH0Cr9Qcm6RxSkVqmhK/MVBYHYeRRSUbUYv08WecjWKSlG2aSnD4aGI841pVxAjC+G1GafUeQ==}
+  '@fastify/multipart@9.0.0':
+    resolution: {integrity: sha512-B/rzOl1wmkj4LddH2i+zR8Gke8ZX1J8D7n4uJeis5VdIa7OR9Ys/TzUxI0/h1SF9ubHlNhBP+eO/FwnftarP9w==}
 
   '@fastify/rate-limit@9.1.0':
     resolution: {integrity: sha512-h5dZWCkuZXN0PxwqaFQLxeln8/LNwQwH9popywmDCFdKfgpi4b/HoMH1lluy6P+30CG9yzzpSpwTCIPNB9T1JA==}
@@ -1236,6 +1241,9 @@ packages:
   fastify-plugin@4.3.0:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
 
+  fastify-plugin@5.0.0:
+    resolution: {integrity: sha512-0725fmH/yYi8ugsjszLci+lLnGBK6cG+WSxM7edY2OXJEU7gr2JiGBoieL2h9mhTych1vFsEfXsAsGGDJ/Rd5w==}
+
   fastify@4.28.1:
     resolution: {integrity: sha512-kFWUtpNr4i7t5vY2EJPCN2KgMVpuqfU4NjnJNCgiNB900oiDeYqaNDRcAfeBbOF5hGixixxcKnOU4KN9z6QncQ==}
 
@@ -2120,6 +2128,9 @@ packages:
   secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
 
+  secure-json-parse@3.0.0:
+    resolution: {integrity: sha512-YO+gVWyp97H+nCG/qdC8X819iKx5g+BpnO9nYT4uFq4uyI0rSxwtx5qD9rGfScg7FGLYu/YBf8uOtwQKv+gq8g==}
+
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
@@ -2205,10 +2216,6 @@ packages:
 
   stream-shift@1.0.3:
     resolution: {integrity: sha512-76ORR0DO1o1hlKwTbi/DM3EXWGf3ZJYO8cXX5RJwnul2DEg2oyoZyjLNoQM8WsvZiFKCRfC1O0J7iCvie3RZmQ==}
-
-  stream-wormhole@1.1.0:
-    resolution: {integrity: sha512-gHFfL3px0Kctd6Po0M8TzEvt3De/xu6cnRrjlfYNhwbhLPLwigI2t1nc6jrzNuaYg5C4YF78PPFuQPzRiqn9ew==}
-    engines: {node: '>=4.0.0'}
 
   streamx@2.15.0:
     resolution: {integrity: sha512-HcxY6ncGjjklGs1xsP1aR71INYcsXFJet5CU1CHqihQ2J5nOsbd4OjgjHO42w/4QNv9gZb3BueV+Vxok5pLEXg==}
@@ -2594,7 +2601,7 @@ snapshots:
       ajv-formats: 2.1.1(ajv@8.11.2)
       fast-uri: 2.1.0
 
-  '@fastify/busboy@2.1.1': {}
+  '@fastify/busboy@3.0.0': {}
 
   '@fastify/cookie@9.4.0':
     dependencies:
@@ -2608,7 +2615,11 @@ snapshots:
 
   '@fastify/deepmerge@1.1.0': {}
 
+  '@fastify/deepmerge@2.0.0': {}
+
   '@fastify/error@3.4.0': {}
+
+  '@fastify/error@4.0.0': {}
 
   '@fastify/fast-json-stringify-compiler@4.3.0':
     dependencies:
@@ -2619,14 +2630,13 @@ snapshots:
       fastify-plugin: 4.3.0
       helmet: 7.0.0
 
-  '@fastify/multipart@8.3.0':
+  '@fastify/multipart@9.0.0':
     dependencies:
-      '@fastify/busboy': 2.1.1
-      '@fastify/deepmerge': 1.1.0
-      '@fastify/error': 3.4.0
-      fastify-plugin: 4.3.0
-      secure-json-parse: 2.7.0
-      stream-wormhole: 1.1.0
+      '@fastify/busboy': 3.0.0
+      '@fastify/deepmerge': 2.0.0
+      '@fastify/error': 4.0.0
+      fastify-plugin: 5.0.0
+      secure-json-parse: 3.0.0
 
   '@fastify/rate-limit@9.1.0':
     dependencies:
@@ -3742,6 +3752,8 @@ snapshots:
 
   fastify-plugin@4.3.0: {}
 
+  fastify-plugin@5.0.0: {}
+
   fastify@4.28.1:
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
@@ -4697,6 +4709,8 @@ snapshots:
 
   secure-json-parse@2.7.0: {}
 
+  secure-json-parse@3.0.0: {}
+
   semver@6.3.1: {}
 
   semver@7.5.4:
@@ -4798,8 +4812,6 @@ snapshots:
       stubs: 3.0.0
 
   stream-shift@1.0.3: {}
-
-  stream-wormhole@1.1.0: {}
 
   streamx@2.15.0:
     dependencies:
