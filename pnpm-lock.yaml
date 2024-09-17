@@ -24,8 +24,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       '@fastify/session':
-        specifier: ^10.9.0
-        version: 10.9.0
+        specifier: ^11.0.0
+        version: 11.0.0
       '@fastify/static':
         specifier: ^7.0.4
         version: 7.0.4
@@ -339,8 +339,8 @@ packages:
   '@fastify/send@2.0.1':
     resolution: {integrity: sha512-8jdouu0o5d0FMq1+zCKeKXc1tmOQ5tTGYdQP3MpyF9+WWrZT1KCBdh6hvoEYxOm3oJG/akdE9BpehLiJgYRvGw==}
 
-  '@fastify/session@10.9.0':
-    resolution: {integrity: sha512-u/c42RuAaxCeEuRCAwK2+/SfGqKOd0NSyRzEvDwFBWySQoKUZQyb9OmmJSWJBbOP1OfaU2OsDrjbPbghE1l/YQ==}
+  '@fastify/session@11.0.0':
+    resolution: {integrity: sha512-DHSpAv5YQprxMHOgMH6hailioPpa48ewnn3IQhpriiLVlN/1i/kFkVR/kOOlaIwSlkmgl5TyOAFFCFojr1Pq2w==}
 
   '@fastify/static@7.0.4':
     resolution: {integrity: sha512-p2uKtaf8BMOZWLs6wu+Ihg7bWNBdjNgCwDza4MJtTqg+5ovKmcbgbR9Xs5/smZ1YISfzKOCNYmZV8LaCj+eJ1Q==}
@@ -1236,6 +1236,9 @@ packages:
   fastify-plugin@4.3.0:
     resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
 
+  fastify-plugin@4.5.1:
+    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
+
   fastify@4.28.1:
     resolution: {integrity: sha512-kFWUtpNr4i7t5vY2EJPCN2KgMVpuqfU4NjnJNCgiNB900oiDeYqaNDRcAfeBbOF5hGixixxcKnOU4KN9z6QncQ==}
 
@@ -2117,6 +2120,10 @@ packages:
     resolution: {integrity: sha512-dVHE6bMtS/bnL2mwualjc6IxEv1F+OCUpA46pKUj6F8uDbUM0jCCulPqRNPSnWwGNKx5etqMjZYdXtrm5KJZGA==}
     engines: {node: '>=10'}
 
+  safe-stable-stringify@2.5.0:
+    resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
+    engines: {node: '>=10'}
+
   secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
 
@@ -2642,10 +2649,10 @@ snapshots:
       http-errors: 2.0.0
       mime: 3.0.0
 
-  '@fastify/session@10.9.0':
+  '@fastify/session@11.0.0':
     dependencies:
-      fastify-plugin: 4.3.0
-      safe-stable-stringify: 2.4.1
+      fastify-plugin: 4.5.1
+      safe-stable-stringify: 2.5.0
 
   '@fastify/static@7.0.4':
     dependencies:
@@ -3742,6 +3749,8 @@ snapshots:
 
   fastify-plugin@4.3.0: {}
 
+  fastify-plugin@4.5.1: {}
+
   fastify@4.28.1:
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
@@ -4694,6 +4703,8 @@ snapshots:
       ret: 0.2.2
 
   safe-stable-stringify@2.4.1: {}
+
+  safe-stable-stringify@2.5.0: {}
 
   secure-json-parse@2.7.0: {}
 
