@@ -20,7 +20,7 @@ export default class Authentication extends Route {
   }
 
   routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
-    app.decorateRequest('user', null)
+    app.decorateRequest('user')
 
     const createToken = (user: Omit<User, 'password'>) => {
       return jwt.sign(user, process.env.AUTH_SECRET, {

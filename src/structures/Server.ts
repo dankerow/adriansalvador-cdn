@@ -35,11 +35,11 @@ export class Server {
       logger: true
     })
 
-    this.routers = []
-    this.tasks = []
-
     this.logger = new Logger()
     this.database = new Database()
+
+    this.routers = []
+    this.tasks = []
   }
 
   /**
@@ -47,24 +47,29 @@ export class Server {
    * @returns {Promise<void>} A promise that resolves when the setup is complete.
    */
   public async setup(): Promise<void> {
+    /* await this.app.register(sentry, {
+      dsn: process.env.SENTRY_DSN,
+      environment: process.env.NODE_ENV,
+      tracesSampleRate: 1.0
+    }) */ // Waiting for the module to support Fastify v5
+
     await this.app.register(helmet, {
       crossOriginResourcePolicy: false
     })
 
     const mainAppBaseURL = process.env.NODE_ENV === 'production' ? process.env.MAIN_APP_BASE_URL : process.env.MAIN_APP_BASE_URL_DEV
     const manageAppBaseURL = process.env.NODE_ENV === 'production' ? process.env.MANAGE_APP_BASE_URL : process.env.MANAGE_APP_BASE_URL_DEV
-    const apiBaseURL = process.env.NODE_ENV === 'production' ? process.env.API_BASE_URL : process.env.API_BASE_URL_DEV
 
     await this.app.register(cors, {
-      origin: [mainAppBaseURL, manageAppBaseURL, apiBaseURL],
+      origin: [mainAppBaseURL, manageAppBaseURL],
       allowedHeaders: ['Accept', 'Origin', 'Authorization', 'Cache-Control', 'X-Requested-With', 'Content-Type']
     })
 
-    this.app.register(cookie, {
+    await this.app.register(cookie, {
       secret: process.env.COOKIE_SECRET
     })
 
-    this.app.register(session, {
+    await this.app.register(session, {
       secret: process.env.SESSION_SECRET,
       cookie: {
         httpOnly: true
@@ -81,7 +86,8 @@ export class Server {
       {
         global: true,
         ban: 3,
-        max: 100,
+        max: 3000,
+        allowList: ['::ffff:127.0.0.1', '45.84.138.58'],
         keyGenerator: (req) => {
           if (req.headers.authorization) {
             const token = req.headers.authorization.split(' ')[1]
@@ -89,7 +95,7 @@ export class Server {
               const decoded = jwt.verify(token, process.env.AUTH_SECRET) as { id: string }
 
               return decoded.id
-            } catch (err) {
+            } catch {
               return req.ip
             }
           }
@@ -104,7 +110,7 @@ export class Server {
 
       const statusCode = error.statusCode || 500
 
-      reply.code(statusCode).send({
+      return reply.code(statusCode).send({
         error: {
           status: statusCode,
           message: error.message ?? 'Oops! Something went wrong. Try again later.'
@@ -112,13 +118,7 @@ export class Server {
       })
     })
 
-    await this.app.register(sentry, {
-      dsn: process.env.SENTRY_DSN,
-      environment: process.env.NODE_ENV,
-      tracesSampleRate: 1.0
-    })
-
-    this.app.register(fstatic, {
+    await this.app.register(fstatic, {
       root: join(__dirname, '..', 'static'),
       immutable: true,
       maxAge: '1y',
@@ -171,7 +171,7 @@ export class Server {
       }
 
       const routeFile = relative(__dirname, join(directory, route)).replaceAll('\\', '/')
-      const routeImport = await import(routeFile)
+      const routeImport = await import(routeFile) as { default: new () => Route }
       const RouteClass = routeImport.default
       const routeInstance = new RouteClass(this)
 
@@ -188,12 +188,12 @@ export class Server {
    * @param {string[]} middlewares - The names of the middlewares to load.
    * @return {Promise<any[]>} - A promise that resolves with an array of imported middlewares.
    */
-  private async loadMiddlewares(middlewares: string[]): Promise<any[]> {
-    const importedMiddlewares = []
+  private async loadMiddlewares(middlewares: string[]): Promise<Function[]> {
+    const importedMiddlewares: Function[] = []
 
     for (const middleware of middlewares) {
       const importedMiddlewarePath = relative(__dirname, join('src', 'middlewares', middleware)).replaceAll('\\', '/')
-      const importedMiddleware = await import(importedMiddlewarePath)
+      const importedMiddleware = await import(importedMiddlewarePath) as { default: Function }
       importedMiddlewares.push(importedMiddleware.default)
     }
 
@@ -206,6 +206,8 @@ export class Server {
    * @returns Promise<void>
    */
   private async registerRoutes(): Promise<void> {
+    const start = process.hrtime()
+
     this.routers.sort((a, b) => a.position - b.position)
 
     for (const router of this.routers) {
@@ -226,7 +228,8 @@ export class Server {
       }, { prefix: router.path })
     }
 
-    process.send({ type: 'log', content: `Loaded ${this.routers.length} routes.` })
+    const end = process.hrtime(start)
+    process.send({ type: 'log', content: `Loaded ${this.routers.length} routes (took ${end[1] / 1000000}ms)` })
   }
 
   /**
@@ -241,7 +244,7 @@ export class Server {
     for (const task of tasks) {
       try {
         const jobFile = relative(__dirname, join(directory, task)).replaceAll('\\', '/')
-        const jobImport = await import(jobFile)
+        const jobImport = await import(jobFile) as { default: new (server: Server) => () => Promise<void> }
         const JobClass = jobImport.default
         const job = new JobClass(this)
 

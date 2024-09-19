@@ -39,7 +39,7 @@ export default class Albums extends Route {
   }
 
   routes(app: FastifyInstance, _options: RegisterOptions, done: DoneFuncWithErrOrRes) {
-    app.decorateRequest('album', null)
+    app.decorateRequest('album')
 
     const getAlbum = async (req: FastifyRequest<{ Params: IParams; Body: IBody  }>, reply: FastifyReply) => {
       if (!req.params.id) {
@@ -248,7 +248,10 @@ export default class Albums extends Route {
       preHandler: [getAlbum],
       schema: {
         params: {
-          id: { type: 'string', minLength: 24, maxLength: 24 }
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
         },
         body: {
           type: 'object',
@@ -325,7 +328,10 @@ export default class Albums extends Route {
     }>('/:id', {
       schema: {
         params: {
-          id: { type: 'string', minLength: 24, maxLength: 24 }
+          type: 'object',
+          properties: {
+            id: {type: 'string', minLength: 24, maxLength: 24}
+          }
         }
       },
       preHandler: [getAlbum]
@@ -385,7 +391,10 @@ export default class Albums extends Route {
     }>('/:id/cover/upload', {
       schema: {
         params: {
-          id: { type: 'string', minLength: 24, maxLength: 24 }
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
         }
       },
       preHandler: [getAlbum]
@@ -439,7 +448,10 @@ export default class Albums extends Route {
     }>('/:id/cover/upload', {
       schema: {
         params: {
-          id: { type: 'string', minLength: 24, maxLength: 24 }
+          type: 'object',
+          properties: {
+            id: { type: 'string', minLength: 24, maxLength: 24 }
+          }
         }
       },
       preHandler: [getAlbum]
@@ -470,7 +482,10 @@ export default class Albums extends Route {
       },
       schema: {
         params: {
-          id: { type: 'string', minLength: 24, maxLength: 24 }
+          type: 'object',
+          properties: {
+            id: {type: 'string', minLength: 24, maxLength: 24}
+          }
         }
       },
       preHandler: [getAlbum]

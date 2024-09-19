@@ -242,7 +242,10 @@ export default class Files extends Route {
     }>('/:id', {
       schema: {
         params: {
-          id: { type: 'string' }
+          type: 'object',
+          properties: {
+            id: { type: 'string' }
+          }
         }
       }
     }, async (req, reply) => {
@@ -304,7 +307,10 @@ export default class Files extends Route {
       },
       schema: {
         params: {
-          id: { type: 'string' }
+          type: 'object',
+          properties: {
+            id: {type: 'string'}
+          }
         }
       }
     }, async (req, reply) => {
