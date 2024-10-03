@@ -16,21 +16,6 @@ export default tseslint.config(
     }
   },
   {
-    settings: {
-      'import/parsers': {
-        '@typescript-eslint/parser': [
-          '.ts', '.tsx'
-        ]
-      },
-      'import/resolver': {
-        node: {
-          extensions: [
-            '.js', '.mjs', '.ts', '.d.ts'
-          ]
-        },
-        typescript: {}
-      }
-    },
     rules: {
       '@typescript-eslint/ban-ts-comment': [
         'error', { 'ts-ignore': 'allow-with-description' }
