@@ -22,7 +22,7 @@
     "@fastify/multipart": "^9.0.1",
     "@fastify/rate-limit": "^10.1.1",
     "@fastify/session": "^11.0.1",
-    "@fastify/static": "^8.0.1",
+    "@fastify/static": "^8.0.2",
     "@google-analytics/data": "^4.9.0",
     "@immobiliarelabs/fastify-sentry": "^8.0.2",
     "archiver": "^7.0.1",
@@ -39,24 +39,24 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.12.0",
+    "@eslint/js": "^9.13.0",
     "@stylistic/eslint-plugin-ts": "^2.9.0",
     "@types/archiver": "^6.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.16.11",
+    "@types/node": "^20.16.13",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
-    "eslint": "^9.12.0",
+    "eslint": "^9.13.0",
     "nodemon": "^3.1.7",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3",
-    "typescript-eslint": "^8.9.0"
+    "typescript-eslint": "^8.10.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
     "delay": 2500
   },
-  "packageManager": "pnpm@9.12.1"
+  "packageManager": "pnpm@9.12.2"
 }
