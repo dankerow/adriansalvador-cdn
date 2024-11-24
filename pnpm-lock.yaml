@@ -91,8 +91,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4
       '@types/node':
-        specifier: ^20.17.7
-        version: 20.17.7
+        specifier: ^22.9.3
+        version: 22.9.3
       consola:
         specifier: ^3.2.3
         version: 3.2.3
@@ -617,8 +617,8 @@ packages:
   '@types/mv@2.1.4':
     resolution: {integrity: sha512-MgEHBpXnQo44Q43j8G0Bvp/Yi8LYbC8hxKrRFMgDEDZMmzDKZLgiyMWtW49B37ko+QupgZ3G5rtPUnOGe5ixLw==}
 
-  '@types/node@20.17.7':
-    resolution: {integrity: sha512-sZXXnpBFMKbao30dUAvzKbdwA2JM1fwUtVEq/kxKuPI5mMwZiRElCpTXb0Biq/LMEVpXDZL5G5V0RPnxKeyaYg==}
+  '@types/node@22.9.3':
+    resolution: {integrity: sha512-F3u1fs/fce3FFk+DAxbxc78DF8x0cY09RRL8GnXLmkJ1jvx3TtPdWoTT5/NiYfI5ASqXBmfqJi9dZ3gxMx4lzw==}
 
   '@types/readdir-glob@1.1.1':
     resolution: {integrity: sha512-ImM6TmoF8bgOwvehGviEj3tRdRBbQujr1N+0ypaln/GWjaerOB26jb93vsRHmdMtvVQZQebOlqt2HROark87mQ==}
@@ -2562,7 +2562,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
 
   '@types/caseless@0.12.5': {}
 
@@ -2570,13 +2570,13 @@ snapshots:
 
   '@types/formidable@2.0.6':
     dependencies:
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
 
   '@types/json-schema@7.0.15': {}
 
   '@types/jsonwebtoken@9.0.7':
     dependencies:
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
 
   '@types/long@4.0.2': {}
 
@@ -2584,18 +2584,18 @@ snapshots:
 
   '@types/mv@2.1.4': {}
 
-  '@types/node@20.17.7':
+  '@types/node@22.9.3':
     dependencies:
       undici-types: 6.19.8
 
   '@types/readdir-glob@1.1.1':
     dependencies:
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
 
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
@@ -3854,7 +3854,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.17.7
+      '@types/node': 22.9.3
       long: 5.2.3
 
   proxy-addr@2.0.7:

@@ -45,7 +45,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mv": "^2.1.4",
-    "@types/node": "^20.17.7",
+    "@types/node": "^22.9.3",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
     "eslint": "^9.15.0",
