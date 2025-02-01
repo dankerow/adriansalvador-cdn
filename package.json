@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@stylistic/eslint-plugin-ts": "^2.13.0",
+    "@stylistic/eslint-plugin-ts": "^3.0.1",
     "@types/archiver": "^6.0.3",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.8",
