@@ -132,7 +132,7 @@ export class Database extends EventEmitter {
       .next() as Promise<Album>
   }
 
-  getAlbums(params: { status?: string; favorites?: boolean; featured?: boolean; search?: string; sort?: string; order?: string; skip?: number; limit?: number } = {}) {
+  getAlbums(params: { status?: string; favorites?: boolean; featured?: boolean; search?: string; sort?: Record<string, number>; order?: string; skip?: number; limit?: number } = {}) {
     const aggregation = []
 
     if (params.status && params.status !== 'all') {
@@ -242,7 +242,12 @@ export class Database extends EventEmitter {
       .aggregate([
         { $match: { _id: new ObjectId(id) } },
         { $lookup: { from: 'albums', localField: 'albumId', foreignField: '_id', as: 'album' } },
-        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } }
+        { $lookup: { from: 'files', localField: 'coverId', foreignField: 'id', as: 'cover' } },
+        { $lookup: { from: 'files', localField: 'coverFallbackId', foreignField: 'id', as: 'coverFallback' } },
+        { $addFields: { album: { $arrayElemAt: ['$album', 0] } } },
+        { $addFields: { cover: { $arrayElemAt: ['$cover', 0] } } },
+        { $addFields: { coverFallback: { $arrayElemAt: ['$coverFallback', 0] } } },
+        { $unset: ['cover.albumId', 'coverFallback.albumId' ] }
       ])
       .limit(1)
       .next() as Promise<WithId<AlbumFile>>
