@@ -45,14 +45,14 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/mv": "^2.1.4",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.4",
     "consola": "^3.4.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.20.0",
+    "eslint": "^9.20.1",
     "nodemon": "^3.1.9",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.23.0"
+    "typescript-eslint": "^8.24.0"
   },
   "nodemonConfig": {
     "ext": "*.ts",
